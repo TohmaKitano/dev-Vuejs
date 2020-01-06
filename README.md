@@ -52,7 +52,7 @@ var app = new Vue({
 
 ## Chapter 2
 
-- マスタッシュ記法<br>
+### マスタッシュ記法
 テキストコンテンツをデータバインディングするための記法のこと。<br>
 属性には使用することができない。
 
@@ -95,7 +95,7 @@ var app = new Vue({
 属性にマスタッシュ記法を使う場合、v-bindディレクティブを使う。
 
 
-- this が何を指すのか
+### this が何を指すのか
 
 ```
 methods: {
@@ -118,7 +118,7 @@ methods: {
 }
 ```
 
-- クラスへのデータバインディング
+### クラスへのデータバインディング
 
 ```
 <p v-bind:class="{ child: isChild, 'is-active': isActive }">Text</p>
@@ -138,7 +138,7 @@ data: {
 <p class="active">Text</p>
 ```
 
-- スタイルへのデータバインディング
+### スタイルへのデータバインディング
 
 ```
 <p v-bind:style="{ color: textColor, backgroundColor: bgColor }">Text</p>
@@ -174,7 +174,7 @@ data: {
 <p style="color: red; background-color: lightgray;">Text</p>
 ```
 
-- 複数のデータへのデータバインディング
+### 複数のデータへのデータバインディング
 
 ```
 <img v-bind="item">
@@ -195,7 +195,7 @@ data: {
 <img id="thumb-1" src="item1.jpg" alt="商品1サムネイル" width="200" height="200">
 ```
 
-- SVGデータへのデータバインディング
+### SVGデータへのデータバインディング
 
 ```
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
