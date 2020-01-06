@@ -11,16 +11,16 @@ Study Vue.js
 
 - データバインディング<br>
 データと描画を同期させる仕組みのこと。<br>
-ex v-if, v-bind, key, ...<br>
+ex) v-if, v-bind, key, ...<br>
 
 ```
 v-bind:value.sync = "message"
 ```
 
--- v-bind => ディレクティブ
--- :value => 引数
--- .sync => 修飾子
--- "message" => 値
+・v-bind => ディレクティブ
+・:value => 引数
+・.sync => 修飾子
+・"message" => 値
 
 - ディレクティブ<br>
 テンプレートとロジックを関連づける機能のこと。
