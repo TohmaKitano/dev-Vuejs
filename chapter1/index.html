@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <div id="app">
+    <!-- テキストのバインディング -->
+    <p>{{ message }}</p>
+    <p>{{ count }}</p>
+
+    <!-- 繰り返しのバインディング -->
+    <ol>
+      <li v-for="item in list">{{ item }}</li>
+    </ol>
+
+    <!-- フォームのバインディング -->
+    <!-- <input v-model="message"> -->
+    <input v-model.number="count">
+
+    <!-- イベントのディレクティブ -->
+    <button v-on:click="handleClick">Click</button>
+
+    <!-- 条件分岐のディレクティブ -->
+    <p v-if="show">Hello, Vue.js!</p>
+
+    <!-- トランジション&アニメーションのディレクティブ -->
+    <button v-on:click="animation=!animation">切り替え</button>
+    <transition>
+      <p v-if="animation">Hello, Vue.js!</p>
+    </transition>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
