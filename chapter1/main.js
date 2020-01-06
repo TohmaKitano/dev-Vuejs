@@ -3,6 +3,7 @@ var app = new Vue({
   // マウントする要素
   el: '#app',
   // アプリケーションで使用するデータ
+  // リアクティブデータ
   data: {
     // テキストのバインディング
     message: 'Hello, Vue.js!',
