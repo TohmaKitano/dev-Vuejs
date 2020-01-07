@@ -7,15 +7,23 @@
 </head>
 <body>
   <div id="app">
-    名前 <input v-model="name">
+    <!-- 名前 <input v-model="name">
     <button v-on:click="doAdd">モンスターを追加</button>
     <ul>
       <li v-for="(item, index) in list" v-bind:key="item.id">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
-        <!-- for文の中にボタンを作成 -->
+        <span v-if="item.hp < 50">瀕死！</span>
+        for文の中にボタンを作成
         <button v-on:click="doRemove(index)">モンスターを削除</button>
+        <button v-on:click="doAttack(index)">攻撃する</button>
       </li>
-    </ul>
+    </ul> -->
+    <!-- <select>
+      <option v-for="item in list">{{ item }}</option>
+    </select> -->
+    <!-- <span v-for="item in 15">{{ item }}</span>
+    <span v-for="item in [1, 5, 10, 15]">{{ item }}</span> -->
+    <span v-for="item in text">{{ item }}</span>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="main03.js"></script>

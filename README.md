@@ -477,6 +477,117 @@ var app = new Vue({
 配列を比較関数にしたがってソートする
 - reverse<br>
 配列の並び順を逆にする
+
+- listプロパティを追加する
+this.$set メソッドでリアクティブデータにプロパティを追加する。
+
+```
+this.$set(更新するデータ, インデックス or キー, 新しい値)
+
+// =>
+this.$this(this.list, 0, { id: 1, name: 'キングスライム', hp: 500 })
+```
+
+```
+data: {
+  ~
+  created: function() {
+    this.list.forEach(function(item) {
+      this.$set(item, 'active', false)
+    }, this)
+  }
+}
+```
+
+- listプロパティを更新する
+
+```
+<span v-if="item.hp < 50">瀕死！</span>
+<button v-on:click="doAttack(index)">攻撃する</button>
+
+methods: {
+  ~
+  doAttack: function(index) {
+    this.list[index].hp -= 10
+  }
+}
+```
+
+- listそのものを更新する
+filterメソッドでlistデータそのものを更新する
+
+```
+this.list = this.list.filter(function(el) {
+  return el >= 100
+})
+```
+
+- ユニークキーを持たない配列
+
+```
+<select>
+  <option v-for="item in list">{{ item }}</option>
+</select>
+
+data: {
+  list: [
+    'スライム', 'ゴブリン', 'ドラゴン'
+  ]
+}
+
+// =>
+<select>
+  <option>スライム</option>
+  <option>ゴブリン</option>
+  <option>ドラゴン</option>
+</select>
+```
+
+- オプションにデータを持たないv-forディレクティブ
+
+```
+<span v-for="item in 15">{{ item }}</span>
+<span v-for="item in [1, 5, 10, 15]">{{ item }}</span>
+
+// =>
+<span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+
+<span>1</span>
+<span>5</span>
+<span>10</span>
+<span>15</span>
+```
+
+- 文字列に対するv-forディレクティブ
+
+```
+<span v-for="item in text">{{ item }}</span>
+
+<span>H</span>
+<span>e</span>
+<span>l</span>
+<span>l</span>
+<span>o</span>
+```
+
+```
+
+```
+
 ```
 
 ```
