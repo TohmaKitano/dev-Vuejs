@@ -584,12 +584,43 @@ data: {
 <span>o</span>
 ```
 
-```
+### 外部からデータを取得する(JSON, WebAPI)
 
 ```
+<div id="app">
+  <ul>
+    <li v-for="(item, index) in list" v-bind:key="item.id">
+      ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+    </li>
+  </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+var app = new Vue({
+  el: '#app',
+  data: {
+    // 空配列をセットしておく
+    list: []
+  },
+  // ローカルで動かす場合は、ローカルサーバーを立てる
+  created: function() {
+    axios.get('list.json').then(function(response) {
+      this.list = response.data
+      console.log(response.data)
+    }.bind(this)).catch(function(e) {
+      console.log(e)
+    })
+  }
+})
 ```
 
+- 簡易的なローカルサーバー
+
+```
+$ npm install -g live-server
+$ cd ルートディレクトリ
+$ live-server .
 ```
 
 ```
