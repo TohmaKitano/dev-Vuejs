@@ -7,18 +7,18 @@
 <body>
   <div id="app">
     <!-- テキストへマスタッシュ記法 -->
-    <!-- <p>{{ message.value }}</p>
+    <p>{{ message.value }}</p>
     <p>{{ message.value.length }}</p>
     <p>{{ list[2] }}</p>
     <p>{{ list[num] }}</p>
     <p>{{ 1 + 1 }}</p> -->
     <!-- <p>{{ var foo = message }}</p> -->
-    <!-- <p>{{ message.value.length >= 10 ? '10文字以上' : '10文字未満' }}</p>
-    <p>{{ Math.round(3.14) }}</p> -->
+    <p>{{ message.value.length >= 10 ? '10文字以上' : '10文字未満' }}</p>
+    <p>{{ Math.round(3.14) }}</p>
 
     <!-- 属性へマスタッシュ記法 -->
     <!-- <input type="text" value="{{ message }}"> -->
-    <!-- <input type="text" v-bind:value="message.value">
+    <input type="text" v-bind:value="message.value">
     <input type="text" :value="message.value"> -->
 
     <!-- データの更新 -->
@@ -70,6 +70,6 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="main.js"></script>
+  <script src="main_bind.js"></script>
 </body>
 </html>

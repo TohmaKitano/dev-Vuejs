@@ -6,7 +6,8 @@
 </head>
 <body>
   <div id="app">
-    <!-- 名前 <input v-model="name">
+    <!-- 繰り返し文とメソッド -->
+    名前 <input v-model="name">
     <button v-on:click="doAdd">モンスターを追加</button>
     <ul>
       <li v-for="(item, index) in list" v-bind:key="item.id">
@@ -16,15 +17,19 @@
         <button v-on:click="doRemove(index)">モンスターを削除</button>
         <button v-on:click="doAttack(index)">攻撃する</button>
       </li>
-    </ul> -->
-    <!-- <select>
+    </ul>
+
+    <!-- ユニークキーを持たないv-forディレクティブ -->
+    <select>
       <option v-for="item in list">{{ item }}</option>
-    </select> -->
-    <!-- <span v-for="item in 15">{{ item }}</span>
-    <span v-for="item in [1, 5, 10, 15]">{{ item }}</span> -->
+    </select>
+
+    <!-- オプションにデータを持たないv-forディレクティブ -->
+    <span v-for="item in 15">{{ item }}</span>
+    <span v-for="item in [1, 5, 10, 15]">{{ item }}</span>
     <span v-for="item in text">{{ item }}</span>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="main03.js"></script>
+  <script src="main_for_methods.js"></script>
 </body>
 </html>

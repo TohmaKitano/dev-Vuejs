@@ -522,7 +522,7 @@ this.list = this.list.filter(function(el) {
 })
 ```
 
-- ユニークキーを持たない配列
+- ユニークキーを持たないv-forディレクティブ
 
 ```
 <select>

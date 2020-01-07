@@ -6,19 +6,22 @@
 </head>
 <body>
   <div id="app">
-    <!-- <ul>
+    <!-- 繰り返し文 -->
+    <ul>
       <li v-for="item in list" v-bind:key="item.id">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
       </li>
-    </ul> -->
-    <!-- <ul>
+    </ul>
+
+    <ul>
       <li v-for="item in list"
           v-bind:key="item.id"
           v-bind:class="{ tsuyoi: item.hp > 300 }">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
         <span v-if="item.hp > 300">つよい！</span>
       </li>
-    </ul> -->
+    </ul>
+
     <ul>
       <li v-for="item in list"
           v-bind:key="item.id"
@@ -28,6 +31,6 @@
     </ul>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="main02.js"></script>
+  <script src="main_for.js"></script>
 </body>
 </html>
