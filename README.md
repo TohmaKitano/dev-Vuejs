@@ -623,14 +623,66 @@ $ cd ルートディレクトリ
 $ live-server .
 ```
 
-```
+### DOMを直接アクセスする
+DOMにアクセスするためにはインスタンスプロパティ$el, $refsを使用する。
+
+- $el ルート要素へアクセスする
 
 ```
+<div id="app"></div>
 
+var app = new Vue({
+  el: '#app',
+  mounted: function() {
+    console.log(this.$el)
+  }
+})
+
+// =>
+<div id="app"></div>
 ```
 
-```
+- $refs ルート以外の要素へアクセスする
 
 ```
+<div id="app">
+  <p ref="hello">Hello, World!</p>
+</div>
 
+var app = new Vue({
+  el: '#app',
+  mounted: function() {
+    console.log(this.$refs.hello)
+  }
+})
+
+// =>
+<p>Hello, World!</p>
+```
+
+- $el, $refsは一時的な変更
+$el, $refsによるDOMの操作が仮想DOMによって上書きされる点に注意する。
+
+```
+<div id="app">
+  <button v-on:click="handClick">カウントアップ</button>
+  <button v-on:click="show=!show">表示/非表示</button>
+  <span ref="count" v-if="show">0</span>
+</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    show: true
+  },
+  methods: {
+    handClick: function() {
+      var count = this.$refs.count
+      if (count) {
+        // parseInt 文字列型を数値型に変換する
+        count.innerText = parseInt(count.innerText, 10) + 1
+      }
+    }
+  }
+})
 ```
