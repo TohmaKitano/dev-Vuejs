@@ -7,13 +7,23 @@
 </head>
 <body>
   <div id="app">
-    <ul>
+    <!-- <ul>
       <li v-for="item in list" v-bind:key="item.id">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
       </li>
-    </ul>
+    </ul> -->
+    <!-- <ul>
+      <li v-for="item in list"
+          v-bind:key="item.id"
+          v-bind:class="{ tsuyoi: item.hp > 300 }">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+        <span v-if="item.hp > 300">つよい！</span>
+      </li>
+    </ul> -->
     <ul>
-      <li v-for="(item, index, key) in list" v-bind:key="item.id">
+      <li v-for="item in list"
+          v-bind:key="item.id"
+          v-if="item.hp > 300">
         ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
       </li>
     </ul>

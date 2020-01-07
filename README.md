@@ -305,26 +305,178 @@ data: {
 </ul>
 ```
 
-
-
-
-
-```
+### if文とfor文
+v-ifディレクティブの条件に合致しないものは、コメントアウトを出力する。
 
 ```
+<ul>
+  <li v-for="item in list"
+      v-bind:key="item.id"
+      v-bind:class="{ tsuyoi: item.hp > 300 }">
+    ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+    <span v-if="item.hp > 300">つよい！</span>
+  </li>
+</ul>
 
+// =>
+<ul>
+  <li class="">ID.1 スライム HP.100<!----></li>
+  <li class="">ID.2 ゴブリン HP.200<!----></li>
+  <li class="tsuyoi">ID.3 ドラゴン HP.500<span>つよい！</span></li>
+</ul>
 ```
 
-```
+- for文に直接if文を記述する場合
 
 ```
+<ul>
+  <li v-for="item in list"
+      v-bind:key="item.id"
+      v-if="item.hp > 300">
+    ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+  </li>
+</ul>
 
+// =>
+<ul>
+  <!---->
+  <!---->
+  <li>ID.3 ドラゴン HP.500</li>
+</ul>
 ```
 
-```
+### メソッドとfor文
+- v-modelディレクティブを使って、listプロパティに新しい要素を追加
 
 ```
+名前 <input v-model="name">
+<button v-on:click="doAdd">モンスターを追加</button>
+<ul>
+  <li v-for="item in list" v-bind:key="item.id">
+    ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+  </li>
+</ul>
 
+var app = new Vue({
+  el: "#app",
+  data: {
+    // 初期値
+    name: 'キマイラ',
+    list: [
+      { id:1, name: 'スライム', hp: 100 },
+      { id:2, name: 'ゴブリン', hp: 200 },
+      { id:3, name: 'ドラゴン', hp: 500 }
+    ]
+  },
+  methods: {
+    doAdd: function() {
+      // リスト内で一番大きいIDを取得する
+      var max = this.list.reduce(function(a, b) {
+        return a > b.id ? a : b.id
+      }, 0)
+      // リストに追加
+      this.list.push({
+        id: max + 1,
+        name: this.name,
+        hp: 500
+      })
+    }
+  }
+})
+
+// =>
+<ul>
+  <li id="1">
+    ID.1 スライム HP.100
+  </li>
+  <li id="2">
+    ID.2 ゴブリン HP.200
+  </li>
+  <li id="3">
+    ID.3 ドラゴン HP.500
+  </li>
+  <li id="4">
+    ID.4 キマイラ HP.500
+  </li>
+</ul>
+```
+
+- listプロパティから要素を削除
+
+```
+名前 <input v-model="name">
+<button v-on:click="doAdd">モンスターを追加</button>
+<ul>
+  <li v-for="(item, index) in list" v-bind:key="item.id">
+    ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+    <!-- for文の中にボタンを作成 -->
+    <button v-on:click="doRemove(index)">モンスターを削除</button>
+  </li>
+</ul>
+
+var app = new Vue({
+  el: "#app",
+  data: {
+    // 初期値
+    name: 'キマイラ',
+    list: [
+      { id:1, name: 'スライム', hp: 100 },
+      { id:2, name: 'ゴブリン', hp: 200 },
+      { id:3, name: 'ドラゴン', hp: 500 }
+    ]
+  },
+  methods: {
+    doAdd: function() {
+      // リスト内で一番大きいIDを取得する
+      var max = this.list.reduce(function(a, b) {
+        return a > b.id ? a : b.id
+      }, 0)
+      // リストに追加
+      this.list.push({
+        id: max + 1,
+        name: this.name,
+        hp: 500
+      })
+    },
+    doRemove: function(index) {
+      // インデックスの位置から要素を1個削除
+      this.list.splice(index, 1)
+    }
+  }
+})
+
+// =>
+<ul>
+  <li>
+    ID.1 スライム HP.100
+    <button>モンスターを削除</button>
+  </li>
+  <li>
+    ID.2 ゴブリン HP.200
+    <button>モンスターを削除</button>
+  </li>
+  <li>
+    ID.3 ドラゴン HP.500
+    <button>モンスターを削除</button>
+  </li>
+</ul>
+```
+
+#### 配列メソッド
+- push<br>
+配列の末尾に要素を追加する
+- pop<br>
+配列の末尾の要素を削除する
+- shift<br>
+配列の末尾に要素を削除する
+- unshift<br>
+配列の先頭に要素を追加する
+- splice<br>
+配列の指定位置から要素を取り出し、要素を追加する
+- sort<br>
+配列を比較関数にしたがってソートする
+- reverse<br>
+配列の並び順を逆にする
 ```
 
 ```
