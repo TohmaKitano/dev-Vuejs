@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in list" v-bind:key="item.id">
+        ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="main04.js"></script>
+</body>
+</html>
