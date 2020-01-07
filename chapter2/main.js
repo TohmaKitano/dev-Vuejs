@@ -28,7 +28,10 @@ var app = new Vue({
       width: 200,
       height: 200
     },
-    radius: 50
+    radius: 50,
+    ok: true,
+    type: 'B',
+    loaded: true
   },
   methods: {
     // increment: function() {

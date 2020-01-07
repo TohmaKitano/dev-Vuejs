@@ -52,7 +52,9 @@ var app = new Vue({
 
 ## Chapter 2
 
-### マスタッシュ記法
+### テキストへのデータバインディング
+
+#### マスタッシュ記法
 テキストコンテンツをデータバインディングするための記法のこと。<br>
 属性には使用することができない。
 
@@ -202,4 +204,139 @@ data: {
   <circle cx="100" cy="75" v-bind:r="radius" fill="lightpink" />
 </svg>
 <input type="range" min="0" max="100" v-model="radius">
+```
+
+### 条件分岐(if文)
+v-ifでは要素はDOMレベルで削除される。v-showでは要素はスタイル(display: none;)で隠蔽される。
+
+```
+<div v-if="ok">v-if条件による描画</div>
+<div v-show="ok">v-show条件による描画</div>
+
+data: {
+  ok: true // or false
+}
+```
+
+- templateタグでv-ifをグループ化
+
+```
+<template v-if="ok">
+  <header>タイトル</header>
+  <div>コンテンツ</div>
+</template>
+
+data: {
+  ok: true // or false
+}
+```
+
+- v-if, v-else-if, v-elseでグループ化
+
+```
+<div v-if="type === 'A'">
+  type は A
+</div>
+<div v-else-if="type === 'B'">
+  type は B
+</div>
+<div v-else>
+  タイプはありません。
+</div>
+
+data: {
+  ok: true // or false
+}
+```
+- v-ifのグループ内で同じ要素を使用する場合、ユニークなkeyを付与しエスケイプする
+
+```
+<div v-if="loaded" key="content-visible">
+  content
+</div>
+<div v-else key="content-loading">
+  loading now...
+</div>
+
+data: {
+  loaded: true // or false
+}
+```
+
+### 繰り返し処理(for文)
+
+- リストデータはオブジェクトを要素とした配列にする
+
+```
+data: {
+  list: [
+    { id:1, name: 'スライム', hp: 100 },
+    { id:2, name: 'ゴブリン', hp: 200 },
+    { id:3, name: 'ドラゴン', hp: 500 }
+  ]
+}
+```
+- リストデータのデータバインディング
+繰り返し描画させたいタグに対して、v-forディレクティブを使用する。<br>
+要素の識別と効率的な描画処理のために要素にはユニークなIDを指定する。ただし、同じ親要素内でキーの重複はできない。
+
+```
+<div id="app">
+  <ul>
+    <li v-for="item in list" v-bind:key="item.id">
+      ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+    </li>
+    </ul>
+</div>
+
+data: {
+  list: [
+    { id:1, name: 'スライム', hp: 100 },
+    { id:2, name: 'ゴブリン', hp: 200 },
+    { id:3, name: 'ドラゴン', hp: 500 }
+  ]
+}
+
+// =>
+<ul>
+  <li>ID.1 スライム HP.100</li>
+  <li>ID.2 ゴブリン HP.200</li>
+  <li>ID.3 ドラゴン HP.500</li>
+</ul>
+```
+
+
+
+
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```
