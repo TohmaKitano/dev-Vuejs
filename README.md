@@ -154,7 +154,7 @@ data: {
 <p style="color: red; background-color: lightgray;">Text</p>
 ```
 
-- クラスやスタイルは、オブジェクトデータを渡すとスマート
+### クラスやスタイルは、オブジェクトデータを渡すとスマート
 
 ```
 <p v-bind:class="classObjext">Text</p>
@@ -623,7 +623,7 @@ $ cd ルートディレクトリ
 $ live-server .
 ```
 
-### DOMを直接アクセスする
+### DOMに直接アクセスする
 DOMにアクセスするためにはインスタンスプロパティ$el, $refsを使用する。
 
 - $el ルート要素へアクセスする
@@ -685,4 +685,97 @@ var app = new Vue({
     }
   }
 })
+```
+
+### テンプレートを制御するディレクティブ
+
+- v-pre HTMLコンパイルをスキップ
+
+```
+<a v-bind:href="url" v-pre>Hello {{ message }}</a>
+
+data: {
+  url: 'https://www.google.com/',
+  message: 'Vue.js!'
+}
+
+// =>
+<a v-bind:href="url" v-pre="">Hello {{ message }}</a>
+```
+
+- v-once 一度だけバインディングを行い以降はスキップ
+
+```
+<a v-bind:href="url" v-once>Hello {{ message }}</a>
+
+data: {
+  url: 'https://www.google.com/',
+  message: 'Vue.js!'
+}
+
+// =>
+<a href="https://www.google.com/">Hello Vue.js!</a>
+```
+
+- v-text マスタッシュの代わりにテキストコンテンツをバインディング
+
+```
+<span v-text="message"></span>
+
+data: {
+  message: 'Hello Vue.js!'
+}
+
+// =>
+<span>Hello Vue.js!</span>
+```
+
+- v-html HTMLをバインディング
+XSS脆弱性を引き起こすため、信頼できるテンプレートのみに使用する。
+
+```
+<span v-html="message"></span>
+
+data: {
+  message: 'Hello <strong>Vue.js</strong>'
+}
+
+// =>
+<span>Hello <strong>Vue.js</strong></span>
+```
+
+- v-cloak インスタンスの準備が終わると取り除かれる
+スタイルも同時に定義して使用する。
+
+```
+<div id="app" v-cloak>
+  {{ message }}
+</div>
+
+[v-cloak] {
+  display: none;
+}
+@keyframes cloak-in {
+  0% {
+    opacity: 0;
+  }
+}
+#app {
+  animation: cloak-in 1s;
+}
+#app[v-cloak] {
+  opacity: 0;
+}
+
+data: {
+  message: 'Hello Vue.js!'
+}
+```
+
+```
+
+```
+
+```
+
 ```
