@@ -744,8 +744,7 @@ data: {
 <span>Hello <strong>Vue.js</strong></span>
 ```
 
-- v-cloak インスタンスの準備が終わると取り除かれる
-スタイルも同時に定義して使用する。
+- v-cloak インスタンスの準備が終わると取り除かれる。スタイルも同時に定義して使用する。
 
 ```
 <div id="app" v-cloak>
@@ -894,4 +893,37 @@ MouseEvent {isTrusted: true, screenX: 182, screenY: 171, clientX: 47, clientY: 
 
 // div2 をクリック =>
 div2
+```
+
+- .prevent
+
+```
+<div v-on:click="handler('div1')">
+  div1
+  <a href="#" v-on:click.prevent="handler('div2')">div2</a>
+</div>
+
+// div2 をクリック =>
+div2
+div1
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```
