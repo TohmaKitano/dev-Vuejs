@@ -468,9 +468,9 @@ var app = new Vue({
 - pop<br>
 配列の末尾の要素を削除する
 - shift<br>
-配列の末尾に要素を削除する
+配列の末尾に要素を追加する
 - unshift<br>
-配列の先頭に要素を追加する
+配列の先頭に要素を削除する
 - splice<br>
 配列の指定位置から要素を取り出し、要素を追加する
 - sort<br>
@@ -770,6 +770,64 @@ data: {
 data: {
   message: 'Hello Vue.js!'
 }
+```
+
+
+## Chapter 3
+
+### イベントハンドラ
+JavaScriptのaddEventListennerメソッドは、Vue.jsではv-onディテクティブを使用する。jQueryでは$(element).onメソッド。
+
+- メソッドイベントハンドラ<br>
+コンポーネントのmethodsオプションに定義したメソッド名を指定する。
+
+```
+<button v-on:click="handleClick">クリック</button>
+<button @click="handleClick">クリック</button>
+```
+
+```
+<button v-on:click="handleClick">クリック</button>
+
+var app = new Vue({
+  el: '#app',
+  methods: {
+    handleClick: function() {
+      alert('クリックしたよ');
+    }
+    // 省略形
+    // handleClick() {
+      // alert('クリックしたよ');
+    //}
+  }
+})
+```
+
+- インラインメソッドハンドラ<br>
+ディレクティブの値にJavaScriptの式を直接定義する。
+
+```
+<button v-on:click="count++">クリック</button>
+<button v-on:click="handleClick($event, item)">クリック</button>
+```
+
+イベントオブジェクトとスコープ内のitemプロパティを引数として持ち、メソッドを呼び出す。
+
+- 使用可能なDOMイベント例
+
+```
+<!-- 要素のスクロールイベント -->
+<div v-on:scroll="handler">
+  コンテンツ
+</div>
+<!-- マウスのホイールイベント -->
+<div v-on:mousewheel="handler">
+  コンテンツ
+</div>
+<!-- 要素のドラッグイベント -->
+<div v-on:dragstrat="handler" draggable>
+  ドラッグ可能
+</div>
 ```
 
 ```
