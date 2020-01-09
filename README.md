@@ -744,8 +744,7 @@ data: {
 <span>Hello <strong>Vue.js</strong></span>
 ```
 
-- v-cloak インスタンスの準備が終わると取り除かれる
-スタイルも同時に定義して使用する。
+- v-cloak インスタンスの準備が終わると取り除かれる。スタイルも同時に定義して使用する。
 
 ```
 <div id="app" v-cloak>
@@ -847,8 +846,8 @@ DOMイベントの振る舞いを変更する。<br>
 |---|---|
 |.stop|event.stopPropagation()を呼ぶ|
 |.prevent|event.preventDefault()を呼ぶ|
-|.capture|キャプチャモードでハンドルする|
-|.self|DOMそのもの自身が発火した時のみハンドルする|
+|.capture|キャプチャモードでイベントを発生する|
+|.self|event.target要素がそのもの自身のときのみ発火する|
 |.native|ルート上のネイティブイベントをハンドルする|
 |.once|一回のみハンドラを呼ぶ|
 |.passive|{ passive: true }でイベントをハンドルする|
@@ -884,7 +883,7 @@ MouseEvent {isTrusted: true, screenX: 182, screenY: 171, clientX: 47, clientY: 
 
 ```
 
-- .stop
+- .stop イベントが親要素に伝播するのをキャンセルする
 
 ```
 <div v-on:click="handler('div1')">
@@ -894,4 +893,54 @@ MouseEvent {isTrusted: true, screenX: 182, screenY: 171, clientX: 47, clientY: 
 
 // div2 をクリック =>
 div2
+```
+
+- .prevent イベントをキャンセルする
+
+```
+<div v-on:click="handler('div1')">
+  div1
+  <a href="#" v-on:click.prevent="handler('div2')">div2</a>
+</div>
+
+// div2 をクリック =>
+div2
+div1
+```
+
+- .capture キャプチャモードでイベントを発生する<br>
+ルート要素からevent.targetまでDOMツリーを探すキャプチャ中(キャプチャフェーズ)にイベントが発生する。<br>
+バブリングモードより先に発生する。
+
+```
+<div v-on:click.capture="handler('div1')">
+  div1
+  <div v-on:click="handler('div2')">
+    div2
+    <div v-on:click="handler('div3')">div3</div>
+  </div>
+</div>
+
+// div3 をクリック =>
+div1
+div3
+div2
+```
+
+- .self event.target要素がそのもの自身のときのみ発火する。
+
+```
+<div class="overlay" v-on:click.self="close">...</div>
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```
