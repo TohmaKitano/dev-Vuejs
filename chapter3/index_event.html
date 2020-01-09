@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main_event.css">
+</head>
+<body>
+  <div id="app">
+    <!-- <button v-on:click="handleClick">クリック</button>
+    <button v-on:click="count++">クリック</button>
+    <button v-on:click="handleClick($event, item)">クリック</button> -->
+    <!-- 画像のロードイベント -->
+    <img src="sample.png" v-on:load="show=true" class="{hide: !show}">
+    <!-- 要素のスクロールイベント -->
+    <div v-on:scroll="handler">
+      コンテンツ
+    </div>
+    <!-- マウスのホイールイベント -->
+    <div v-on:mousewheel="handler">
+      コンテンツ
+    </div>
+    <!-- 要素のドラッグイベント -->
+    <div v-on:dragstrat="handler" draggable>
+      ドラッグ可能
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main_event.js"></script>
+</body>
+</html>
