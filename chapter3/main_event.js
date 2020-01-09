@@ -4,11 +4,18 @@ var app = new Vue({
     show: true
   },
   methods: {
-    handleClick: function() {
-      alert('クリックしたよ');
-    }
+    // handleClick: function() {
+    //   alert('クリックしたよ');
+    // }
     // handleClick() {
     //   alert('クリックしたよ');
     // }
+    // handleInput: function(event) {
+    //   // フック処理
+    //   this.message = event.target.value
+    // }
+    handler: function(comment) {
+      console.log(comment)
+    }
   }
 })

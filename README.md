@@ -828,12 +828,70 @@ var app = new Vue({
 <div v-on:dragstrat="handler" draggable>
   ドラッグ可能
 </div>
+<!-- フォーム -->
+<input v-bind:value="message" v-on:click="handleInput">
+methods: {
+  handleInput: function(event) {
+  // フック処理
+  this.message = event.target.value
+  }
+}
+// => v-onディレクティブを使うことでフック処理を行う
 ```
+
+### イベント修飾子
+DOMイベントの振る舞いを変更する。<br>
+通常のHTMLでは、同じイベントをハンドルしたDOMがネストされている場合、event.target要素から順に親要素に向かってバブリング(イベントの伝播)される。
+
+|修飾子|振る舞い|
+|---|---|
+|.stop|event.stopPropagation()を呼ぶ|
+|.prevent|event.preventDefault()を呼ぶ|
+|.capture|キャプチャモードでハンドルする|
+|.self|DOMそのもの自身が発火した時のみハンドルする|
+|.native|ルート上のネイティブイベントをハンドルする|
+|.once|一回のみハンドラを呼ぶ|
+|.passive|{ passive: true }でイベントをハンドルする|
+
+- stopPropagation()メソッド<br>
+イベントが親要素に伝播するのをキャンセルするためのメソッド。
+
+- preventDefault()メソッド<br>
+イベントをキャンセルするためのメソッド。
+
+- マウスイベントの修飾子
+|修飾子|振る舞い|
+|---|---|
+|.left|マウスの左ボタンが押された時のみハンドルする|
+|.right|マウスの右ボタンが押された時のみハンドルする|
+|.middle|マウスの中央ボタンが押された時のみハンドルする|
+
+- サンプル
+
+```
+<div v-on:click.rigth="handler">example</div>
+<div v-on:click.right.prevent="handler">example</div>
+
+methods: {
+  handler: function(comment) {
+  console.log(comment)
+  }
+}
+
+// =>
+MouseEvent {isTrusted: true, screenX: 182, screenY: 171, clientX: 47, clientY: 24, …}
+// =>
 
 ```
 
-```
+- .stop
 
 ```
+<div v-on:click="handler('div1')">
+  div1
+  <a href="#" v-on:click.stop="handler('div2')">div2</a>
+</div>
 
+// div2 をクリック =>
+div2
 ```
