@@ -866,6 +866,8 @@ DOMイベントの振る舞いを変更する。<br>
 |.right|マウスの右ボタンが押された時のみハンドルする|
 |.middle|マウスの中央ボタンが押された時のみハンドルする|
 
+- サンプル
+
 ```
 <div v-on:click.rigth="handler">example</div>
 <div v-on:click.right.prevent="handler">example</div>
@@ -878,8 +880,18 @@ methods: {
 
 // =>
 MouseEvent {isTrusted: true, screenX: 182, screenY: 171, clientX: 47, clientY: 24, …}
-```
+// =>
 
 ```
 
+- .stop
+
+```
+<div v-on:click="handler('div1')">
+  div1
+  <a href="#" v-on:click.stop="handler('div2')">div2</a>
+</div>
+
+// div2 をクリック =>
+div2
 ```
