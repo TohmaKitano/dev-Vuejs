@@ -7,7 +7,8 @@ var app = new Vue({
     // val: []
     // val: ''
     preview: '',
-    val: 50
+    val: 50,
+    price: 100
   },
   methods: {
     handleChange: function(event) {
