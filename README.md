@@ -848,9 +848,9 @@ DOMイベントの振る舞いを変更する。<br>
 |.prevent|event.preventDefault()を呼ぶ|
 |.capture|キャプチャモードでイベントを発生する|
 |.self|event.target要素がそのもの自身のときのみ発火する|
-|.native|ルート上のネイティブイベントをハンドルする|
-|.once|一回のみハンドラを呼ぶ|
-|.passive|{ passive: true }でイベントをハンドルする|
+|.native|コンポーネントで直接イベントを発火する|
+|.once|一回のみイベントを呼ぶ|
+|.passive|{ passive: true }でイベントを明示的に呼び出さない|
 
 - stopPropagation()メソッド<br>
 イベントが親要素に伝播するのをキャンセルするためのメソッド。
@@ -859,6 +859,7 @@ DOMイベントの振る舞いを変更する。<br>
 イベントをキャンセルするためのメソッド。
 
 - マウスイベントの修飾子
+
 |修飾子|振る舞い|
 |---|---|
 |.left|マウスの左ボタンが押された時のみハンドルする|
@@ -933,14 +934,47 @@ div2
 <div class="overlay" v-on:click.self="close">...</div>
 ```
 
-```
+- .native コンポーネントで直接イベントを発火する
 
 ```
-
+<!-- コンポーネントをクリックするとイベントが発火 -->
+<my-component v-on:click.native="handler"></my-component>
+<!-- コンポーネントをクリックしてもイベントが発火しない -->
+<my-component v-on:click="handler"></my-component>
 ```
 
-```
+### キー修飾子
+特定のキーコードの入力のみイベントを呼び出す。
 
 ```
+<input v-on:keydown.13="handler">
+<input v-on:keydown.enter="handler">
+// いずれかのarrowキーが押されたとき
+<input v-on:keydown.up.down.left.rigth="handler">
+```
 
+|修飾子|振る舞い|
+|-----|-----|
+|.enter|エンターキーを押す|
+|.tab|tabキーを押す|
+|.delete|deleteキーを押す|
+|.esc|escキーを押す|
+|.space|spaceキーを押す|
+|.up|arrowキーの上を押す|
+|.down|arrowキーの下を押す|
+|.left|arrowキーの左を押す|
+|.right|arrowキーの右を押す|
+
+### システム修飾子
+特定のキーコードが押されているときのみイベントを呼び出す。
+
+|修飾子|振る舞い|
+|-----|-----|
+|.ctrl|ctrlキーが押されている|
+|.alt|altキーが押されている|
+|.shift|shiftキーが押されている|
+|.meta|metaキーが押されている|
+
+```
+<button v-on:click.shift="doDelete">削除ボタン</button>
 ```
