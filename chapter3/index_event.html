@@ -7,43 +7,60 @@
 </head>
 <body>
   <div id="app">
-    <!-- <button v-on:click="handleClick">クリック</button>
+    <button v-on:click="handleClick">クリック</button>
     <button v-on:click="count++">クリック</button>
-    <button v-on:click="handleClick($event, item)">クリック</button> -->
+    <button v-on:click="handleClick($event, item)">クリック</button>
+
     <!-- 画像のロードイベント -->
-    <!-- <img src="sample.png" v-on:load="show=true" class="{hide: !show}"> -->
+    <img src="sample.png" v-on:load="show=true" class="{hide: !show}">
     <!-- 要素のスクロールイベント -->
-    <!-- <div v-on:scroll="handler">
+    <div v-on:scroll="handler">
       コンテンツ
-    </div> -->
+    </div>
     <!-- マウスのホイールイベント -->
-    <!-- <div v-on:mousewheel="handler">
+    <div v-on:mousewheel="handler">
       コンテンツ
-    </div> -->
+    </div>
     <!-- 要素のドラッグイベント -->
-    <!-- <div v-on:dragstrat="handler" draggable>
+    <div v-on:dragstrat="handler" draggable>
       ドラッグ可能
-    </div> -->
-    <!-- フォーム -->
-    <!-- <input v-bind:value="message" v-on:click="handleInput"> -->
-    <!-- <div v-on:click.right="handler">example</div> -->
-    <!-- <div v-on:click.right.prevent="handler">example</div> -->
-    <!-- <div v-on:click="handler('div1')">
+    </div>
+    <!-- フォームイベント -->
+    <input v-bind:value="message" v-on:click="handleInput">
+    <!-- クリックイベント -->
+    <div v-on:click.right="handler">example</div>
+    <div v-on:click.right.prevent="handler">example</div>
+
+    <!-- イベント修飾子 -->
+    <div v-on:click="handler('div1')">
       div1
       <a href="#" v-on:click.stop="handler('div2')">div2</a>
-    </div> -->
-    <!-- <div v-on:click="handler('div1')">
+    </div>
+    <div v-on:click="handler('div1')">
       div1
       <a href="#" v-on:click.prevent="handler('div2')">div2</a>
-    </div> -->
-    <!-- <div v-on:click.capture="handler('div1')">
+    </div>
+    <div v-on:click.capture="handler('div1')">
       div1
       <div v-on:click="handler('div2')">
         div2
         <div v-on:click="handler('div3')">div3</div>
       </div>
-    </div> -->
+    </div>
     <div class="overlay" v-on:click.self="close">...</div>
+
+    <!-- コンポーネントをクリックするとイベントが発火 -->
+    <my-component v-on:click.native="handler"></my-component>
+    <!-- コンポーネントをクリックしてもイベントが発火しない -->
+    <my-component v-on:click="handler"></my-component>
+
+    <!-- キー修飾子 -->
+    <input v-on:keydown.13="handler">
+    <input v-on:keydown.enter="handler">
+    <input v-on:keydown.up.down.left.rigth="handler">
+
+    <!-- システム修飾子 -->
+    <button v-on:click.shift="doDelete">削除ボタン</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="main_event.js"></script>
