@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main_event.css">
+</head>
+<body>
+  <div id="app">
+    <input v-model="message">
+    <p>{{ message }}</p>
+
+    <!-- テキストエリア -->
+    <textarea v-model="message"></textarea>
+    <pre>{{ message }}</pre>
+
+    <!-- チェックボックス -->
+    <label>
+      <input type="checkbox" v-model="val"> {{ val }}
+    </label>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main_form.js"></script>
+</body>
+</html>

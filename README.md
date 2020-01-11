@@ -978,3 +978,29 @@ div2
 ```
 <button v-on:click.shift="doDelete">削除ボタン</button>
 ```
+
+### フォーム
+v-modelディレクティブを使いフォームの値をデータと同期させる双方向データバインディングを行う。<br>
+v-modelディレクディブは、DOMのデータバインディングとリアクティブデータの処理を自動化する。<br>
+入力フォームでは値は全て文字列型に、複数選択した値は配列型になる。<br>
+なお、v-modelディレクティブを使用すると、value, checked, selected などの設定は無視される。
+
+1. データバインディングで要素のvalue属性を更新する
+2. イベントハンドリングで受け取った値をデータに代入する
+
+```
+<div id="app">
+  <input v-model="message">
+  <p>{{ message }}</p>
+</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    // 初期値をセット
+    message: 'Hello, World!'
+  }
+})
+```
+
+
