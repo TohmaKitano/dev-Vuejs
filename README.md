@@ -862,9 +862,9 @@ DOMイベントの振る舞いを変更する。<br>
 
 |修飾子|振る舞い|
 |---|---|
-|.left|マウスの左ボタンが押された時のみハンドルする|
-|.right|マウスの右ボタンが押された時のみハンドルする|
-|.middle|マウスの中央ボタンが押された時のみハンドルする|
+|.left|マウスの左ボタンが押す|
+|.right|マウスの右ボタンが押す|
+|.middle|マウスの中央ボタンが押す|
 
 - サンプル
 
@@ -977,4 +977,159 @@ div2
 
 ```
 <button v-on:click.shift="doDelete">削除ボタン</button>
+```
+
+### フォーム
+v-modelディレクティブを使いフォームの値をデータと同期させる双方向データバインディングを行う。<br>
+v-modelディレクディブは、DOMのデータバインディングとリアクティブデータの処理を自動化する。<br>
+入力フォームでは値は全て文字列型に、複数選択した値は配列型になる。<br>
+なお、v-modelディレクティブを使用すると、value, checked, selected などの設定は無視される。
+
+1. データバインディングで要素のvalue属性を更新する
+2. イベントハンドリングで受け取った値をデータに代入する
+
+```
+<div id="app">
+  <input v-model="message">
+  <p>{{ message }}</p>
+</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    // 初期値をセット
+    message: 'Hello, World!'
+  }
+})
+```
+
+```
+<!-- インプット -->
+<input v-model="message">
+<p>{{ message }}</p>
+
+data: {
+  // 初期値をセット
+  message: 'Hello, World!'
+}
+
+// => Hello, World!
+
+<!-- テキストエリア -->
+<textarea v-model="message"></textarea>
+<pre>{{ message }}</pre>
+
+data: {
+  // 初期値をセット
+  message: 'Hello, World!'
+}
+
+// => Hello, World!
+
+<!-- チェックボックス -->
+<label><input type="checkbox" v-model="val"> {{ val }}</label>
+<label><input type="checkbox" v-model="val" true-value="yes" false-value="no"> {{ val }}</label>
+
+data: {
+  val: true
+}
+
+// => true / false
+// => yes / no
+
+<label><input type="checkbox" v-model="val" value="A">A</label>
+<label><input type="checkbox" v-model="val" value="B">B</label>
+<label><input type="checkbox" v-model="val" value="C">C</label>
+<p>{{ val }}</p>
+
+data: {
+  val: []
+}
+
+// => ["A", "C"]
+
+<!-- ラジオボタン -->
+<label><input type="radio" v-model="val" value="a">A</label>
+<label><input type="radio" v-model="val" value="b">B</label>
+<label><input type="radio" v-model="val" value="c">C</label>
+<p>{{ val }}</p>
+
+data: {
+  val: ''
+}
+
+// => 'a'
+
+<!-- セレクトボックス -->
+<select v-model="val">
+  <option disabled="disabled">選択して下さい</option>
+  <option value="a">A</option>
+  <option value="b">B</option>
+  <option value="c">C</option>
+</select>
+<p>{{ val }}</p>
+
+data: {
+  val: ''
+}
+
+// => 'a'
+
+<select v-model="val" multiple>
+  <option value="a">A</option>
+  <option value="b">B</option>
+  <option value="c">C</option>
+</select>
+<p>{{ val }}</p>
+
+data: {
+  val: []
+}
+
+// => ["a"]
+
+<!-- 画像ファイル -->
+<!-- v-modelディレクティブを使用できなため、changeイベントをハンドルする -->
+<input type="file" v-on:change="handleChange">
+<div v-if="preview">
+  <img v-bind:src="preview">
+</div>
+
+data: {
+  preview: ''
+},
+methods: {
+  handleChange: function(event) {
+    var file = event.target.files[0]
+    if (file && file.type.match(/^image\/(png|jpeg)$/)) {
+      this.preview = window.URL.createObjectURL(file)
+    }
+  }
+}
+
+// => <img src="blob:null/ff38863e-ab28-4c4e-ae8c-25d7dbc7e343">
+
+<!-- その他 -->
+<input type="range" v-model.number="val"> {{ val }}
+
+data: {
+  val: 50
+}
+```
+
+### フォーム修飾子
+
+|修飾子|振る舞い|
+|-----|-----|
+|.lazy|changeイベントで同期するよう変更する|
+|.number|値を数値に変更する|
+|.trim|余分なスペースを削除する|
+
+```
+<!-- 修飾子 -->
+<input type="text" v-model.number="price"> {{ price }}
+
+data: {
+  val: 100
+}
 ```
