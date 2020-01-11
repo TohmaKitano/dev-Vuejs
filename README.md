@@ -1173,3 +1173,25 @@ var app = new Vue({
   }
 })
 ```
+
+#### スムーススクロールの実装例
+
+```
+<script src="https://cdn.jsdelivr.net/npm/smooth-scroll@12.1.5"></script>
+<div id="app">
+  <div class="content">...</div>
+  <div v-on:click="scrollTop">
+    ページ上部へ移動
+  </div>
+</div>
+
+var scroll = new SmoothScroll()
+new Vue({
+  el: '#app',
+  methods: {
+    scrollTop: function () {
+      scroll.animateScroll(0)
+    }
+  }
+})
+```
