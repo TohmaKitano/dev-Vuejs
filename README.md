@@ -1195,3 +1195,98 @@ new Vue({
   }
 })
 ```
+
+## Chapter4
+
+### 算出プロパティ
+任意に処理を含めることのできるデータのこと。<br>
+computedで定義した関数は、Vueインスタンスを初期化した際に、Object.definePropertyによってVueインスタンスのプロパティとして定義される。
+
+```
+<p>{{ width }} の半分は {{ halfWidth }}</p>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    width: 800
+  },
+  computed: {
+    halfWidth: function() {
+      return this.width / 2
+    }
+  }
+})
+
+// => <p>800 の半分は 400</p>
+```
+
+- 算出プロパティを組み合わせる
+
+```
+<p>X: {{ halfPoint.x }}</p>
+<p>Y: {{ halfPoint.y }}</p>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    width: 800,
+    height: 600
+  },
+  computed: {
+    halfWidth: function() {
+      return this.width / 2
+    },
+    halfHeight: function() {
+      return this.height / 2
+    },
+    halfPoint: function() {
+      return {
+        x: this.halfWidth,
+        y: this.halfHeight
+      }
+    }
+  }
+})
+
+// =>
+<p>X: 400</p>
+<p>Y: 300</p>
+```
+
+### ゲッターとセッター
+
+```
+<input v-model.number="width"> {{ width }}
+<input v-model.number="halfWidth"> {{ halfWidth }}
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    width: 800
+  },
+  computed: {
+    halfWidth: {
+      // ゲッター
+      get: function() { return this.width / 2 },
+      // セッター
+      set: function(val) { this.width = val * 2 }
+    }
+  }
+})
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```

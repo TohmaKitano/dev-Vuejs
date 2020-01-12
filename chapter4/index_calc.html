@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+</head>
+<body>
+  <div id="app">
+    <!-- <p>{{ width }} の半分は {{ halfWidth }}</p> -->
+
+    <!-- <p>X: {{ halfPoint.x }}</p>
+    <p>Y: {{ halfPoint.y }}</p> -->
+
+    <input v-model.number="width"> {{ width }}
+    <input v-model.number="halfWidth"> {{ halfWidth }}
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="main_calc.js"></script>
+</body>
+</html>
