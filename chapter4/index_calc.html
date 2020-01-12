@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- <p>{{ width }} の半分は {{ halfWidth }}</p> -->
+
+    <!-- <p>X: {{ halfPoint.x }}</p>
+    <p>Y: {{ halfPoint.y }}</p> -->
+
+    <!-- <input v-model.number="width"> {{ width }}
+    <input v-model.number="halfWidth"> {{ halfWidth }} -->
+
+    <!-- <ol>
+      <li>{{ computedData }}</li>
+      <li>{{ computedData }}</li>
+    </ol>
+    <ol>
+      <li>{{ methodsData() }}</li>
+      <li>{{ methodsData() }}</li>
+    </ol> -->
+
+    <input v-model.number="budget"> 円以下に絞り込む
+    <input v-model.number="limit"> 件を表示
+    <button v-on:click="order=!order">切り替え</button>
+    <p>{{ matched.length }} 件中 {{ limited.length }} 件を表示中</p>
+    <ul>
+      <li v-for="item in limited" v-bind:key="limited.id">
+        {{ item.name }} {{ item.price }} 円
+      </li>
+    </ul>
+  </div>
+  
+  <script src="main_calc.js"></script>
+</body>
+</html>
