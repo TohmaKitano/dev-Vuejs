@@ -1275,16 +1275,125 @@ var app = new Vue({
 })
 ```
 
-```
+### 算出プロパティのキャッシュ機能
+算出プロパティはリアクティブな依存データに基づき結果をキャッシュする。
 
 ```
+<!-- 算出プロパティ -->
+<ol>
+  <li>{{ computedData }}</li>
+  <li>{{ computedData }}</li>
+</ol>
+<!-- メソッド -->
+<ol>
+  <li>{{ methodsData() }}</li>
+  <li>{{ methodsData() }}</li>
+</ol>
 
+computed: {
+  computedData: function() { return Math.random() }
+},
+methods: {
+  methodsData: function() { return Math.random() }
+}
+
+// =>
+<ol>
+  <li>0.6101415668728649</li>
+  <li>0.6101415668728649</li>
+</ol>
+// =>
+<ol>
+  <li>0.9289635049644003</li>
+  <li>0.46988487693472347</li>
+</ol>
 ```
 
-```
+- リストの絞込み機能
+キャッシュ機能により、算出プロパティはリアクティブデータに変更があるまで何度使用しても関数内の処理は一度しか実行されない。
 
 ```
+<input v-model.number="budget"> 円以下に絞り込む
+<input v-model.number="limit"> 件を表示
+<p>{{ matched.length }} 件中 {{ limited.length }} 件を表示中</p>
+<ul>
+  <li v-for="item in limited" v-bind:key="limited.id">
+    {{ item.name }} {{ item.price }} 円
+  </li>
+</ul>
 
+var app = new Vue({
+  el: '#app',
+  data: {
+    budget: 300,
+    limit: 2,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'バナナ', price: 200 },
+      { id: 3, name: 'いちご', price: 400 },
+      { id: 4, name: 'オレンジ', price: 300 },
+      { id: 5, name: 'メロン', price: 500 }
+    ]
+  },
+  computed: {
+    matched: function() {
+      return this.list.filter(function(el) {
+        return el.price <= this.budget
+      }, this)
+    },
+    limited: function() {
+      return this.matched.slice(0, this.limit)
+    }
+  }
+})
+```
+
+- ソート機能
+sortは配列を直接操作するため、元のデータの順番を書き換えてしまう。<br>
+シャローコピーしたり、Lodashなどのライブラリを使用する。
+
+```
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+
+<input v-model.number="budget"> 円以下に絞り込む
+<input v-model.number="limit"> 件を表示
+<button v-on:click="order=!order">切り替え</button>
+<p>{{ matched.length }} 件中 {{ limited.length }} 件を表示中</p>
+<ul>
+  <li v-for="item in limited" v-bind:key="limited.id">
+    {{ item.name }} {{ item.price }} 円
+  </li>
+</ul>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    order: false,
+    budget: 300,
+    limit: 2,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'バナナ', price: 200 },
+      { id: 3, name: 'いちご', price: 400 },
+      { id: 4, name: 'オレンジ', price: 300 },
+      { id: 5, name: 'メロン', price: 500 }
+    ]
+  },
+  computed: {
+    matched: function() {
+      return this.list.filter(function(el) {
+        return el.price <= this.budget
+      }, this)
+    },
+    sorted: function() {
+      return _.orderBy(this.matched, 'price', this.order ? 'desc' : 'asc')
+    },
+    limited: function() {
+      // return this.matched.slice(0, this.limit)
+      return this.sorted.slice(0, this.limit)
+    }
+  }
+})
 ```
 
 ```
