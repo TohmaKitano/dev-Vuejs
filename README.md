@@ -1640,6 +1640,16 @@ var app = new Vue({
 })
 ```
 
+- グローバルへ登録<br>
+グローバルメソッド Vue.filterを使ってすべてのコンポーネントに使用できるようにする。
+
+
+```
+Vue.filter('localNum', function(value) {
+  return value.toLocalString()
+})
+```
+
 - フィルタに引数を持たせる
 
 ```
@@ -1665,4 +1675,70 @@ filters: {
     return value * Math.PI * 100
   }
 }
+```
+
+### カスタムディレクティブ
+v-bindのようなディレクティブを自作する機能。原則、データバインディングだけではDOMを操作できない場合に使用する。<br>
+カスタムディレクティブは、メソッド名にv-プレフィックスをつける。
+
+```
+<div v-directive>example</div>
+<!-- valueに変化があると呼び出される -->
+<div v-directive="value">example</div>
+
+<input type="text" v-focus>
+
+var app = new Vue({
+  el: '#app',
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus()
+      }
+    }
+  }
+})
+```
+
+- グローバルへ登録<br>
+グローバルメソッド Vue.directiveを使ってすべてのコンポーネントに使用できるようにする。
+
+
+```
+Vue.directive('focus', {
+  inserted: function(element) {
+    element.focus()
+  }
+})
+```
+
+- 使用可能なフック
+
+|メソッド|振る舞い|
+|-----|-----|
+|bind|はじめて要素と紐づいたとき|
+|inserted|紐づいた要素が親Nodeに挿入されたとき|
+|update|紐づいた要素を包含しているコンポーネントのVNodeが更新されたとき|
+|componentUpdated|包含しているコンポーネントと子コンポーネントのVNodeが更新されたとき|
+|unbind|紐づいた要素が削除されたとき|
+
+
+```
+Vue.directive('example', {
+  bind: function(el, binding) {
+    console.log('v-exapmle bind')
+  },
+  inserted: function(el, binding) {
+    console.log('v-exmaple inserted')
+  },
+  update: function(el, binding) {
+    console.log('v-exmaple update')
+  },
+  componentUpdated: function(el, binding) {
+    console.log('v-exmaple componentUpdated')
+  },
+  unbind: function(el, binding) {
+    console.log('v-exmaple unbind')
+  }
+})
 ```
