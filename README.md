@@ -1,6 +1,11 @@
 # README
 Let's study & enjoy Vue.js
 
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-1">Chapter 1 Basic</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-2">Chapter 2 Data</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 4 Watch, Processing Data</a>
+
 ## Chapter 1
 
 - フレームワーク<br>
@@ -1402,6 +1407,209 @@ var app = new Vue({
 })
 ```
 
+### ウォッチャ
+特定のデータ、または算出プロパティの状態を監視して、変化があったとき登録した処理を自動的に実行する(データの変化をトリガーにしたフック)<br>
+<br>
+コンポーネントのwatchオプションに、監視するデータの名前と変化したときに呼び出されるハンドラを定義する。
+
+```
+var app = new Vue({
+  :<snip>
+  watch: {
+    監視するデータ: function(新しい値, 古い値) {
+      // 比較関数に新しい値と古い値をセット
+      // valueが変化したときに行いたい処理
+    }
+  }
+})
 ```
 
+- オプション
+
+|プロパティ|値|振る舞い|
+|-----|-----|-----|
+|deep|Boolean|ネストされたオブジェクトも監視する|
+|immediate|Boolean|初期読み込み時にも呼び出す|
+
+
+```
+watch: {
+  list: {
+    handler: function(newVal, oldVal) {
+      // 比較関数にnewValとoldValをセット
+      // listが変化したときに行いたい処理
+    },
+    deep: true,
+    immediate: true
+  }
+}
+```
+
+- インスタンスメソッド this.$watch<br>
+this.$watchを使用することで、各メソッド内でウォッチャを登録できる。
+
+```
+created: function() {
+  this.$watch('value', function(newVal, oldVal) {
+    // ...
+  })
+}
+```
+
+- インスタンスメソッド this.$watchの引数
+
+```
+[
+  監視するデータ,
+  ハンドラ,
+  オプション
+]
+
+created: function() {
+  this.$watch(
+    'value',function(newVal, oldVal) {
+    // ...
+  }, {
+    immediate: true
+  })
+}
+
+// ウォッチャの解除
+var unwatch = this.$watch('value', handler)
+// valueの監視を解除
+unwatch()
+
+// 一度だけ動作するウォッチャ
+new Vue({
+  el: '#app',
+  data: {
+    edited: false,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+    ]
+  },
+  created: function() {
+    var unwatch = this.$watch('list', function () {
+      // listが編集されたことを記録する
+      this.edited = true
+      // 監視を解除
+      unwatch()
+    }, {
+      deep: true
+    })
+  }
+})
+```
+
+- 実行頻度の制御<br>
+フォームの入力など監視するが高頻度で変化する場合、setTimeoutやLodashなどのライブラリを使用して、パフォーマンスが下がらないようにする。
+
+```
+// debounce => Lodashのメソッド。実行から指定ミリ秒がすぎた場合に、コールバックを呼び出す。
+
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+
+<input type="text" v-model="value">
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    value: '初期値'
+  },
+  watch: {
+    value: _.debounce(function (newVal) {
+        // コストの高い処理
+        console.log(newVal)
+      },
+      // valueの変化が終わるのを待つ時間をミリ秒で指定
+      500)
+  }
+})
+```
+
+- 複数の値を監視する
+
+```
+this.$watch(function() {
+  return [this.width, this.height]
+}, function() {
+  // widthまたはheightが変化したら処理
+})
+
+// 算出プロパティを監視すると同じことができる
+computed: {
+  watchedTarget: function() {
+    return [this.width, this.height]
+  }
+},
+watch:
+  watchedTarget: function() {
+  // ...
+}
+```
+
+- 監視対象がオブジェクト型だった場合
+
+```
+watch: {
+  list: function(newVal, oldVal) {
+    console.log(newVal.length, oldVal.length)
+    // => 監視対象がオブジェクト型の場合、古い値は参照、保持されるので結果は同じ
+  }
+}
+
+// 監視対象をコピー or ディープコピーする
+this.$watch(function() {
+  return Object.assign([], this.list)
+}, function(newVal, oldVal) {
+  console.log(newVal.length, oldVal.length)
+})
+
+// 監視対象にプロパティを含める
+this.$watch(function() {
+  return { value: this.list, length: this.list.length }
+}, function(newVal, oldVal) {
+  console.log(newVal.length, oldVal.length)
+})
+```
+
+### フォームを監視してAPIからデータを取得
+
+```
+<script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+
+<select v-model="current">
+  <option v-for="topic in topics" v-bind:value="topic.value">
+    {{ topic.name }}
+  </option>
+</select>
+<div v-for="item in list">{{ item.full_name }}</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    list: [],
+    current: '',
+    topics: [
+      { value: 'Vue', name: 'Vue.js' },
+      { value: 'jQuery', name: 'jQuery' }
+    ]
+  },
+  watch: {
+    current: function(value) {
+      axios.get('https://api.github.com/search/repositories', {
+        params: { q: 'topic:' + value }
+      }).then(function(response) {
+        this.list = response.data.items
+      }.bind(this))
+    }
+  }
+})
+
+// =>
+<select>
+  <option value="Vue">Vue.js</option>
+  <option value="jQuery">jQuery</option>
+</select>
 ```
