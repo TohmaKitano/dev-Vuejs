@@ -35,3 +35,8 @@ Vue.directive('example', {
     console.log('v-exmaple unbind')
   }
 })
+
+// フックの関数
+Vue.directive('example', function(el, binding, vonode, oldVnode) {
+  // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
+})
