@@ -1402,6 +1402,107 @@ var app = new Vue({
 })
 ```
 
+### ウォッチャ
+特定のデータ、または算出プロパティの状態を監視して、変化があったとき登録した処理を自動的に実行する(データの変化をトリガーにしたフック)<br>
+<br>
+コンポーネントのwatchオプションに、監視するデータの名前と変化したときに呼び出されるハンドラを定義する。
+
+```
+var app = new Vue({
+  :<snip>
+  watch: {
+    監視するデータ: function(新しい値, 古い値) {
+      // 比較関数に新しい値と古い値をセット
+      // valueが変化したときに行いたい処理
+    }
+  }
+})
+```
+
+- オプション
+
+|プロパティ|値|振る舞い|
+|-----|-----|-----|
+|deep|Boolean|ネストされたオブジェクトも監視する|
+|immediate|Boolean|初期読み込み時にも呼び出す|
+
+
+```
+watch: {
+  list: {
+    handler: function(newVal, oldVal) {
+      // 比較関数にnewValとoldValをセット
+      // listが変化したときに行いたい処理
+    },
+    deep: true,
+    immediate: true
+  }
+}
+```
+
+- インスタンスメソッド this.$watch<br>
+this.$watchを使用することで、各メソッド内でウォッチャを登録できる。
+
+```
+created: function() {
+  this.$watch('value', function(newVal, oldVal) {
+    // ...
+  })
+}
+```
+
+- インスタンスメソッドの引数
+
+```
+[
+  監視するデータ,
+  ハンドラ,
+  オプション
+]
+
+created: function() {
+  this.$watch(
+    'value',function(newVal, oldVal) {
+    // ...
+  }, {
+    immediate: true
+  })
+}
+
+```
+// ウォッチャの解除
+var unwatch = this.$watch('value', handler)
+// valueの監視を解除
+unwatch()
+
+// 一度だけ動作するウォッチャ
+var unwatch = this.$watch('list', function() {
+  // listの変更を記録
+  this.edited = true
+  unwatch()
+}, {
+  deep: true
+})
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
+```
+
 ```
 
 ```
