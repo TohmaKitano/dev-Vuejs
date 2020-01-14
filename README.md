@@ -4,7 +4,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-1">Chapter 1 Basic</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-2">Chapter 2 Data</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
-- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 4 Watch, Processing Data</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
 
 ## Chapter 1
 
@@ -1612,4 +1612,57 @@ var app = new Vue({
   <option value="Vue">Vue.js</option>
   <option value="jQuery">jQuery</option>
 </select>
+```
+
+### フィルタを使ったテキストの変換処理
+
+```
+// マスタッシュ
+{{ 対象のデータ | フィルタの名前 }}
+
+// v-bind
+<div v-bind:id="対象のデータ | フィルタの名前"></div>
+```
+
+```
+<div v-bind:id=" price | localNum"></div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    price: 19800
+  },
+  filters: {
+    localNum :function(value) {
+      return value.toLocalString()
+    }
+  }
+})
+```
+
+- フィルタに引数を持たせる
+
+```
+{{ message | filter(foo, 100) }}
+
+filters: {
+  filter: function(messsage, foo, num) {
+    console.log(message, foo, num)
+  }
+}
+```
+
+- 複数のフィルタをつなげる
+
+```
+{{ value | filter1 | filter2 }}
+
+filters: {
+  round: function(value) {
+    return Math.round(val * 100) / 100
+  },
+  radian: function(value) {
+    return value * Math.PI * 100
+  }
+}
 ```
