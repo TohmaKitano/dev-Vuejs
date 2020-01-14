@@ -9,7 +9,13 @@
 </head>
 <body>
   <div id="app">
-    
+    <input type="text" v-model="value">
+    <!-- <select v-model="current">
+      <option v-for="topic in topics" v-bind:value="topic.value">
+        {{ topic.name }}
+      </option>
+    </select>
+    <div v-for="item in list">{{ item.full_name }}</div> -->
   </div>
   <script src="main_watch.js"></script>
 </body>
