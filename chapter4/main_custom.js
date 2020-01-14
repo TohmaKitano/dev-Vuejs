@@ -3,8 +3,8 @@ var app = new Vue({
   el: '#app',
   directives: {
     focus: {
-      inserted: function(element) {
-        element.focus()
+      inserted: function(el) {
+        el.focus()
       }
     }
   }
@@ -12,8 +12,8 @@ var app = new Vue({
 
 // グローバルに登録
 Vue.directive('focus', {
-  inserted: function(element) {
-    element.focus()
+  inserted: function(el) {
+    el.focus()
   }
 })
 
@@ -34,4 +34,9 @@ Vue.directive('example', {
   unbind: function(el, binding) {
     console.log('v-exmaple unbind')
   }
+})
+
+// フックの関数
+Vue.directive('example', function(el, binding, vonode, oldVnode) {
+  // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
 })

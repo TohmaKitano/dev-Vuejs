@@ -6,6 +6,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
 
+
 ## Chapter 1
 
 - フレームワーク<br>
@@ -1706,8 +1707,8 @@ var app = new Vue({
 
 ```
 Vue.directive('focus', {
-  inserted: function(element) {
-    element.focus()
+  inserted: function(el) {
+    el.focus()
   }
 })
 ```
@@ -1740,5 +1741,21 @@ Vue.directive('example', {
   unbind: function(el, binding) {
     console.log('v-exmaple unbind')
   }
+})
+```
+
+- フックの引数
+
+|引数|内容|
+|-----|-----|
+|el|ディレクティブが付与されている要素|
+|binding|バインドされた値、引数、修飾子のオブジェクト|
+|vnode|要素に対応するVNode|
+|oldVnode|更新前のVNode|
+
+```
+// フックの関数
+Vue.directive('example', function(el, binding, vonode, oldVnode) {
+  // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
 })
 ```
