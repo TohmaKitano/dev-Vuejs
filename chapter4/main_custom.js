@@ -3,8 +3,8 @@ var app = new Vue({
   el: '#app',
   directives: {
     focus: {
-      inserted: function(element) {
-        element.focus()
+      inserted: function(el) {
+        el.focus()
       }
     }
   }
@@ -12,8 +12,8 @@ var app = new Vue({
 
 // グローバルに登録
 Vue.directive('focus', {
-  inserted: function(element) {
-    element.focus()
+  inserted: function(el) {
+    el.focus()
   }
 })
 

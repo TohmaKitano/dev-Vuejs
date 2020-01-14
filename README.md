@@ -1706,8 +1706,8 @@ var app = new Vue({
 
 ```
 Vue.directive('focus', {
-  inserted: function(element) {
-    element.focus()
+  inserted: function(el) {
+    el.focus()
   }
 })
 ```
@@ -1742,3 +1742,7 @@ Vue.directive('example', {
   }
 })
 ```
+
+- フックの引数
+
+
