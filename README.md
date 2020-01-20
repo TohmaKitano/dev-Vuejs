@@ -2181,3 +2181,33 @@ Vue.component('example', {
 ```
 <component-child v-bind="object"></component-child>
 ```
+
+- 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
+
+
+```
+<component-child v-on:childs-event="parentsMethod"></component-child>
+
+Vue.component('component-child', {
+  template: '<button v-on:click="handleClick">イベント発火</button>',
+  methods: {
+    handleClick: function() {
+      this.$emit('childs-event')
+    }
+  }
+})
+
+new Vue({
+  el: '#app',
+  methods: {
+    parentsMethod: function() {
+      alert('イベントをキャッチ')
+    }
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <button>イベント発火</button>
+</div>
+```

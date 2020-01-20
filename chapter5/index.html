@@ -20,14 +20,16 @@
 
     <!-- <component-child id="parent" class="parent"></component-child> -->
 
-    <ul>
+    <!-- <ul>
       <component-child v-for="item in list"
                        v-bind:key="item.id"
                        v-bind:name="item.name"
                        v-bind:hp="item.hp"
       >
       </component-child>
-    </ul>
+    </ul> -->
+
+    <component-child v-on:childs-event="parentsMethod"></component-child>
   </div>
   <script src="main.js"></script>
 </body>

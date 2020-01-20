@@ -135,42 +135,60 @@
 // })
 // // => [Vue warn]: ~
 
-// propsの受け取りデータ型を指定する
-Vue.component('component-child', {
-  props: {
-    val: String
-  }
-})
-// 1 + '1' => 11 :String
-// propsの許容範囲はしっかり定義しておく
+// // propsの受け取りデータ型を指定する
+// Vue.component('component-child', {
+//   props: {
+//     val: String
+//   }
+// })
+// // 1 + '1' => 11 :String
+// // propsの許容範囲はしっかり定義しておく
 
-Vue.component('example', {
-  props: {
-    // Nullはどんなデータ型も受け取る
-    propA: Number,
-    propB: [String, Number],
-    propC: {
-      type: String,
-      required: true
-    },
-    // デフォルト値
-    propD: {
-      type: Number,
-      dafault: 100
-    },
-    propE: {
-      type: Object,
-      default: function() {
-        return { message: 'hello' }
-      }
-    },
-    // カスタムでバリデーションを設定
-    propF: {
-      validator: function(value) {
-        return value > 10
-      }
+// Vue.component('example', {
+//   props: {
+//     // Nullはどんなデータ型も受け取る
+//     propA: Number,
+//     propB: [String, Number],
+//     propC: {
+//       type: String,
+//       required: true
+//     },
+//     // デフォルト値
+//     propD: {
+//       type: Number,
+//       dafault: 100
+//     },
+//     propE: {
+//       type: Object,
+//       default: function() {
+//         return { message: 'hello' }
+//       }
+//     },
+//     // カスタムでバリデーションを設定
+//     propF: {
+//       validator: function(value) {
+//         return value > 10
+//       }
+//     }
+//   }
+// })
+// // => propsに記述するとコードの見通しが悪くなるので、属性に記述した方がスマート
+// // => <component-child v-bind="object"></component-child>
+
+// 子から親へデータを渡す
+Vue.component('component-child', {
+  template: '<button v-on:click="handleClick">イベント発火</button>',
+  methods: {
+    handleClick: function() {
+      this.$emit('childs-event')
     }
   }
 })
-// => propsに記述するとコードの見通しが悪くなるので、属性に記述した方がスマート
-// => <component-child v-bind="object"></component-child>
+new Vue({
+  el: '#app',
+  methods: {
+    parentsMethod: function() {
+      alert('イベントをキャッチ')
+    }
+  }
+})
