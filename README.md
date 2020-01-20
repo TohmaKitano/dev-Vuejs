@@ -1890,7 +1890,7 @@ Vue.component('my-component', {
 </div>
 
 // コンポーネントを使用
-var myComponet = {
+var myComponent = {
   template: '<p>MyComponet</p>'
 }
 // コンポーネントはインスタンスが作成される前に定義する
@@ -1903,15 +1903,16 @@ var app = new Vue({
 
 // => 実行結果
 <div id="app">
-  <p>MyComponet</p>
+  <p>MyComponent</p>
 </div>
 ```
 
 ### コンポーネントのオプション
-データやメソッドも定義できる。
+データやメソッドも定義できる。<br>
+<strong>component オプションはコンポーネントをローカルに登録し、そのスコープでのみ使う場合付与する。</strong>
 
 ```
-var myComponet = Vue.component('my-component', {
+var myComponent = Vue.component('my-component', {
   template: '<p>{{ message }}</p>',
   data: function() {
     return {
@@ -1925,7 +1926,7 @@ var myComponet = Vue.component('my-component', {
 var app = new Vue({
   el: '#app',
   components: {
-    'my-component': myComponet
+    'my-component': myComponent
   }
 })
 
@@ -2051,4 +2052,162 @@ var app = new Vue({
 <p id="parent" class="child parent">componentChild</p>
 // => 単一の値しか指定できないもの(id など)は、上書き
 // => 複数の値が設定できるものはマージ
+
+// => 今更だが、わざわざ変数に入れる必要性はない
+// => component オプションはコンポーネントをローカルに登録し、そのスコープでのみ使う場合付与する
+Vue.component('component-child', {
+  template: '<p id="child" class="child">componentChild</p>',
+})
+new Vue({
+  el: '#app'
+})
+```
+
+- 子コンポーネントでfor文を使う
+
+```
+<ul>
+  <component-child v-for="item in list"
+                   v-bind:key="item.id"
+                   v-bind:name="item.name"
+                   v-bind:hp="item.hp"
+  >
+  </component-child>
+</ul>
+
+Vue.component('component-child', {
+  template: '<li>{{ name }} HP.{{ hp }}</li>',
+  props: [
+    'name',
+    'hp'
+  ]
+})
+new Vue({
+  el: '#app',
+  data: {
+    list: [
+      { id: 1, name: 'スライム', hp: 100},
+      { id: 2, name: 'ゴブリン', hp: 200},
+      { id: 3, name: 'ドラゴン', hp: 500}
+    ]
+  }
+})
+
+// => 実行結果
+<ul>
+  <li>スライム HP.100</li>
+  <li>ゴブリン HP.200</li>
+  <li>ドラゴン HP.500</li>
+</ul>
+```
+
+- 子コンポーネントはpropsで受け取ったデータを書き換えてはいけない
+
+```
+Vue.component('component-child', {
+  template: '<li>{{ name }} HP.{{ hp }}\
+            <button v-on:click="doAttack">攻撃する</button></li>',
+  props: [
+    'name',
+    'hp'
+  ],
+  methods: {
+    doAttack: function() {
+      this.hp -= 10
+    }
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    list: [
+      { id: 1, name: 'スライム', hp: 100},
+      { id: 2, name: 'ゴブリン', hp: 200},
+      { id: 3, name: 'ドラゴン', hp: 500}
+    ]
+  }
+})
+// => [Vue warn]: ~
+```
+
+- propsの受け取りデータ型を指定する
+
+```
+Vue.component('component-child', {
+  props: {
+    val: String
+  }
+})
+
+// 1 + '1' => 11 :String として出力されてしまう
+// propsの許容範囲はしっかり定義しておく
+```
+
+#### propsの受け取りデータ型のサンプル
+
+```
+Vue.component('example', {
+  props: {
+    // Nullはどんなデータ型も受け取る
+    propA: Number,
+    propB: [String, Number],
+    propC: {
+      type: String,
+      required: true
+    },
+    // デフォルト値
+    propD: {
+      type: Number,
+      dafault: 100
+    },
+    propE: {
+      type: Object,
+      default: function() {
+        return { message: 'hello' }
+      }
+    },
+    // カスタムでバリデーションを設定
+    propF: {
+      validator: function(value) {
+        return value > 10
+      }
+    }
+  }
+})
+```
+
+- propsに記述するとコードの見通しが悪くなるので、属性に記述した方がスマート
+
+```
+<component-child v-bind="object"></component-child>
+```
+
+- 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
+
+
+```
+<component-child v-on:childs-event="parentsMethod"></component-child>
+
+Vue.component('component-child', {
+  template: '<button v-on:click="handleClick">イベント発火</button>',
+  methods: {
+    handleClick: function() {
+      this.$emit('childs-event')
+    }
+  }
+})
+
+new Vue({
+  el: '#app',
+  methods: {
+    parentsMethod: function() {
+      alert('イベントをキャッチ')
+    }
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <button>イベント発火</button>
+</div>
 ```
