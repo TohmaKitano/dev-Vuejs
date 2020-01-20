@@ -10,7 +10,15 @@
 <body>
   <div id="app">
     <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
-    <my-component></my-component>
+    <!-- <my-component></my-component> -->
+
+    <!-- <component-child val="これは子A"></component-child>
+    <component-child val="これは子B"></component-child> -->
+
+    <!-- <component-child v-bind:val="valA"></component-child>
+    <component-child v-bind:val="valB"></component-child> -->
+
+    <component-child id="parent" class="parent"></component-child>
   </div>
   <script src="main.js"></script>
 </body>

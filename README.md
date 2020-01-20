@@ -1961,7 +1961,94 @@ template: <div><span>Hello</span><span>, World</span></div>
 ```
 <div id="app">
   <my-component></my-component>
-  // ↑と↓は別々のインスタンス
+  // ↑と↓は別々のインスタンスでそれぞれスコープをもつ
   <my-component></my-component>
 </div>
+```
+
+### コンポーネント間の通信
+
+1. 親子間の通信(props + カスタムイベント)
+1. 非親子間の通信(イベントバス)
+1. 状態管理(VueX)
+
+#### 親子間の通信(props + カスタムイベント)
+
+```
+// 親 => my-component
+// 子 => component-child
+
+Vue.component('my-component', {
+  template: '<p><component-child>MyComponet</component-child></p>'
+})
+```
+
+- 親から子へデータを渡す => 属性で渡し、propsで受け取る
+
+```
+// 親がルートインスタンスの場合
+<div id="app">
+  <component-child val="これは子A"></component-child>
+  <component-child val="これは子B"></component-child>
+</div>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p>{{ val }}</p>',
+  props: ['val']
+})
+var app = new Vue({
+  el: '#app'
+})
+
+// => 実行結果
+<div id="app">
+  <p>これは子A</p>
+  <p>これは子B</p>
+</div>
+```
+
+- 親から子へリアクティブデータを渡す
+
+```
+// 親がルートインスタンスの場合
+<div id="app">
+  <component-child v-bind:val="valA"></component-child>
+  <component-child v-bind:val="valB"></component-child>
+</div>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p>{{ val }}</p>',
+  props: ['val']
+})
+var app = new Vue({
+  el: '#app',
+  data: {
+    valA: 'これは子A',
+    valB: 'これは子B'
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <p>これは子A</p>
+  <p>これは子B</p>
+</div>
+```
+
+- 子コンポーネントに属性を渡す
+
+```
+<component-child id="parent" class="parent"></component-child>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p id="child" class="child">componentChild</p>',
+})
+var app = new Vue({
+  el: '#app'
+})
+
+// => 実行結果
+<p id="parent" class="child parent">componentChild</p>
+// => 単一の値しか指定できないもの(id など)は、上書き
+// => 複数の値が設定できるものはマージ
 ```
