@@ -40,3 +40,62 @@ Vue.directive('example', {
 Vue.directive('example', function(el, binding, vonode, oldVnode) {
   // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
 })
+
+// 動画の再生を操作するサンプル
+var app = new Vue({
+  el: '#app',
+  data: {
+    video1: true,
+    video2: false
+  },
+  directives: {
+    video(el, binding) {
+      binding.value ? el.play() : el.pause()
+    }
+  }
+})
+// => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
+
+// 前の状態と比較して処理を行う
+var app = new Vue({
+  el: '#app',
+  data: {
+    video1: true,
+    video2: false
+  },
+  directives: {
+    video(el, binding) {
+      if (binding.value !== binding.oldValue) {
+        binding.value ? el.play() : el.pause()
+      }
+    }
+  }
+})
+// => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
+// => 関係のない呼び出しをスキップする
+
+
+// nextTick
+// 更新後のDOMへアクセスするサンプル
+var app = new Vue({
+  el: '#app',
+  data: {
+    list: []
+  },
+  watch: {
+    list: function() {
+      // 更新後のul要素の高さを取得できない
+      console.log('通常:', this.$refs.list.offsetHeight)
+      // nextTickで更新後のul要素の高さを取得する
+      this.$nextTick(function() {
+        console.log('nextTick:', this.$refs.list.offsetHeight)
+      })
+    }
+  }
+})
+// => 通常: 0
+// => nextTick: 24
+// => 通常: 24
+// => nextTick: 48
+// => ...
+
