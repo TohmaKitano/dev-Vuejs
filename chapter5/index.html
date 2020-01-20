@@ -18,7 +18,16 @@
     <!-- <component-child v-bind:val="valA"></component-child>
     <component-child v-bind:val="valB"></component-child> -->
 
-    <component-child id="parent" class="parent"></component-child>
+    <!-- <component-child id="parent" class="parent"></component-child> -->
+
+    <ul>
+      <component-child v-for="item in list"
+                       v-bind:key="item.id"
+                       v-bind:name="item.name"
+                       v-bind:hp="item.hp"
+      >
+      </component-child>
+    </ul>
   </div>
   <script src="main.js"></script>
 </body>
