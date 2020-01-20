@@ -5,6 +5,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-2">Chapter 2 Data</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-5">Chapter 5 Component</a>
 
 
 ## Chapter 1
@@ -1854,4 +1855,200 @@ var app = new Vue({
 // => 通常: 24
 // => nextTick: 48
 // => ...
+```
+
+# Chapter 5
+
+## コンポーネント
+機能ごとにJavaScriptとテンプレートを1つのセットにして、他の機能とは分離して開発できるようにする仕組みのこと。
+
+### コンポーネントの定義
+
+```
+// コンポーネントの定義
+<div id="app">
+    <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
+  <my-component></my-component>
+</div>
+
+// コンポーネントを使用
+Vue.component('my-component', {
+  template: '<p>MyComponet</p>'
+})
+
+// => 実行結果
+<div id="app">
+  <my-component></my-component>
+</div>
+
+// => インスタンスを生成する
+
+// コンポーネントの定義
+<div id="app">
+    <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
+  <my-component></my-component>
+</div>
+
+// コンポーネントを使用
+var myComponet = {
+  template: '<p>MyComponet</p>'
+}
+// コンポーネントはインスタンスが作成される前に定義する
+var app = new Vue({
+  el: '#app',
+  components: {
+    'my-component': myComponet
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <p>MyComponet</p>
+</div>
+```
+
+### コンポーネントのオプション
+データやメソッドも定義できる。
+
+```
+var myComponet = Vue.component('my-component', {
+  template: '<p>{{ message }}</p>',
+  data: function() {
+    return {
+      message: 'Hello, World'
+    }
+  },
+  methods: {
+    // 処理を記述する
+  }
+})
+var app = new Vue({
+  el: '#app',
+  components: {
+    'my-component': myComponet
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <p>Hello, World</p>
+</div>
+```
+
+- data はオブジェクトを返す関数にする
+
+```
+:<snip>
+data: function() {
+  return {
+    message: 'Hello, World'
+  }
+},
+:<snip>
+```
+
+- ルートは単数にする
+
+```
+template: <span>Hello</span><span>, World</span>
+// => NG
+template: <div><span>Hello</span><span>, World</span></div>
+// => OK
+```
+
+- コンポーネントは別々のインスタンス
+
+```
+<div id="app">
+  <my-component></my-component>
+  // ↑と↓は別々のインスタンスでそれぞれスコープをもつ
+  <my-component></my-component>
+</div>
+```
+
+### コンポーネント間の通信
+
+1. 親子間の通信(props + カスタムイベント)
+1. 非親子間の通信(イベントバス)
+1. 状態管理(VueX)
+
+#### 親子間の通信(props + カスタムイベント)
+
+```
+// 親 => my-component
+// 子 => component-child
+
+Vue.component('my-component', {
+  template: '<p><component-child>MyComponet</component-child></p>'
+})
+```
+
+- 親から子へデータを渡す => 属性で渡し、propsで受け取る
+
+```
+// 親がルートインスタンスの場合
+<div id="app">
+  <component-child val="これは子A"></component-child>
+  <component-child val="これは子B"></component-child>
+</div>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p>{{ val }}</p>',
+  props: ['val']
+})
+var app = new Vue({
+  el: '#app'
+})
+
+// => 実行結果
+<div id="app">
+  <p>これは子A</p>
+  <p>これは子B</p>
+</div>
+```
+
+- 親から子へリアクティブデータを渡す
+
+```
+// 親がルートインスタンスの場合
+<div id="app">
+  <component-child v-bind:val="valA"></component-child>
+  <component-child v-bind:val="valB"></component-child>
+</div>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p>{{ val }}</p>',
+  props: ['val']
+})
+var app = new Vue({
+  el: '#app',
+  data: {
+    valA: 'これは子A',
+    valB: 'これは子B'
+  }
+})
+
+// => 実行結果
+<div id="app">
+  <p>これは子A</p>
+  <p>これは子B</p>
+</div>
+```
+
+- 子コンポーネントに属性を渡す
+
+```
+<component-child id="parent" class="parent"></component-child>
+
+var componentChild = Vue.component('component-child', {
+  template: '<p id="child" class="child">componentChild</p>',
+})
+var app = new Vue({
+  el: '#app'
+})
+
+// => 実行結果
+<p id="parent" class="child parent">componentChild</p>
+// => 単一の値しか指定できないもの(id など)は、上書き
+// => 複数の値が設定できるものはマージ
 ```

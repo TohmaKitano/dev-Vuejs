@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
+    <!-- <my-component></my-component> -->
+
+    <!-- <component-child val="これは子A"></component-child>
+    <component-child val="これは子B"></component-child> -->
+
+    <!-- <component-child v-bind:val="valA"></component-child>
+    <component-child v-bind:val="valB"></component-child> -->
+
+    <component-child id="parent" class="parent"></component-child>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
