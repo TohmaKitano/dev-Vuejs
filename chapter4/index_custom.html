@@ -14,7 +14,15 @@
     <!-- <div v-directive="value">example</div> -->
 
     <!-- カスタムディレクティブのサンプル-->
-    <input type="text" v-focus>
+    <!-- <input type="text" v-focus> -->
+
+    <!-- 動画の再生を操作するサンプル -->
+    <button v-on:click="video1=true">再生</button>
+    <button v-on:click="video1=false">停止</button>
+    <video src="movie1.mp4" v-video="video1"></video>
+    <button v-on:click="video2=true">再生</button>
+    <button v-on:click="video2=false">停止</button>
+    <video src="movie2.mp4" v-video="video2"></video>
   </div>
 
   <script src="main_custom.js"></script>

@@ -1759,3 +1759,57 @@ Vue.directive('example', function(el, binding, vonode, oldVnode) {
   // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
 })
 ```
+
+#### 動画の再生を操作するサンプル
+
+```
+<button v-on:click="video1=true">再生</button>
+<button v-on:click="video1=false">停止</button>
+<video src="movie1.mp4" v-video="video1"></video>
+<button v-on:click="video2=true">再生</button>
+<button v-on:click="video2=false">停止</button>
+<video src="movie2.mp4" v-video="video2"></video>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    video1: true,
+    video2: false
+  },
+  directives: {
+    video(el, binding) {
+      binding.value ? el.play() : el.pause()
+    }
+  }
+})
+// => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
+```
+
+- 前の状態と比較して処理を行う<br>
+オブジェクトbindingが含むプロパティ
+
+|プロパティ|内容|
+|-----|-----|
+|arg|引数|
+|modifilers|修飾子のオブジェクト|
+|value|新しい値|
+|oldValue|古い値|
+
+```
+var app = new Vue({
+  el: '#app',
+  data: {
+    video1: true,
+    video2: false
+  },
+  directives: {
+    video(el, binding) {
+      if (binding.value !== binding.oldValue) {
+        binding.value ? el.play() : el.pause()
+      }
+    }
+  }
+})
+// => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
+// => 関係のない呼び出しをスキップする
+```
