@@ -2100,3 +2100,84 @@ new Vue({
   <li>ドラゴン HP.500</li>
 </ul>
 ```
+
+- 子コンポーネントはpropsで受け取ったデータを書き換えてはいけない
+
+```
+Vue.component('component-child', {
+  template: '<li>{{ name }} HP.{{ hp }}\
+            <button v-on:click="doAttack">攻撃する</button></li>',
+  props: [
+    'name',
+    'hp'
+  ],
+  methods: {
+    doAttack: function() {
+      this.hp -= 10
+    }
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    list: [
+      { id: 1, name: 'スライム', hp: 100},
+      { id: 2, name: 'ゴブリン', hp: 200},
+      { id: 3, name: 'ドラゴン', hp: 500}
+    ]
+  }
+})
+// => [Vue warn]: ~
+```
+
+- propsの受け取りデータ型を指定する
+
+```
+Vue.component('component-child', {
+  props: {
+    val: String
+  }
+})
+
+// 1 + '1' => 11 :String として出力されてしまう
+// propsの許容範囲はしっかり定義しておく
+```
+
+#### propsの受け取りデータ型のサンプル
+
+```
+Vue.component('example', {
+  props: {
+    // Nullはどんなデータ型も受け取る
+    propA: Number,
+    propB: [String, Number],
+    propC: {
+      type: String,
+      required: true
+    },
+    // デフォルト値
+    propD: {
+      type: Number,
+      dafault: 100
+    },
+    propE: {
+      type: Object,
+      default: function() {
+        return { message: 'hello' }
+      }
+    },
+    // カスタムでバリデーションを設定
+    propF: {
+      validator: function(value) {
+        return value > 10
+      }
+    }
+  }
+})
+```
+
+- propsに記述するとコードの見通しが悪くなるので、属性に記述した方がスマート
+
+```
+<component-child v-bind="object"></component-child>
+```
