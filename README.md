@@ -1180,7 +1180,7 @@ var app = new Vue({
 })
 ```
 
-#### スムーススクロールの実装例
+#### スムーススクロールのサンプル
 
 ```
 <script src="https://cdn.jsdelivr.net/npm/smooth-scroll@12.1.5"></script>
@@ -1812,4 +1812,46 @@ var app = new Vue({
 })
 // => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
 // => 関係のない呼び出しをスキップする
+```
+
+- nextTick
+データの更新前/更新後のDOMへのアクセスを待ち受ける仕組みのこと。<br>
+非同期通信時に発生する誤差に対応する。
+
+```
+this.$nextTick(function()) {
+  // DOMの更新後に実行する処理
+}
+```
+
+#### 更新後のDOMへアクセスするサンプル
+
+```
+<button v-on:click="list.push(list.length+1)">追加</button>
+<ul ref="list">
+  <li v-for="item in list">{{ item }}</li>
+</ul>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    list: []
+  },
+  watch: {
+    list: function() {
+      // 更新後のul要素の高さを取得できない
+      console.log('通常:', this.$refs.list.offsetHeight)
+      // nextTickで更新後のul要素の高さを取得する
+      this.$nextTick(function() {
+        console.log('nextTick:', this.$refs.list.offsetHeight)
+      })
+    }
+  }
+})
+
+// => 通常: 0
+// => nextTick: 24
+// => 通常: 24
+// => nextTick: 48
+// => ...
 ```

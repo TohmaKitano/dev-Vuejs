@@ -1,45 +1,45 @@
-// // カスタムディレクティブ
-// var app = new Vue({
-//   el: '#app',
-//   directives: {
-//     focus: {
-//       inserted: function(el) {
-//         el.focus()
-//       }
-//     }
-//   }
-// })
+// カスタムディレクティブ
+var app = new Vue({
+  el: '#app',
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus()
+      }
+    }
+  }
+})
 
-// // グローバルに登録
-// Vue.directive('focus', {
-//   inserted: function(el) {
-//     el.focus()
-//   }
-// })
+// グローバルに登録
+Vue.directive('focus', {
+  inserted: function(el) {
+    el.focus()
+  }
+})
 
-// // カスタムディレクティブで使用可能なフック
-// Vue.directive('example', {
-//   bind: function(el, binding) {
-//     console.log('v-exapmle bind')
-//   },
-//   inserted: function(el, binding) {
-//     console.log('v-exmaple inserted')
-//   },
-//   update: function(el, binding) {
-//     console.log('v-exmaple update')
-//   },
-//   componentUpdated: function(el, binding) {
-//     console.log('v-exmaple componentUpdated')
-//   },
-//   unbind: function(el, binding) {
-//     console.log('v-exmaple unbind')
-//   }
-// })
+// カスタムディレクティブで使用可能なフック
+Vue.directive('example', {
+  bind: function(el, binding) {
+    console.log('v-exapmle bind')
+  },
+  inserted: function(el, binding) {
+    console.log('v-exmaple inserted')
+  },
+  update: function(el, binding) {
+    console.log('v-exmaple update')
+  },
+  componentUpdated: function(el, binding) {
+    console.log('v-exmaple componentUpdated')
+  },
+  unbind: function(el, binding) {
+    console.log('v-exmaple unbind')
+  }
+})
 
-// // フックの関数
-// Vue.directive('example', function(el, binding, vonode, oldVnode) {
-//   // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
-// })
+// フックの関数
+Vue.directive('example', function(el, binding, vonode, oldVnode) {
+  // 第二引数に関数を渡すと、bindとupdateにフックし、同じ処理を呼び出す。
+})
 
 // 動画の再生を操作するサンプル
 var app = new Vue({
@@ -73,4 +73,29 @@ var app = new Vue({
 })
 // => updateフックで、video1プロパティ(el)の値(binding)が変化すると、video2プロパティ(el)の値(binding)も変化する
 // => 関係のない呼び出しをスキップする
+
+
+// nextTick
+// 更新後のDOMへアクセスするサンプル
+var app = new Vue({
+  el: '#app',
+  data: {
+    list: []
+  },
+  watch: {
+    list: function() {
+      // 更新後のul要素の高さを取得できない
+      console.log('通常:', this.$refs.list.offsetHeight)
+      // nextTickで更新後のul要素の高さを取得する
+      this.$nextTick(function() {
+        console.log('nextTick:', this.$refs.list.offsetHeight)
+      })
+    }
+  }
+})
+// => 通常: 0
+// => nextTick: 24
+// => 通常: 24
+// => nextTick: 48
+// => ...
 

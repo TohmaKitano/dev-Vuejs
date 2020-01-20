@@ -9,12 +9,12 @@
 </head>
 <body>
   <div id="app">
-    <!-- <div v-directive>example</div> -->
+    <div v-directive>example</div>
     <!-- valueに変化があると呼び出される -->
-    <!-- <div v-directive="value">example</div> -->
+    <div v-directive="value">example</div>
 
     <!-- カスタムディレクティブのサンプル-->
-    <!-- <input type="text" v-focus> -->
+    <input type="text" v-focus>
 
     <!-- 動画の再生を操作するサンプル -->
     <button v-on:click="video1=true">再生</button>
@@ -23,6 +23,13 @@
     <button v-on:click="video2=true">再生</button>
     <button v-on:click="video2=false">停止</button>
     <video src="movie2.mp4" v-video="video2"></video>
+
+    <!-- 更新後のDOMへアクセスするサンプル -->
+    <button v-on:click="list.push(list.length+1)">追加</button>
+    <ul ref="list">
+      <li v-for="item in list">{{ item }}</li>
+    </ul>
+
   </div>
 
   <script src="main_custom.js"></script>
