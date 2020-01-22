@@ -2008,7 +2008,7 @@ var app = new Vue({
 </div>
 ```
 
-- 親から子へリアクティブデータを渡す
+- props down 親から子へリアクティブデータを渡す
 
 ```
 // 親がルートインスタンスの場合
@@ -2182,7 +2182,7 @@ Vue.component('example', {
 <component-child v-bind="object"></component-child>
 ```
 
-- 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
+- event up 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
 
 
 ```
@@ -2338,4 +2338,132 @@ new Vue({
 
 // $event変数は第一引数しか持たないので、複数の値を引き渡す場合、オブジェクトにする
 this.$emit('childs-event', { id:1 name: 'Name' })
+```
+
+#### 状態管理(VueX)
+:<snip>
+
+### スロット
+親コンポーネント側から子コンポーネントのテンプレートの一部を差し込む機能。
+
+#### デフォルトスロット
+
+```
+// 親テンプレート
+<component-child>
+  実はここがスロットコンテンツ
+</component-child>
+
+// 子テンプレート
+<div class="component-child">
+  ここにスロットを埋め込む => <slot></slot>
+</div>
+
+// => 実行結果
+<div class="component-child">
+  ここにスロットを埋め込む => 実はここがスロットコンテンツ
+</div>
+```
+
+#### 名前付きスロット
+親側でコンテンツを囲むタグに slot="name"属性をつける。<br>
+子側でslotタグに slot="name"属性をつける。<br>
+スコープは親コンポーネント。
+
+```
+// header タグの中身が変わる
+<component-child>
+  <header slot="header">
+    Hello, Vue.js!
+  </header>
+  Vue.jsはJavaScriptのフレームワークです。
+</component-child>
+
+Vue.component('component-child', {
+  template: '<section class="component-child">\
+            <slot name="header">default title</slot>\
+            <div class="content">\
+            <slot>default content</slot>\
+            </div>\
+            <footer name="footer">\
+            </footer>\
+            </section>'
+})
+new Vue({
+  el: '#app',
+})
+
+// => 実行結果
+<section class="component-child">
+  <header>
+    Hello, Vue.js!
+  </header>
+  <div class="content">
+    Vue.jsはJavaScriptのフレームワークです。
+  </div>
+  <footer name="footer"></footer>
+</section>
+```
+
+#### スコープ付きスロット
+属性slot-scopeで子側のスコープにアクセスする。<br>
+親側でコンテンツを囲むタグに slot-scope="name"属性をつける。<br>
+子側でslotタグに 親側に渡したいデータの属性をつける。<br>
+※スコープ付きslotを使うとコンポーネント構造が細かくなるので、一旦機能を把握するところで留めておく。
+
+```
+// slot-scope名は重複しないようにする
+<component-child>
+  <p slot-scope="props">
+    スロットから受け取ったtext -> {{ props.text }}
+  </p>
+</component-child>
+
+Vue.component('component-child', {
+  template: '<div class="props-child">\
+            <slot text="Hello, Vue.js"></slot>\
+            </div>'
+})
+new Vue({
+  el: '#app'
+})
+
+// => 出力結果
+<div class="props-child">
+  <p>
+    スロットから受け取ったtext -> Hello, Vue.js
+  </p>
+</div>
+// => スロットから受け取ったtext => Hello, Vue.js
+```
+```
+<component-child>
+  <li slot-scope="props">{{ props.item_name }}</li>
+</component-child>
+
+Vue.component('component-child', {
+  template: '<ul class="component-child">\
+            <slot v-for="item in list" v-bind:item_name="item.name"></slot>\
+            </ul>',
+  // dataを関数にして、listをreturnする
+  data: function() {
+    return {
+      list: [
+        { id: 1, name: 'スライム', hp: 100},
+        { id: 2, name: 'ゴブリン', hp: 200},
+        { id: 3, name: 'ドラゴン', hp: 500}
+      ]
+    }
+  }
+})
+new Vue({
+  el: '#app'
+})
+
+// => 出力結果
+<ul class="component-child">
+  <li>スライム</li>
+  <li>ゴブリン</li>
+  <li>ドラゴン</li>
+</ul>
 ```

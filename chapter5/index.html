@@ -10,35 +10,54 @@
 <body>
   <div id="app">
     <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
-    <!-- <my-component></my-component> -->
+    <!-- <my-component></my-component>
 
-    <!-- <component-child val="これは子A"></component-child>
-    <component-child val="これは子B"></component-child> -->
+    <component-child val="これは子A"></component-child>
+    <component-child val="これは子B"></component-child>
 
-    <!-- <component-child v-bind:val="valA"></component-child>
-    <component-child v-bind:val="valB"></component-child> -->
+    <component-child v-bind:val="valA"></component-child>
+    <component-child v-bind:val="valB"></component-child>
 
-    <!-- <component-child id="parent" class="parent"></component-child> -->
+    <component-child id="parent" class="parent"></component-child>
 
-    <!-- <ul>
+    <ul>
       <component-child v-for="item in list"
                        v-bind:key="item.id"
                        v-bind:name="item.name"
                        v-bind:hp="item.hp"
       >
       </component-child>
-    </ul> -->
+    </ul>
 
-    <!-- <component-child v-on:childs-event="parentsMethod"></component-child> -->
+    <component-child v-on:childs-event="parentsMethod"></component-child>
 
-    <!-- <component-child v-for="item in list"
+    <component-child v-for="item in list"
                      v-bind="item"
                      v-bind:key="item.id"
                      v-on:attack="handleAttack"
     >
-    </component-child> -->
+    </component-child>
 
     <component-child v-on:childs-event="parentMethods($event, parentsData)"></component-child>
+
+    <component-child>
+      <header slot="header">
+        Hello, Vue.js!
+      </header>
+      Vue.jsはJavaScriptのフレームワークです。
+    </component-child>
+
+    <component-child>
+      <p slot-scope="props">
+        スロットから受け取ったtext -> {{ props.text }}
+      </p>
+    </component-child>
+
+    <component-child>
+      <li slot-scope="props">{{ props.item_name }}</li>
+    </component-child> -->
+
+    
   </div>
   <script src="main.js"></script>
 </body>
