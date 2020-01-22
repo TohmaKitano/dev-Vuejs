@@ -1984,7 +1984,7 @@ Vue.component('my-component', {
 })
 ```
 
-#### props down 親から子へデータを渡す => 属性で渡し、propsで受け取る
+- 親から子へデータを渡す => 属性で渡し、propsで受け取る
 
 ```
 // 親がルートインスタンスの場合
@@ -2008,7 +2008,7 @@ var app = new Vue({
 </div>
 ```
 
-- 親から子へリアクティブデータを渡す
+- props down 親から子へリアクティブデータを渡す
 
 ```
 // 親がルートインスタンスの場合
@@ -2182,7 +2182,7 @@ Vue.component('example', {
 <component-child v-bind="object"></component-child>
 ```
 
-#### event up 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
+- event up 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
 
 
 ```
@@ -2466,79 +2466,4 @@ new Vue({
   <li>ゴブリン</li>
   <li>ドラゴン</li>
 </ul>
-```
-
-### 双方向のデータバインディング
-原則コンポーネントは、props down, event upのどちらかのデータフローであるが、この二つを自動化することができる。
-
-```
-// v-modelを使うと、dataを動的に書き換えることができる
-<my-calender v-model="date"></my-calender>
-// ↑は↓と同義
-<my-calender v-on:input="date = $event" v-bind:value="date"></my-calender>
-
-this.$emit('input', '2020-01-01')
-// my-calenderコンポーネントは、$emitを使ってinputイベントを発火させる
-// 自動でdateプロパティに子コンポーネントの引数($event)を代入する
-```
-
-#### .sync修飾子 を使用し、一つのコンポーネントに複数の値を同期
-v-model, .sync修飾子の値は、暗黙的に親コンポーネント側が更新される。
-
-```
-<my-component v-bind:name.sync="name"
-              v-bind:hp.sync="hp"
->
-</my-component>
-
-Vue.component('my-component', {
-  template: '<div class="my-component">\
-            <p>名前.{{ name }} HP.{{ hp }}</p>\
-            <p>名前 <input v-model="localName"></p>\
-            <p>HP <input size="5" v-model.number="localHp"></p>\
-            </div>',
-  props: {
-    name: String,
-    hp: Number
-  },
-  computed: {
-    // 算出プロパティのゲッター(取得)とセッター(代入)を使う
-    localName: {
-      // 値を取得
-      get: function() {
-        return this.name
-      },
-      // 値を代入
-      set: function(val) {
-        this.$emit('update:name', val)
-      }
-    },
-    localHp: {
-      // 値を取得
-      get: function() {
-        return this.hp
-      },
-      // 値を代入
-      set: function(val) {
-        this.$emit('update:hp', val)
-      }
-    }
-  }
-})
-new Vue({
-  el: '#app',
-  data: {
-    name: 'スライム',
-    hp: 100
-  }
-})
-
-// => 出力結果
-<div class="my-component">
-  <p>名前.スライム HP.100</p>
-  <p>名前 <input></p>
-  <p>HP <input size="5"></p>
-</div>
-// => 値が空になるとエラーを吐き出す
-// => Invalid prop: type check failed for prop ...
 ```
