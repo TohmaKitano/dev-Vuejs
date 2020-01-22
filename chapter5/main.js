@@ -272,20 +272,48 @@
 //   }
 // })
 
-// 名前付きスロット
-Vue.component('component-child', {
-  template: '<section class="component-child">\
-            <slot name="header">default title</slot>\
-            <div class="content">\
-            <slot>default content</slot>\
-            </div>\
-            <footer name="footer">\
-            </footer>\
-            </section>'
-})
-new Vue({
-  el: '#app',
-  // components: {
-  //   'component-child': componentChild
-  // }
-})
+// // 名前付きスロット
+// Vue.component('component-child', {
+//   template: '<section class="component-child">\
+//             <slot name="header">default title</slot>\
+//             <div class="content">\
+//             <slot>default content</slot>\
+//             </div>\
+//             <footer name="footer">\
+//             </footer>\
+//             </section>'
+// })
+// new Vue({
+//   el: '#app',
+//   // components: {
+//   //   'component-child': componentChild
+//   // }
+// })
+
+// // スコープ付きスロット
+// Vue.component('component-child', {
+//   template: '<div class="props-child">\
+//             <slot text="Hello, Vue.js"></slot>\
+//             </div>'
+// })
+// new Vue({
+//   el: '#app'
+// })
+
+// Vue.component('component-child', {
+//   template: '<ul class="component-child">\
+//             <slot v-for="item in list" v-bind:item_name="item.name"></slot>\
+//             </ul>',
+//   data: function() {
+//     return {
+//       list: [
+//         { id: 1, name: 'スライム', hp: 100},
+//         { id: 2, name: 'ゴブリン', hp: 200},
+//         { id: 3, name: 'ドラゴン', hp: 500}
+//       ]
+//     }
+//   }
+// })
+// new Vue({
+//   el: '#app'
+// })

@@ -38,7 +38,7 @@
     >
     </component-child>
 
-    <component-child v-on:childs-event="parentMethods($event, parentsData)"></component-child> -->
+    <component-child v-on:childs-event="parentMethods($event, parentsData)"></component-child>
 
     <component-child>
       <header slot="header">
@@ -46,6 +46,18 @@
       </header>
       Vue.jsはJavaScriptのフレームワークです。
     </component-child>
+
+    <component-child>
+      <p slot-scope="props">
+        スロットから受け取ったtext -> {{ props.text }}
+      </p>
+    </component-child>
+
+    <component-child>
+      <li slot-scope="props">{{ props.item_name }}</li>
+    </component-child> -->
+
+    
   </div>
   <script src="main.js"></script>
 </body>
