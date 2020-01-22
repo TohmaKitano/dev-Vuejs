@@ -1984,7 +1984,7 @@ Vue.component('my-component', {
 })
 ```
 
-#### props down 親から子へデータを渡す => 属性で渡し、propsで受け取る
+- 親から子へデータを渡す => 属性で渡し、propsで受け取る
 
 ```
 // 親がルートインスタンスの場合
@@ -2008,7 +2008,7 @@ var app = new Vue({
 </div>
 ```
 
-- 親から子へリアクティブデータを渡す
+- props down 親から子へリアクティブデータを渡す
 
 ```
 // 親がルートインスタンスの場合
@@ -2182,7 +2182,7 @@ Vue.component('example', {
 <component-child v-bind="object"></component-child>
 ```
 
-#### event up 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
+- event up 子から親へデータを渡す => カスタムメソッドと$emitで渡し、onで受け取る
 
 
 ```
@@ -2542,4 +2542,3 @@ new Vue({
 // => 値が空になるとエラーを吐き出す
 // => Invalid prop: type check failed for prop ...
 ```
-
