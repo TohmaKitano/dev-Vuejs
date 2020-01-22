@@ -2483,6 +2483,7 @@ this.$emit('input', '2020-01-01')
 ```
 
 #### .sync修飾子 を使用し、一つのコンポーネントに複数の値を同期
+v-model, .sync修飾子の値は、暗黙的に親コンポーネント側が更新される。
 
 ```
 <my-component v-bind:name.sync="name"
