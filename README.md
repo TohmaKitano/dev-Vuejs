@@ -2339,3 +2339,67 @@ new Vue({
 // $event変数は第一引数しか持たないので、複数の値を引き渡す場合、オブジェクトにする
 this.$emit('childs-event', { id:1 name: 'Name' })
 ```
+
+#### 状態管理(VueX)
+:<snip>
+
+### スロット
+親コンポーネント側から子コンポーネントのテンプレートの一部を差し込む機能。
+
+#### デフォルトスロット
+
+```
+// 親テンプレート
+<component-child>
+  実はここがスロットコンテンツ
+</component-child>
+
+// 子テンプレート
+<div class="component-child">
+  ここにスロットを埋め込む => <slot></slot>
+</div>
+
+// => 実行結果
+<div class="component-child">
+  ここにスロットを埋め込む => 実はここがスロットコンテンツ
+</div>
+```
+
+#### 名前付きスロット
+親側でコンテンツを囲むタグに slot="name"属性をつける。<br>
+子側でslotタグに slot="name"属性をつける。
+
+```
+// header タグの中身が変わる
+<component-child>
+  <header slot="header">
+    Hello, Vue.js!
+  </header>
+  Vue.jsはJavaScriptのフレームワークです。
+</component-child>
+
+Vue.component('component-child', {
+  template: '<section class="component-child">\
+            <slot name="header">default title</slot>\
+            <div class="content">\
+            <slot>default content</slot>\
+            </div>\
+            <footer name="footer">\
+            </footer>\
+            </section>'
+})
+new Vue({
+  el: '#app',
+})
+
+// => 実行結果
+<section class="component-child">
+  <header>
+    Hello, Vue.js!
+  </header>
+  <div class="content">
+    Vue.jsはJavaScriptのフレームワークです。
+  </div>
+  <footer name="footer"></footer>
+</section>
+```

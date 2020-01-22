@@ -271,3 +271,21 @@
 //     }
 //   }
 // })
+
+// 名前付きスロット
+Vue.component('component-child', {
+  template: '<section class="component-child">\
+            <slot name="header">default title</slot>\
+            <div class="content">\
+            <slot>default content</slot>\
+            </div>\
+            <footer name="footer">\
+            </footer>\
+            </section>'
+})
+new Vue({
+  el: '#app',
+  // components: {
+  //   'component-child': componentChild
+  // }
+})
