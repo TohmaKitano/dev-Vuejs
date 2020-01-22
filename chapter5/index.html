@@ -10,7 +10,7 @@
 <body>
   <div id="app">
     <!-- DOMとして認識させるには、テンプレート名はケバブケースで記述する制約 -->
-    <!-- <my-component></my-component>
+    <my-component></my-component>
 
     <component-child val="これは子A"></component-child>
     <component-child val="これは子B"></component-child>
@@ -55,7 +55,11 @@
 
     <component-child>
       <li slot-scope="props">{{ props.item_name }}</li>
-    </component-child> -->
+    </component-child>
+
+    <my-calender v-on:input="date = $event" v-bind:value="date">
+    </my-calender>
+    <my-calender v-model="date"></my-calender>
 
     <my-component v-bind:name.sync="name"
                   v-bind:hp.sync="hp"
