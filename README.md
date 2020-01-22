@@ -2525,6 +2525,7 @@ Vue.component('my-component', {
     }
   }
 })
+
 new Vue({
   el: '#app',
   data: {
@@ -2543,3 +2544,69 @@ new Vue({
 // => Invalid prop: type check failed for prop ...
 ```
 
+### テンプレートの定義方法
+
+#### template オプション<br>
+tempalteオプションに直接記述する。
+
+```
+Vue.component({
+  template: '<p>テンプレート</p>'
+})
+
+// EC2015環境下では、テンプレートリテラルでも良い
+Vue.component({
+  template: `<p>テンプレート</p>`
+})
+```
+
+- inline-template<br>
+カスタムタグ inline-template内の記述をHTMLテンプレートとして使用する。非推奨なので原則使用しない。
+
+```
+<my-component inline-template>
+  <p>テンプレート</p>
+</my-component>
+```
+
+- text/x-templateタイプ + セレクタ
+MINEタイプ text/x-templateタイプを使うと、DOMがブラウザに認識されない。非推奨なので原則使用しない。
+
+```
+<script type="text/x-template" id="component-child">
+  <p>テンプレート</p>
+</script>
+
+Vue.component('my-component', {
+  template: '#component-child'
+})
+```
+
+#### 単一ファイルコンポーネント
+HTML + CSS + JavaScript をセットにし、.vue 拡張子をファイルに記述する。<br>
+プリコンパイルが必要となるため、ビルド環境が必要。
+
+#### 描画関数
+プリコンパイルの工程をスキップし、JavaScriptを使って動的に仮想DOMを構築する。上級者向けなので、必要となったら知識を仕入れる。
+
+```
+Vue.component('my-component', {
+  render: function(createElement) {
+    return createElement('element', { options })
+  }
+})
+```
+
+- テンプレートがDOMと認識されるケース<br>
+以下のルールの他、コンポーネントの名前は、ケバブケースで記述し、有効なカスタムタグを使う必要がる。
+
+-- マウントした要素の内側に直接記述したテンプレート
+-- inline-template で記述したテンプレート
+-- テンプレートの中で記述した、slot のコンテンツ
+
+- テンプレートがDOMと認識されないケース<br>
+以下のルール下では、HTMLの制約を受けない
+
+-- 単一コンポーネントファイル(.vueファイル)
+-- template オプションに直接記述したテンプレート
+-- text/x-template で記述したテンプレート

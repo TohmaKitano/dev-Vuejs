@@ -318,45 +318,62 @@
 //   el: '#app'
 // })
 
-// 双方向のデータバインディング
-Vue.component('my-component', {
-  template: '<div class="my-component">\
-            <p>名前.{{ name }} HP.{{ hp }}</p>\
-            <p>名前 <input v-model="localName"></p>\
-            <p>HP <input size="5" v-model.number="localHp"></p>\
-            </div>',
-  props: {
-    name: String,
-    hp: Number
-  },
-  computed: {
-    // 算出プロパティのゲッター(取得)とセッター(代入)を使う
-    localName: {
-      // 値を取得
-      get: function() {
-        return this.name
-      },
-      // 値を代入
-      set: function(val) {
-        this.$emit('update:name', val)
-      }
-    },
-    localHp: {
-      // 値を取得
-      get: function() {
-        return this.hp
-      },
-      // 値を代入
-      set: function(val) {
-        this.$emit('update:hp', val)
-      }
-    }
-  }
-})
-new Vue({
-  el: '#app',
-  data: {
-    name: 'スライム',
-    hp: 100
-  }
-})
+// // 双方向のデータバインディング
+// Vue.component('my-component', {
+//   template: '<div class="my-component">\
+//             <p>名前.{{ name }} HP.{{ hp }}</p>\
+//             <p>名前 <input v-model="localName"></p>\
+//             <p>HP <input size="5" v-model.number="localHp"></p>\
+//             </div>',
+//   props: {
+//     name: String,
+//     hp: Number
+//   },
+//   computed: {
+//     // 算出プロパティのゲッター(取得)とセッター(代入)を使う
+//     localName: {
+//       // 値を取得
+//       get: function() {
+//         return this.name
+//       },
+//       // 値を代入
+//       set: function(val) {
+//         this.$emit('update:name', val)
+//       }
+//     },
+//     localHp: {
+//       // 値を取得
+//       get: function() {
+//         return this.hp
+//       },
+//       // 値を代入
+//       set: function(val) {
+//         this.$emit('update:hp', val)
+//       }
+//     }
+//   }
+// })
+// new Vue({
+//   el: '#app',
+//   data: {
+//     name: 'スライム',
+//     hp: 100
+//   }
+// })
+
+// // テンプレートの定義方法
+// Vue.component({
+//   template: '<p>テンプレート</p>'
+// })
+
+// // EC2015環境下では、テンプレートリテラルでも良い
+// Vue.component({
+//   template: `<p>テンプレート</p>`
+// })
+
+// // 描画関数
+// Vue.component('my-component', {
+//   render: function(createElement) {
+//     return createElement('element', { options })
+//   }
+// })
