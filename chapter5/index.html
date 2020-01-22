@@ -55,9 +55,16 @@
 
     <component-child>
       <li slot-scope="props">{{ props.item_name }}</li>
-    </component-child> -->
+    </component-child>
 
-    
+    <my-calender v-on:input="date = $event" v-bind:value="date">
+    </my-calender>
+    <my-calender v-model="date"></my-calender> -->
+
+    <my-component v-bind:name.sync="name"
+                  v-bind:hp.sync="hp"
+    >
+    </my-component>
   </div>
   <script src="main.js"></script>
 </body>
