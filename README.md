@@ -2271,3 +2271,71 @@ new Vue({
 // .native 修飾子を使用し、発火させる
 <my-icon v-on:click.native="handleClick"></my-icon>
 ```
+
+#### 非親子間の通信(イベントバス)
+Vueインスタンスをイベントバスとして使用しデータを渡す。<br>
+Vuexを導入した方がスマート。
+
+```
+// インスタンスの初期化時にデータがセットされるよう算出プロパティを使う
+
+var bus = new Vue({
+  data: {
+    count: 0
+  }
+})
+
+Vue.component('component-other', {
+  template: '<p>bus: {{ bus.count }}</p>',
+  computed: {
+    // busのデータを算出プロパティに使用する
+    bus: function() {
+      return bus.$data
+    }
+  },
+  created: function() {
+    // $on で子は自分自身のイベントを発火する
+    bus.$on('event-bus', function() {
+      this.count++
+    })
+  }
+})
+```
+
+- 親から直接子コンポーネントを参照する
+
+```
+<component-child ref="child"></component-child>
+
+// 親メソッドで発火させる
+this.$refs.child.$emit('open')
+```
+
+- コンポーネントの属性のスコープ<br>
+コンポーネントの属性の値は、親のスコープになる
+
+```
+// 親のデータを受け取る
+<component-child v-on:childs-event="parentMethods"></component-child>
+// => parentMethods は親のスコープ
+
+// 親と子両方のデータを受け取る
+// $event変数を使う
+<component-child v-on:childs-event="parentMethods($event, parentsData)"></component-child>
+// => $event で子コンポーネントの引数を使用する
+
+new Vue({
+  data: {
+    parentsData: ''
+  },
+  methods: {
+    parentsMethod: function(childsArg, parentsArg) {
+      // childsArg => 子のデータ(= $event)
+      // parentsArg => 親のデータ(= parentsData)
+    }
+  }
+})
+
+// $event変数は第一引数しか持たないので、複数の値を引き渡す場合、オブジェクトにする
+this.$emit('childs-event', { id:1 name: 'Name' })
+```

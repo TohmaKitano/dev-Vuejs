@@ -31,12 +31,14 @@
 
     <!-- <component-child v-on:childs-event="parentsMethod"></component-child> -->
 
-    <component-child v-for="item in list"
+    <!-- <component-child v-for="item in list"
                      v-bind="item"
                      v-bind:key="item.id"
                      v-on:attack="handleAttack"
     >
-    </component-child>
+    </component-child> -->
+
+    <component-child v-on:childs-event="parentMethods($event, parentsData)"></component-child>
   </div>
   <script src="main.js"></script>
 </body>

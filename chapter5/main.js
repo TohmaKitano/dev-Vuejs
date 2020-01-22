@@ -236,3 +236,38 @@
 // <my-icon v-on:click="handleClick"></my-icon>
 // // .native 修飾子を使用し、発火させる
 // <my-icon v-on:click.native="handleClick"></my-icon>
+
+// // 非親子間の通信(イベントバス)
+// // インスタンスの初期化時にデータがセットされるよう算出プロパティを使う
+// var bus = new Vue({
+//   data: {
+//     count: 0
+//   }
+// })
+// Vue.component('component-other', {
+//   template: '<p>bus: {{ bus.count }}</p>',
+//   computed: {
+//     // busのデータを算出プロパティに使用する
+//     bus: function() {
+//       return bus.$data
+//     }
+//   },
+//   created: function() {
+//     bus.$on('event-bus', function() {
+//       this.count++
+//     })
+//   }
+// })
+
+// // 親と子両方のデータを受け取る
+// new Vue({
+//   data: {
+//     parentsData: ''
+//   },
+//   methods: {
+//     parentsMethod: function(childsArg, parentsArg) {
+//       // childsArg => 子のデータ
+//       // parentsArg => 親のデータ
+//     }
+//   }
+// })
