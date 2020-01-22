@@ -57,7 +57,11 @@
       <li slot-scope="props">{{ props.item_name }}</li>
     </component-child> -->
 
-    
+    <my-component v-bind:name.sync="name"
+                  v-bind:hp.sync="hp"
+    >
+    </my-component>
+
   </div>
   <script src="main.js"></script>
 </body>
