@@ -176,19 +176,63 @@
 // // => <component-child v-bind="object"></component-child>
 
 // 子から親へデータを渡す
-Vue.component('component-child', {
-  template: '<button v-on:click="handleClick">イベント発火</button>',
-  methods: {
-    handleClick: function() {
-      this.$emit('childs-event')
-    }
-  }
-})
-new Vue({
-  el: '#app',
-  methods: {
-    parentsMethod: function() {
-      alert('イベントをキャッチ')
-    }
-  }
-})
+// Vue.component('component-child', {
+//   template: '<button v-on:click="handleClick">イベント発火</button>',
+//   methods: {
+//     handleClick: function() {
+//       this.$emit('childs-event')
+//     }
+//   }
+// })
+// new Vue({
+//   el: '#app',
+//   methods: {
+//     parentsMethod: function() {
+//       alert('イベントをキャッチ')
+//     }
+//   }
+// })
+
+// Vue.component('component-child',{
+//   template: '<li>{{ name }} HP.{{ hp }}\
+//             <button v-on:click="doAttack">攻撃する</button></li>',
+//   // props の受け取りデータ型を指定
+//   props: {
+//     id: Number,
+//     name: String,
+//     hp: Number
+//   },
+//   methods: {
+//     doAttack: function() {
+//       this.$emit('attack', this.id)
+//     }
+//   }
+// })
+// new Vue({
+//   el: '#app',
+//   data: {
+//     // データは親に持たせておく
+//     list: [
+//       { id: 1, name: 'スライム', hp: 100},
+//       { id: 2, name: 'ゴブリン', hp: 200},
+//       { id: 3, name: 'ドラゴン', hp: 500}
+//     ]
+//   },
+//   methods: {
+//     handleAttack: function(id) {
+//       // 引数のIDから要素を検索
+//       var item = this.list.find(function(el) {
+//         return el.id === id
+//       })
+//       if (item.hp !== undefined && item.hp > 0) {
+//         item.hp -= 10
+//       }
+//     }
+//   }
+// })
+
+// // カスタムタグのイベントハンドリング
+// // 通常では発火しない
+// <my-icon v-on:click="handleClick"></my-icon>
+// // .native 修飾子を使用し、発火させる
+// <my-icon v-on:click.native="handleClick"></my-icon>

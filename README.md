@@ -2211,3 +2211,63 @@ new Vue({
   <button>イベント発火</button>
 </div>
 ```
+
+```
+<component-child v-for="item in list"
+                 v-bind="item"
+                 v-bind:key="item.id"
+                 v-on:attack="handleAttack"
+>
+</component-child>
+
+// 子テンプレート
+Vue.component('component-child',{
+  template: '<li>{{ name }} HP.{{ hp }}\
+            <button v-on:click="doAttack">攻撃する</button></li>',
+  // props の受け取りデータ型を指定
+  props: {
+    id: Number,
+    name: String,
+    hp: Number
+  },
+  methods: {
+    doAttack: function() {
+      this.$emit('attack', this.id)
+    }
+  }
+})
+
+// 親テンプレート
+new Vue({
+  el: '#app',
+  // データは親に持たせておく
+  data: {
+    list: [
+      { id: 1, name: 'スライム', hp: 100},
+      { id: 2, name: 'ゴブリン', hp: 200},
+      { id: 3, name: 'ドラゴン', hp: 500}
+    ]
+  },
+  methods: {
+    handleAttack: function(id) {
+      // 引数のIDから要素を検索
+      var item = this.list.find(function(el) {
+        return el.id === id
+      })
+      if (item.hp !== undefined && item.hp > 0) {
+        item.hp -= 10
+      }
+    }
+  }
+})
+```
+
+- カスタムタグのイベントハンドリング
+
+```
+// 通常では発火しない
+<my-icon v-on:click="handleClick"></my-icon>
+
+// .native 修飾子を使用し、発火させる
+<my-icon v-on:click.native="handleClick"></my-icon>
+```
