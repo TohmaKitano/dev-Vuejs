@@ -2685,3 +2685,37 @@ Vue.component('my-component-b', {
   template: '<p>MyComponentB</p>'
 })
 ```
+
+#### keep-alive コンポーネントと状態を維持
+
+```
+<div id="app">
+  <button v-on:click="current='comp-board'">メッセージ一覧</button>
+  <button v-on:click="current='comp-form'">投稿フォーム</button>
+  <!-- keep-alive で状態を管理 -->
+  <keep-alive>
+    <div v-bind:is="current"></div>
+  </keep-alive>
+</div>
+
+// メッセージ一覧
+Vue.component('comp-board', {
+  template: '<div>Message Board</div>'
+})
+// 投稿フォーム
+Vue.component('comp-form', {
+  template: '<div>Form<textarea v-model="message"></textarea></div>',
+  data: function() {
+    return {
+      message: ''
+    }
+  }
+})
+
+new Vue({
+  el: '#app',
+  data: {
+    current: 'comp-board'
+  }
+})
+```
