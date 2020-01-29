@@ -2911,3 +2911,65 @@ new Vue({
   }
 })
 ```
+
+- <strong>mode属性</strong> enterとleaveのタイミングを変更
+
+|属性|フェーズ|
+|-----|-----|
+|in-out|enterトランジションが終わったらleaveトランジションを開始する|
+|out-in|leaveトランジションが終わったらenterトランジションを開始する|
+
+```
+<div id="app">
+  <p><button v-on:click="show=!show">切り替え</button></p>
+  <transition mode="out-in">
+    <div v-if="show" key="a">TRUE</div>
+    <div v-else key="b">FALSE</div>
+  </transition>
+</div>
+
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
+```
+
+- キーが変化したら実行<br>
+特定のデータの変化をトリガにしてトランジションを実行。
+
+```
+// countプロパティの数値が変わるたびにトランジションが発火する
+<div id="app">
+  <p><button v-on:click="count++">切り替え</button></p>
+  <transition>
+    <div v-bind:key="count">{{ count }}</div>
+  </transition>
+</div>
+
+.v-enter-active {
+  transition: opacity 1s;
+}
+.v-leave-active {
+  transition: opacity 0.8s ease 0.2s;
+  position: absolute;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    count: 0
+  }
+})
+```

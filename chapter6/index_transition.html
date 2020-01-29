@@ -11,34 +11,47 @@
 <body>
   <div id="app">
     <!-- サンプル -->
-    <!-- <p><button v-on:click="show=!show">切り替え</button></p>
+    <p><button v-on:click="show=!show">切り替え</button></p>
     <transition>
       <div v-show="show">
         トランジションさせたい要素
       </div>
-    </transition> -->
+    </transition>
 
     <!-- プレフィックスを付与 -->
-    <!-- <p><button v-on:click="show=!show">切り替え</button></p>
+    <p><button v-on:click="show=!show">切り替え</button></p>
     <transition name="demo">
       <div v-if="show">
         トランジションさせたい要素
       </div>
-    </transition> -->
+    </transition>
 
     <!-- 初期描画時に実行 -->
-    <!-- <p><button v-on:click="show=!show">切り替え</button></p>
+    <p><button v-on:click="show=!show">切り替え</button></p>
     <transition appear>
       <div v-if="show">
         トランジションさせたい要素
       </div>
-    </transition> -->
+    </transition>
 
     <!-- 複数の要素をグループ化して実行 -->
     <p><button v-on:click="show=!show">切り替え</button></p>
     <transition>
       <div v-if="show" key="a">TRUE</div>
       <div v-else key="b">FALSE</div>
+    </transition>
+
+    <!-- enterとleaveのタイミングを変更 -->
+    <p><button v-on:click="show=!show">切り替え</button></p>
+    <transition mode="in-out">
+      <div v-if="show" key="a">TRUE</div>
+      <div v-else key="b">FALSE</div>
+    </transition>
+
+    <!-- キーが変化したら実行 -->
+    <p><button v-on:click="count++">切り替え</button></p>
+    <transition>
+      <div v-bind:key="count">{{ count }}</div>
     </transition>
 
   </div>
