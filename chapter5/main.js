@@ -413,3 +413,27 @@ new Vue({
     }
   }
 })
+
+// Mixin 共通処理を登録
+// Mixin を定義
+var mixin = {
+  created: function() {
+    this.hello()
+  },
+  methods: {
+    hello: function() {
+      console.log('hello from mixin!')
+    }
+  }
+}
+// Mixin を使用
+Vue.component('my-component-a', {
+  // Mixin を登録
+  mixins: [mixin],
+  template: '<p>MyComponentA</p>'
+})
+Vue.component('my-component-b', {
+  // Mixin を登録
+  mixins: [mixin],
+  template: '<p>MyComponentB</p>'
+})
