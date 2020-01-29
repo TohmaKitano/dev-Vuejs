@@ -377,3 +377,63 @@ Vue.component('my-component', {
     return createElement('element', { options })
   }
 })
+
+// 関数型コンポーネント
+Vue.component('functional-component', {
+  // function オプションを付ける
+  functional: true,
+  render: function(createElement, context) {
+    return createElement('div', context.props.message)
+  },
+  props: {
+    message: String
+  }
+})
+
+// 動的コンポーネント
+// コンポーネントを定義
+Vue.component('my-component-a', {
+  template: '<div class="my-component-a">component A</div>'
+})
+Vue.component('my-component-b', {
+  template: '<div class="my-component-b">component B</div>'
+})
+// 親コンポーネント
+// <button v-on:click="current^=1">toggle</button>
+// <div v-bind:is="component"></div>
+new Vue({
+  el: '#app',
+  data: {
+    componentTypes: ['my-component-a', 'my-component-b'],
+    current: 0
+  },
+  computed: {
+    component: function() {
+      return this.componentTypes[this.current]
+    }
+  }
+})
+
+// Mixin 共通処理を登録
+// Mixin を定義
+var mixin = {
+  created: function() {
+    this.hello()
+  },
+  methods: {
+    hello: function() {
+      console.log('hello from mixin!')
+    }
+  }
+}
+// Mixin を使用
+Vue.component('my-component-a', {
+  // Mixin を登録
+  mixins: [mixin],
+  template: '<p>MyComponentA</p>'
+})
+Vue.component('my-component-b', {
+  // Mixin を登録
+  mixins: [mixin],
+  template: '<p>MyComponentB</p>'
+})
