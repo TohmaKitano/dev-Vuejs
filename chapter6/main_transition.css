@@ -20,7 +20,7 @@
 } */
 
 /*  トランジションクラス */
-.v-enter-active, .v-leave-active {
+/* .v-enter-active, .v-leave-active {
   transition: opacity 1s;
 }
 .v-enter {
@@ -34,11 +34,28 @@
 }
 .v-leave-to {
   opacity: 0;
-}
+} */
 /* 下記に省略可能 */
 .v-enter-active, .v-leave-active {
   transition: opacity 1s;
 }
+/* position: absoluteを指定するキレイにフェードできる */
+.v-leave-active {
+  position: absolute;
+}
 .v-enter, .v-leave-to {
   opacity: 0;
 }
+
+/* enterとleaveに別々のスタイルを定義 */
+/* .v-enter-active, .v-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.v-enter {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+} */

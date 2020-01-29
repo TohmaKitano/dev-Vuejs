@@ -2864,3 +2864,50 @@ new Vue({
   opacity: 0;
 }
 ```
+
+- enterとleaveに別々のスタイルを定義
+
+```
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.v-enter {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+```
+
+- 複数の要素をグループ化して実行<br>
+グループ化した要素には、キーを指定する。
+
+```
+<div id="app">
+  <p><button v-on:click="show=!show">切り替え</button></p>
+  <transition>
+    <div v-if="show" key="a">TRUE</div>
+    <div v-else key="b">FALSE</div>
+  </transition>
+</div>
+
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+/* position: absoluteを指定するキレイにフェードできる */
+.v-leave-active {
+  position: absolute;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
+```
