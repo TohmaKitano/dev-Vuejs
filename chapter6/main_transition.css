@@ -18,3 +18,27 @@
 .v-enter, .v-leave-to {
   opacity: 0;
 } */
+
+/*  トランジションクラス */
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter {
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+.v-leave {
+  opacity: 1;
+}
+.v-leave-to {
+  opacity: 0;
+}
+/* 下記に省略可能 */
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}

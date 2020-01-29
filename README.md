@@ -2816,3 +2816,51 @@ new Vue({
   }
 })
 ```
+
+### 単一要素トランジション
+トランジションを適用したい一つの要素を<transition>タグで囲む。<br>
+追加されるときは、<strong>.v-enter</strong>から<strong>.v-enter-to</strong>。<br>
+削除されるときは、<strong>.v-leave</strong>から<strong>.v-leave-to</strong>。
+
+- トランジションクラス
+
+|enter|フェーズ|
+|-----|-----|
+|.v-enter|DOMに挿入される前に付与。終了したら削除。enterがアクティブ|
+|.v-enter-to|トランジション開始する前に付与。終了したら削除。enterが終了|
+|.v-enter-active|DOMに挿入される前に付与。終了したら削除。enterがアクティブ|
+
+|leave|フェーズ|
+|-----|-----|
+|.v-leave|トランジション開始する前に付与。開始したら削除。leaveが開始|
+|.v-leave-to|トランジション開始する時に付与。終了したら削除。leaveが終了|
+|.v-leave-active|トランジション開始する前に付与。終了したら削除。leaveがアクティブ|
+
+```
+/*  トランジションクラス */
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter {
+  opacity: 0;
+}
+.v-enter-to {
+  opacity: 1;
+}
+.v-leave {
+  opacity: 1;
+}
+.v-leave-to {
+  opacity: 0;
+}
+
+// => 下記に省略可能
+// 透明度100%
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+// 透明度0%
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+```
