@@ -2819,8 +2819,8 @@ new Vue({
 
 ### 単一要素トランジション
 トランジションを適用したい一つの要素を<transition>タグで囲む。<br>
-追加されるときは、<strong>.v-enter</strong>から<strong>.v-enter-to</strong>。<br>
-削除されるときは、<strong>.v-leave</strong>から<strong>.v-leave-to</strong>。
+追加するときは、<strong>.v-enter</strong> から<strong> .v-enter-to</strong><br>
+削除するときは、<strong>.v-leave</strong> から<strong> .v-leave-to</strong>
 
 - トランジションクラス
 
@@ -2970,6 +2970,45 @@ new Vue({
   el: '#app',
   data: {
     count: 0
+  }
+})
+```
+
+### リストトランジション
+トランジションを適用したい複数の要素を<transition-group>タグで囲みグループ化して、追加、削除、移動のアニメーションを実行。<br>
+tag属性でタグ名を指定、必ずキーを設定、トランジションクラスには.v-moveが付与される。
+
+```
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+<div id="app">
+  <p><button v-on:click="order=!order">切り替え</button></p>
+  <transition-group tag="ul" class="list">
+    <li v-for="item in sortedList" v-bind:key="item.id">
+      {{ item.name }} {{ item.price }}円
+    </li>
+  </transition-group>
+</div>
+
+.v-move {
+  transition: transform 1s;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    order: false,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+      { id: 3, name: 'いちご', price: 300 }
+    ]
+  },
+  computed: {
+    // orderの値でリストの順番を反転する
+    sortedList: function() {
+      // LodashのorderByメソッド
+      return _.orderBy(this.list, 'price', this.order ? 'desc' : 'asc')
+    }
   }
 })
 ```
