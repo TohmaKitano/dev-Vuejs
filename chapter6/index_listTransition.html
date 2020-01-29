@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main_listTransition.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- サンプル -->
+    <p><button v-on:click="order=!order">切り替え</button></p>
+    <transition-group tag="ul" class="list">
+      <li v-for="item in sortedList" v-bind:key="item.id">
+        {{ item.name }} {{ item.price }}円
+      </li>
+    </transition-group>
+  </div>
+
+  <script src="main_listTransition.js"></script>
+</body>
+</html>
