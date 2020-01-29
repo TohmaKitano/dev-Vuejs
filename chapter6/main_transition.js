@@ -1,7 +1,7 @@
-// // サンプル
-// new Vue({
-//   el: '#app',
-//   data: {
-//     show: true
-//   }
-// })
+// サンプル
+new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
