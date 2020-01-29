@@ -6,7 +6,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-5">Chapter 5 Component</a>
-<a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
 
 
 ## Chapter 1
@@ -2726,6 +2726,93 @@ new Vue({
   el: '#app',
   data: {
     current: 'comp-board'
+  }
+})
+```
+
+## Chapter 6
+
+### トランジション
+トランジションを適用したい要素を<transition>タグで囲む。<br>
+要素がDOMに追加されると enterを含んだクラス、削除されると leaveを含んだクラスが付与される。
+
+```
+<div id="app">
+  <p><button v-on:click="show=!show">切り替え</button></p>
+  <transition>
+    <div v-show="show">
+      トランジションさせたい要素
+    </div>
+  </transition>
+</div>
+
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
+```
+
+- <strong>name属性</strong> プレフィックスを付与する
+
+```
+<div id="app">
+  <p><button v-on:click="show=!show">切り替え</button></p>
+  <!-- name 属性にプレフィックスを付与 -->
+  <transition name="demo">
+    <div v-if="show">
+      トランジションさせたい要素
+    </div>
+  </transition>
+</div>
+
+// v- に代わり、demo- が付与される
+.demo-enter-active, .demo-leave-active {
+  transition: opacity 1s;
+}
+.demo-enter, .demo-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    show: true
+  }
+})
+```
+
+- <strong>appear属性</strong> 初期描画時に実行する
+
+```
+<div id="app">
+  <p><button v-on:click="show=!show">切り替え</button></p>
+  <transition appear>
+    <div v-if="show">
+      トランジションさせたい要素
+    </div>
+  </transition>
+</div>
+
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+new Vue({
+  el: '#app',
+  data: {
+    show: true
   }
 })
 ```

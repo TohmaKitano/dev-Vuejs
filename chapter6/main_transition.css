@@ -1,0 +1,20 @@
+/* .v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+.demo-enter-active, .demo-leave-active {
+  transition: opacity 1s;
+}
+.demo-enter, .demo-leave-to {
+  opacity: 0;
+}
+
+.v-enter-active, .v-leave-active {
+  transition: opacity 1s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+} */
