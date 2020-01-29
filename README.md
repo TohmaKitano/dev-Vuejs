@@ -2546,7 +2546,7 @@ new Vue({
 
 ### テンプレートの定義方法
 
-#### template オプション<br>
+- template オプション<br>
 tempalteオプションに直接記述する。
 
 ```
@@ -2569,7 +2569,7 @@ Vue.component({
 </my-component>
 ```
 
-- text/x-templateタイプ + セレクタ
+- text/x-templateタイプ + セレクタ<br>
 MINEタイプ text/x-templateタイプを使うと、DOMがブラウザに認識されない。非推奨なので原則使用しない。
 
 ```
@@ -2597,16 +2597,62 @@ Vue.component('my-component', {
 })
 ```
 
-- テンプレートがDOMと認識されるケース<br>
+#### テンプレートがDOMと認識されるケース
 以下のルールの他、コンポーネントの名前は、ケバブケースで記述し、有効なカスタムタグを使う必要がる。
 
--- マウントした要素の内側に直接記述したテンプレート
--- inline-template で記述したテンプレート
--- テンプレートの中で記述した、slot のコンテンツ
+- マウントした要素の内側に直接記述したテンプレート
+- inline-template で記述したテンプレート
+- テンプレートの中で記述した、slot のコンテンツ
 
-- テンプレートがDOMと認識されないケース<br>
+#### テンプレートがDOMと認識されないケース
 以下のルール下では、HTMLの制約を受けない
 
--- 単一コンポーネントファイル(.vueファイル)
--- template オプションに直接記述したテンプレート
--- text/x-template で記述したテンプレート
+- 単一コンポーネントファイル(.vueファイル)
+- template オプションに直接記述したテンプレート
+- text/x-template で記述したテンプレート
+
+#### 関数型コンポーネント
+状態とインスタンスを持たないので、ライフサイクルや監視が行われないが、propsは使うことができる。<br>
+関数型コンポーネントはVue DevToolsに表示されない。
+
+```
+Vue.component('functional-component', {
+  // function オプションを付ける
+  functional: true,
+  render: function(createElement, context) {
+    return createElement('div', context.props.message)
+  },
+  props: {
+    message: String
+  }
+})
+```
+
+#### 動的コンポーネント
+属性<strong> is </strong>を使いコンポーネントを指定すると、複数のコンポーネントを切り替えられる。
+
+```
+// コンポーネントを定義
+Vue.component('my-component-a', {
+  template: '<div class="my-component-a">component A</div>'
+})
+Vue.component('my-component-b', {
+  template: '<div class="my-component-b">component B</div>'
+})
+
+// 親コンポーネント
+<button v-on:click="current^=1">toggle</button>
+<div v-bind:is="component"></div>
+new Vue({
+  el: '#app',
+  data: {
+    componentTypes: ['my-component-a', 'my-component-b'],
+    current: 0
+  },
+  computed: {
+    component: function() {
+      return this.componentTypes[this.current]
+    }
+  }
+})
+```
