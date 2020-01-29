@@ -6,6 +6,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-3">Chapter 3 Event, Form</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-5">Chapter 5 Component</a>
+<a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
 
 
 ## Chapter 1
