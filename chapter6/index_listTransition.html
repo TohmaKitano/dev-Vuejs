@@ -11,14 +11,26 @@
 <body>
   <div id="app">
     <!-- サンプル -->
-    <p><button v-on:click="order=!order">切り替え</button></p>
+    <!-- <p><button v-on:click="order=!order">切り替え</button></p>
     <transition-group tag="ul" class="list">
       <li v-for="item in sortedList" v-bind:key="item.id">
         {{ item.name }} {{ item.price }}円
       </li>
-    </transition-group>
-  </div>
+    </transition-group> -->
 
+    <!-- 移動トランジションのサンプル -->
+    <p>
+      <button v-on:click="doShuffle">シャッフル</button>
+      <button v-on:click="doAdd">追加</button>
+    </p>
+    <transition-group tag="ul" class="list">
+      <li v-for="(item, index) in list"
+          v-bind:key="item"
+          class="item"
+          v-on:click="doRemove(index)">{{ item }}</li>
+    </transition-group>
+
+  </div>
   <script src="main_listTransition.js"></script>
 </body>
 </html>
