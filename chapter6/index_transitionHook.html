@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Vue.js App</title>
+  <link rel="stylesheet" href="main_transitionHook.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- トランジションフック -->
+    <p><button v-on:click="show=!show">切り替え</button></p>
+    <transition v-on:enter="enter" v-on:after-enter="afterEnter">
+      <div v-if="show">
+        トランジションさせたい要素
+      </div>
+    </transition>
+
+    <!-- トランジションフックのサンプル -->
+    <p><button v-on:click="show=!show">切り替え</button></p>
+    <transition
+      v-on:before-enter="beforeEnter"
+      v-on:enter="enter"
+      v-on:after-enter="afterEnter"
+      v-on:enter-cancelled="enterCancelled"
+      v-on:before-leave="beforeLeave"
+      v-on:leave="leave"
+      v-on:after-leave="afterLeave"
+      v-on:leave-cancelled="leaveCancelled">
+      <div v-if="show">
+        トランジションさせたい要素
+      </div>
+    </transition>
+  </div>
+  <script src="main_transitionHook.js"></script>
+</body>
+</html>
