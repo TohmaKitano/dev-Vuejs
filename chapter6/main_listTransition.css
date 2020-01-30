@@ -3,7 +3,8 @@
   transition: transform 1s;
 } */
 
-.list {
+/* 移動トランジション */
+/* .list {
   width: 240px;
   padding: 0;
 }
@@ -26,4 +27,16 @@
   opacity: 0;
   background: #f9a3b1;
   transform: translateY(-30px);
+} */
+
+/* SVGのトランジション */
+.v-enter-active, .v-leave-active {
+  transition: all 1s;
+}
+.v-leave-active {
+  position: absolute;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
 }
