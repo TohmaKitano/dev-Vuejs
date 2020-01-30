@@ -3012,3 +3012,39 @@ new Vue({
   }
 })
 ```
+
+- leaveとmoveが同時発生する場合<br>
+スタイルを一括で定義するか、<strong>:not()</strong> で回避する。
+
+```
+<ul>
+  <li>item1</li>
+  <li class="v-leave-active v-leave-to">item2</li>
+  <li class="v-leave-active v-leave-to move">item3</li>
+</ul>
+
+// =>
+.v-enter-active, v-leave-active {
+  transition: opacity 1s, transform 1s;
+}
+.v-leave-active {
+  position: absolute;
+}
+/* このタグに上書きされてしまう */
+.v-move {
+  transition: transform 1s;
+}
+.v-enter, v-leave-to {
+  opacity: 0;
+}
+
+// => スタイルを一括で定義する場合
+.v-enter-active, v-leave-active, v-move {
+  transition: opacity 1s, transform 1s;
+}
+
+// => :not()を使う場合
+.v-move:not(.v-leave-active) {
+  transition: transform 1s;
+}
+```
