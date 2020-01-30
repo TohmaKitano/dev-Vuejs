@@ -19,7 +19,7 @@
     </transition-group> -->
 
     <!-- 移動トランジションのサンプル -->
-    <p>
+    <!-- <p>
       <button v-on:click="doShuffle">シャッフル</button>
       <button v-on:click="doAdd">追加</button>
     </p>
@@ -28,7 +28,15 @@
           v-bind:key="item"
           class="item"
           v-on:click="doRemove(index)">{{ item }}</li>
-    </transition-group>
+    </transition-group> -->
+
+    <!-- SVGのトランジション -->
+    <button v-on:click="toggle=!toggle">切り替え</button>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <transition>
+        <my-circle v-bind:fill="fill" v-bind:key="fill"></my-circle>
+      </transition>
+    </svg>
 
   </div>
   <script src="main_listTransition.js"></script>
