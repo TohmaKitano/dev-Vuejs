@@ -3545,3 +3545,87 @@ proxyTable: {
 }
 :<snip>
 ```
+
+### Vue.js プラグインのインストール
+<strong>Vue.use</strong> メソッドを使用して、Vue.jsに登録する。
+
+- Vuexを登録する場合
+
+```
+# my-app/src/main.js
+import Vuex from 'vuex'
+Vue.use(Vuex)
+```
+
+- 自作のプラグインを登録する場合<br>
+※ ここは難しいのでハマらないようする。
+
+```
+var MyPlugin = {
+  // install => Vue.use()でプラグインが登録された時に呼び出される
+  install: function(Vue, options) {
+    // Vue.use() した時に実行される処理
+    console.log(options)
+  }
+}
+Vue.use(MyPlugin, {
+  lang: 'ja'
+})
+```
+
+- Vue.prototype インスタンス共通のメソッドやプロパティを登録
+
+```
+var MyPlugin = {
+  install: function(Vue) {
+    Vue.directive('my-plugin', function(el) {
+      // グローバルにカスタムディレクティブを登録
+    })
+    Vue.mixin({
+      created: function() {
+        // グローバルにミックスインを登録
+      }
+    })
+    // インスタンスプロパティを登録
+    Vue.prototype.$myPlugin = 'myPlugin'
+    // 慣例的に$から始まる名前を登録
+  }
+}
+Vue.use(MyPlugin)
+```
+
+#### 自作のプラグインを登録するサンプル
+
+```
+# my-app/src/window-plugin.js
+var windowPlugin = {
+  install: function(Vue) {
+    // プラグインデータ用にVueインスタンスを利用する
+    var store = new Vue({
+      data: {
+        scrollY: 0
+      }
+    })
+    // ウィンドウのスクロールイベントをハンドル
+    var timer = null
+    window.addEventListener('scroll', function() {
+      if (timer === null) {
+        timer = setTimeout(function() {
+          // 200ms間隔でscrollYプロパティに代入
+          store.scrollY = window.scrollY
+          clearTimeout(timer)
+          timer = null
+        }, 200)
+      }
+    })
+    // インスタンスプロパティに登録
+    Vue.prototype.$window = store.$data
+  }
+}
+
+export default windowPlugin
+
+# my-app/src/main.js
+import windowPlugin from './window-plugin'
+Vue.use(windowPlugin)
+```
