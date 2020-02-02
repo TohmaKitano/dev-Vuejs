@@ -3405,3 +3405,37 @@ import Exmaple from './Example.js'
 console.log(Exmaple.count)
 // => 1
 ```
+
+### Node.js
+「ChromeのV8 JavaScriptエンジン」で動くJavaScriptの実行環境。
+
+- バージョンの確認
+
+```
+$ node -v
+$ npm -v
+```
+
+- <strong>npm</strong><br>
+Node.jsのJavaScriptのパッケージ管理ツール。
+
+|コマンド|ショートカット|内容|
+|-----|-----|-----|
+|npm install --global|npm i -g|グローバルに追加|
+|npm install --save|npm i -S|本番に必要なパッケージを追加|
+|npm install --save-dev|npm i -D|開発に必要なパッケージを追加|
+
+```
+// サンプル
+// @~ でバージョンを指定
+$ npm i -S vue@2.5.13
+```
+
+### Babel
+ES2015以降のJavaScript記法を、ES6準拠の記法へ変換(トランスパイル)するツール。
+
+```
+// サンプル
+const count = 1
+// => var count = 1
+```
