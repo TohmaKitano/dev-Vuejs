@@ -3439,3 +3439,90 @@ ES2015以降のJavaScript記法を、ES6準拠の記法へ変換(トランスパ
 const count = 1
 // => var count = 1
 ```
+
+### Vue CLI のインストール
+<a href="https://github.com/vuejs-templates" target="_blank" rel="noopener">Vue CLI Templates</a>
+
+```
+// グローバルにインストール
+$ npm i -g vue-cli
+
+// バージョンを確認
+$ vue --version
+
+// プロジェクトの作成
+$ vue init テンプレート名 プロジェクト名
+$ cd プロジェクト名
+$ npm install
+```
+
+#### Vue CLI のインストールサンプル
+
+```
+$ vue init webpack my-app
+
+? Project name (my-app)
+? Project description (A Vue.js project)
+? Author (xxx <xxx@exaple.com>)
+? Vue build (Use arrow keys)
+❯ Runtime + Compiler: recommended for most users // => こちらを選択してコンパイルする
+  Runtime-only: about 6KB lighter min+gzip, but...
+? Install vue-router? (Y/n) // => 一旦、n で良い
+? Use ESLint to lint your code? (Y/n) // => 一旦、n で良い
+? Set up unit tests (Y/n) // => 一旦、n で良い
+? Setup e2e tests with Nightwatch? (Y/n) // => 一旦、n で良い
+❯ Yes, use NPM // => 一旦、npm で良い
+  Yes, use Yarn
+  No, I will handle that myself
+
+$ cd my-app
+```
+
+- 構成
+
+```
+❯ tree -L 1
+.
+├── README.md
+├── build
+├── config
+├── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+└── static
+
+5 directories, 4 files
+```
+
+- ランタイム限定のVueに変更
+
+```
+# my-app/src/main.js
+// デフォルト(template) => コンパイルが必要
+// new Vue({
+//   el: '#app',
+//   components: { App },
+//   template: '<App/>'
+// })
+
+// ランタイム限定(描画関数) => コンパイルは不要
+new Vue({
+  el: '#app',
+  render: h => h(App)
+})
+```
+
+- 開発サーバーを起動、ホットリロードを起動
+
+```
+$ npm run dev
+```
+
+- プロジェクトをビルド<br>
+プロジェクトルートにdistフォルダが作成されるので、distフォルダをデプロイする。
+
+```
+$ npm run build
+```
