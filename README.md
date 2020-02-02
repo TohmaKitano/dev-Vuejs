@@ -3382,3 +3382,26 @@ span.title {
 <style src="./style.css"></style>
 <style src="./style.css" lang="scss" scoped></style>
 ```
+
+#### JavaScript(ES2015)ファイルの定義サンプル
+.jsファイルはそれぞれスコープをもつが、<strong>export default</strong> でデータを返す。
+
+```
+# Example.js
+// stateはこのモジュール内でしか使用できない
+var state = {
+  count: 1
+}
+
+// データをエクスポートする
+export default state
+
+
+# main.js
+// データをインポートする
+import Exmaple from './Example.js'
+
+// データにアクセスする
+console.log(Exmaple.count)
+// => 1
+```
