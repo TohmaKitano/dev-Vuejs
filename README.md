@@ -7,6 +7,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-4">Chapter 4 Watch, Processing Data</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-5">Chapter 5 Component</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-7">Chapter 7 Application</a>
 
 
 ## Chapter 1
@@ -3279,4 +3280,105 @@ new Vue({
     //}
   }
 })
+```
+
+## Chapter 7
+
+- Vuex<br>
+アプリケーションの状態を一元管理する、状態管理用のライブラリ。
+
+- Vue Router<br>
+コンポーネントで構造化されたビューをURLと紐づける、 SPA構築のためルーティング管理用のライブラリ。
+
+- Vue CLI<br>
+アプリケーション開発に必要な開発環境を構築する、コマンドラインインターフェース。<br>
+JavaScriptファイルをモジュール化し、保守性や再利用性(メンテナンス性)を向上する。
+
+- バンドルツール<br>
+モジュール化したファイルを結合し、ブラウザで配信できる形にする(バンドルツール)。<br>
+ex webpack...
+
+- 抽象化<br>
+コンポーネントやモジュールのようにコードを分割すること。
+
+
+### 単一ファイルコンポーネント(Single File Components)
+コンポーネント構築をより快適にするための仕組み。
+
+#### 単一ファイルコンポーネントの定義サンプル
+
+|ファイル名|MyComponent|
+|タグ名|<MyComponent />|
+|コンポーネント名|export default { name: 'MyCpmponent }|
+
+
+- スコープ付きCSS(Scoped CSS)<br>
+定義したコンポーネント内にCSSのスコープを与えるオプション。
+
+```
+<template>
+  <div class="example">
+    <span class="title">{{ text }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'example',
+  data() {
+    return {
+      text: 'example'
+    }
+  }
+}
+</script>
+
+// スコープ付きCSS
+<style scoped>
+span.title {
+  color: #ffbb00;
+}
+</style>
+```
+
+- 子コンポーネントのルート要素とスロット要素は、親と子の両方のスコープをもつ
+
+```
+<div class="example">
+  <child-component />
+</div>
+
+// => 実行結果
+<div class="example" data-A-aaaaa>
+  <div class="example" data-A-aaaaa data-B-bbbbb>
+    <span data-B-bbbbb>child-component</span>
+  </div>
+</div>
+```
+
+- スコープをまたいで指定する
+
+```
+// CSSの場合
+<style scoped>
+.a >>> .b {
+  color: #ff0000;
+}
+</style>
+
+// SCSSの場合
+<style lang="scss" scoped>
+.a/deep/ .b {
+  color: #ff0000;
+}
+</style>
+```
+
+- 外部ファイルを読み込む
+
+```
+<template src="./template.html"></template>
+<script src="./script.js"></script>
+<style src="./style.css"></style>
+<style src="./style.css" lang="scss" scoped></style>
 ```
