@@ -65,5 +65,18 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
-  }
+  },
+
+  // プロキシの設定テスト
+  // http://localhost:8080/api => http://localhost:8080/my-app/api
+  // proxyTable: {
+  //   '/api': {
+  //     targer: 'http://localhost:8080',
+  //     changeOrigin: true,
+  //     pathRewite: {
+  //       '^/api': '/my-app/api'
+  //     }
+  //   }
+  // }
+
 }

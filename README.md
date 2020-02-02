@@ -3526,3 +3526,22 @@ $ npm run dev
 ```
 $ npm run build
 ```
+
+#### プロキシを変更する場合(APIのパスやCROSの設定など)
+
+```
+# my-app/config/index.js
+
+:<snip>
+// http://localhost:8080/api => http://localhost:8080/my-app/api
+proxyTable: {
+  '/api': {
+    targer: 'http://localhost:8080',
+    changeOrigin: true,
+    pathRewite: {
+      '^/api': '/my-app/api'
+    }
+  }
+}
+:<snip>
+```
