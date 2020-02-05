@@ -22,8 +22,8 @@ Vue.config.productionTip = false
 // })
 
 // 自作のプラグインを登録するサンプル
-import windowPlugin from './window-plugin'
-Vue.use(windowPlugin)
+// import windowPlugin from './window-plugin'
+// Vue.use(windowPlugin)
 
 // var MyPlugin = {
 //   install: function(Vue) {
@@ -42,7 +42,10 @@ Vue.use(windowPlugin)
 // }
 // Vue.use(MyPlugin)
 
-// 自作のプラグインを登録するサンプル
+// ストア
+import store from '@/store.js'
+// store.commit('increment')
+// console.log(store.state.count)
 
 /* eslint-disable no-new */
 // デフォルト(template) => コンパイルが必要
@@ -55,5 +58,6 @@ Vue.use(windowPlugin)
 // ランタイム限定(描画関数) => コンパイルは不要
 new Vue({
   el: '#app',
+  store, // ストアを登録
   render: h => h(App)
 })
