@@ -4590,3 +4590,23 @@ export default store
 
 # my-app/src/main.js
 ```
+
+### モジュールをファイルごとに管理する
+Vuexモジュールはフォルダに階層化して分ける。
+
+```
+src
+| - store
+| | - modules
+|   | - moduleA
+|     | - actions.js
+|     | - getters.js
+|     | - index.js
+|     | - mutations.js
+|   | - moduleB
+...
+| | - store.js
+```
+
+### モジュールの再利用
+
