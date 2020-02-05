@@ -4503,3 +4503,90 @@ console.log(store.state.moduleB.count)
 
 - ヘルパーでネームスペースを指定<br>
 studing now...
+
+- モジュールのネスト
+
+```
+const moduleA = {
+  namespaced: true,
+  modules: {
+    moduleC
+  }
+}
+
+store.commit('moduleA/moduleC/update')
+```
+
+- ネームスペース付きモジュールから外部へアクセス(<strong>？</strong>)<br>
+studing now...
+
+```
+# my-app/src/store.js
+const moduleA = {
+  namespaced: true,
+  getters: {
+    test(state, getters, rootState, rootGetters) {
+      // 自分自身の item ゲッターを使用 getters['moduleA/item']
+      getters.item
+      // ルートの user ゲッターを使用
+      rootGetters.user
+
+      return [getters.item, rootGetters.user]
+    },
+    item() { return 'getter: moduleA/item' },
+  },
+  actions: {
+    test({ dispatch, commit, getters, rootGetters }) {
+      // 自分自身の update をディスパッチ
+      dispatch('update')
+      // ルートの update をディスパッチ
+      dispatch('update', null, { root: true })
+      // ルートの update をコミット
+      commit('update', null, { root: true })
+      // ルートに登録されたモジュール moduleB の update をコミット
+      commit('moduleB/update', null, { root: true })
+    },
+    update() {
+      console.log('action: moduleA/update')
+      // => action: moduleA/update
+    },
+  }
+}
+
+const moduleB = {
+  namespaced: true,
+  mutations: {
+    update() {
+      console.log('mutation: moduleB/update')
+      // => mutation: moduleB/update
+    }
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
+  },
+  getters: {
+    user() {
+      return 'getter: user'
+    }
+  },
+  mutations: {
+    update() {
+      console.log('mutation: update')
+      // => mutation: update
+    }
+  },
+  actions: {
+    update() {
+      console.log('action: update')
+      // => action: update
+    }
+  }
+})
+export default store
+
+# my-app/src/main.js
+```
