@@ -4167,3 +4167,48 @@ store.commit('mutationType', 1)
 console.log(store.state.count)
 // => 1
 ```
+
+### アクション(actions)
+データの加工や非同期処理を行い、その結果をミューテーションへコミットする。
+
+#### ディスパッチ(dispatch)
+登録されているアクションを呼び出すインスタンスメソッド。
+
+```
+// 呼び出し方
+store.dispatch('actionType', payload)
+```
+
+```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    mutationType(state, payload) {
+      state.count = payload
+    }
+  },
+  actions: {
+    actionType({ commit }, payload) {
+      // アクション内からコミットする
+      commit('mutationType', payload)
+    }
+  }
+})
+export default store
+
+# my-app/src/main.js
+// アクションをdisppatchで呼び出す
+store.dispatch('actionType', 1)
+console.log(store.state.count)
+// => 1
+```
+
+### Vuexのルール
+studing now...
+
+- アプリケーションレベルの状態はストアで管理する
+- 状態を変更できるのはミューテーションのみ
+- 非同期処理はコミットする前に実行する(<strong>？</strong>)

@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png">
-    <HelloWorld/> -->
+    <img src="./assets/logo.png">
+    <HelloWorld/>
 
-    <h3>引数なし</h3>
+    <!-- <h3>引数なし</h3>
     <ol>
       <li>{{ count }}</li>
       <li>{{ max }}</li>
@@ -14,7 +14,7 @@
       <li>{{ itemB(1) }}</li>
       <li>{{ nameA }}</li>
       <li>{{ nameB(1) }}</li>
-    </ol>
+    </ol> -->
 
   </div>
 </template>
@@ -22,29 +22,29 @@
 <script>
 import HelloWorld from './components/HelloWorld'
 
+export default {
+  name: 'App',
+  components: {
+    HelloWorld
+  },
+  // created() {
+  //   console.log(this.$store.state.count)
+  //   this.$store.commit('increment')
+  // }
+}
+
 // export default {
-//   name: 'App',
-//   components: {
-//     HelloWorld
-//   },
-//   created() {
-//     console.log(this.$store.state.count)
-//     this.$store.commit('increment')
+//   computed: {
+//     // 引数なしゲッター
+//     count() { return this.$store.getters.count },
+//     max()   { return this.$store.getters.max },
+//     // 引数付きゲッター
+//     itemA() { return this.$store.getters.item(1) },
+//     itemB() { return this.$store.getters.item },
+//     nameA() { return this.$store.getters.name(1) },
+//     nameB() { return this.$store.getters.name }
 //   }
 // }
-
-export default {
-  computed: {
-    // 引数なしゲッター
-    count() { return this.$store.getters.count },
-    max()   { return this.$store.getters.max },
-    // 引数付きゲッター
-    itemA() { return this.$store.getters.item(1) },
-    itemB() { return this.$store.getters.item },
-    nameA() { return this.$store.getters.name(1) },
-    nameB() { return this.$store.getters.name }
-  }
-}
 </script>
 
 <style>
