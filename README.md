@@ -8,6 +8,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-5">Chapter 5 Component</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-7">Chapter 7 Application</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-8">Chapter 8 VueX</a>
 
 
 ## Chapter 1
@@ -3836,4 +3837,109 @@ myFunction(1).then().catch().finally((e) => {
   console.log('Result')
 })
 // => result
+```
+
+## Chapter 8
+
+### Vuex
+アプリケーションの状態を一元管理する、状態管理用のライブラリ。<br>
+<br>
+Vuexによって管理されるデータ、処理はリアクティブになっているため、使用しているファイルで常に同期される。
+
+- 複数のコンポーネントでデータを共有
+- データの状態に関する処理を共有
+- 大きな状態管理もモジュールで簡単に細分化
+
+### Vuex のインストール
+<a href="https://vuex.vuejs.org/ja/" target="_blank" rel="noopener">Vuex</a>
+
+```
+$ cd my-app
+$ npm install vuex babel-polyfill
+
+// バージョンを指定する場合
+$ npm install vuex@3.0.1 babel-polyfill@6.26.0
+```
+
+- <strong>store.js</strong> ファイルを作成
+状態を管理するための「ストア」を作成する。ストアはアプリケーション内に作った、仮想のデータベースのようなもの。
+
+```
+$ touch store.js
+
+# my-app/src/store.js
+import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+```
+
+### ストアのインスタンスを作成
+
+```
+# my-app/src/store.js
+import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+  }
+})
+export default store
+
+# my-app/src/main.js
+:<snip>
+import store from '@/store.js'
+console.log(store.state.count)
+:<snip>
+// => 0
+
+// @はデフォルトで登録されているsrcディレクトリのエイリアス
+// import store from './store.js' => import store from '@/store.js'
+```
+
+- インスタンスからcommitメソッドでミューテーションを呼び出す
+
+```
+# my-app/src/main.js
+:<snip>
+import store from '@/store.js'
+store.commit('increment') // 追記
+console.log(store.state.count)
+:<snip>
+// => 1
+```
+
+- ストアインスタンス内の<strong>this</strong><br>
+Vue.js本体のようにthisを使用しない。アロー関数も使用できる。
+
+### ストアをVueアプリケーションに登録
+ストアのインスタンスをVueアプリケーションのルートに登録する。<br>
+コンポーネントのインスタンスプロパティとして、$storeとしてどこからでも使用できるようになる。
+
+```
+# my-app/src/main.js
+import store from '@/store.js'
+new Vue({
+  el: '#app',
+  store, // ストアを登録
+  render: h => h(App)
+})
+
+# my-app/src/App.vue
+export default {
+  :<snip>
+  created() {
+    console.log(this.$store.state.count)
+    this.$store.commit('increment')
+  }
+}
 ```
