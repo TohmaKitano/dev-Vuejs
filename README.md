@@ -3948,7 +3948,7 @@ export default {
 ### コアコンセプト
 
 #### ステート(state)
-ストアで管理している状態そのもの。コンポーネントでいうdataにあたる。
+ストアで管理している状態そのもの。コンポーネントでいうデータ(data)にあたる。
 
 ```
 # my-app/src/store.js
@@ -4005,5 +4005,165 @@ console.log(store.getters.max)
 - getterに引数を使う
 
 ```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+      { id: 3, name: 'いちご', price: 300 }
+    ]
+  },
+  getters: {
+    :<snip>
+    // 引数付きゲッター
+    item(state) {
+      // 引数を使用するためアロー関数を返している
+      return id => state.list.find(el => el.id === id)
+    },
+    // 別のゲッターを使う
+    name(state, getters) {
+      return id => getters.item(id).name
+    }
+  }
+})
+export default store
 
+# my-app/src/main.js
+import store from '@/store.js'
+console.log(store.getters.item(1))
+// => {__ob__: Observer}
+console.log(store.getters.name(1))
+// => りんご
+```
+
+#### getterのサンプル
+
+```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+      { id: 3, name: 'いちご', price: 300 }
+    ]
+  },
+  getters: {
+    // ステートを返す
+    count(state, getters, rootState, rootGetter) {
+      return state.count
+    },
+    // リストの中からpriceプロパティの最大値を返す
+    max(state) {
+      return state.list.reduce((a, b) => {
+        return a > b.price ? a : b.price
+      }, 0)
+    },
+    // 引数付きゲッター
+    item(state) {
+      // 引数を使用するためアロー関数を返している
+      return id => state.list.find(el => el.id === id)
+    },
+    // 別のゲッターを使う
+    name(state, getters) {
+      return id => getters.item(id).name
+    }
+  }
+})
+export default store
+
+# my-app/src/App.vue
+<template>
+  <div id="app">
+    <h3>引数なし</h3>
+    <ol>
+      <li>{{ count }}</li>
+      <li>{{ max }}</li>
+    </ol>
+    <h3>引数付き</h3>
+    <ol>
+      <li>{{ itemA }}</li>
+      <li>{{ itemB(1) }}</li>
+      <li>{{ nameA }}</li>
+      <li>{{ nameB(1) }}</li>
+    </ol>
+  </div>
+</template>
+
+<script>
+export default {
+  computed: {
+    // 引数なしゲッター
+    count() { return this.$store.getters.count },
+    max()   { return this.$store.getters.max },
+    // 引数付きゲッター
+    itemA() { return this.$store.getters.item(1) },
+    itemB() { return this.$store.getters.item },
+    nameA() { return this.$store.getters.name(1) },
+    nameB() { return this.$store.getters.name }
+  }
+}
+</script>
+
+// => 出力結果
+引数なし
+1.0
+2.300
+引数付き
+1.{ "id": 1, "name": "りんご", "price": 100 }
+2.{ "id": 1, "name": "りんご", "price": 100 }
+3.りんご
+4.りんご
+```
+
+### ミューテーション(mutations)
+ステートを変更するメソッド。コンポーネントでいうメソッド(methods)にあたる。
+
+#### 引数
+
+- <strong>state</strong>:ステート
+- <strong>payload</strong>:コミットからの引数
+
+#### コミット
+登録されているミューテーションを呼び出すインスタンスメソッド。コンポーネントでいう$emitのような機能にあたる。
+
+```
+// 呼び出し方
+store.commit('mutationType', payload)
+
+// 引数が複数ある場合
+store.commit('mutationType', { id: 1, name: 'りんご' })
+
+:<snip>
+mutations: {
+  mutationType(state, { id, name }) {
+    // ...
+  }
+},
+:<snip>
+```
+
+```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    mutationType(state, payload) {
+      state.count += payload
+    }
+  }
+})
+export default store
+
+# my-app/src/main.js
+// ミューテーション
+// ミューテーションをcommitで呼び出す
+store.commit('mutationType', 1)
+console.log(store.state.count)
+// => 1
 ```

@@ -47,12 +47,20 @@ import store from '@/store.js'
 // store.commit('increment')
 // console.log(store.state.count)
 // console.log(store.state.message)
-console.log(store.getters.count)
-// => 0
-console.log(store.getters.max)
-// => 300
-console.log(store.getters.item(1))
-// => {__ob__: Observer}
+// console.log(store.getters.count)
+// // => 0
+// console.log(store.getters.max)
+// // => 300
+// console.log(store.getters.item(1))
+// // => {__ob__: Observer}
+// console.log(store.getters.name(1))
+// // => りんご
+
+// ミューテーション
+// ミューテーションをcommitで呼び出す
+store.commit('mutationType', 1)
+console.log(store.state.count)
+// => 1
 
 /* eslint-disable no-new */
 // デフォルト(template) => コンパイルが必要

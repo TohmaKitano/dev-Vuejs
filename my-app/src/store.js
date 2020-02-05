@@ -26,11 +26,11 @@ const store = new Vuex.Store({
     ]
     // message: 'Hello, Vue.js'
   },
-  // mutations: {
-  //   increment(state) {
-  //     state.count++
-  //   }
-  // },
+  mutations: {
+    mutationType(state, payload) {
+      state.count = payload
+    }
+  },
   getters: {
     // ステートを返す
     count(state, getters, rootState, rootGetter) {
