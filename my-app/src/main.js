@@ -56,9 +56,15 @@ import store from '@/store.js'
 // console.log(store.getters.name(1))
 // // => りんご
 
-// ミューテーション
-// ミューテーションをcommitで呼び出す
-store.commit('mutationType', 1)
+// // ミューテーション
+// // ミューテーションをcommitで呼び出す
+// store.commit('mutationType', 1)
+// console.log(store.state.count)
+// // => 1
+
+// アクション
+// アクションをdisppatchで呼び出す
+store.dispatch('actionType', 1)
 console.log(store.state.count)
 // => 1
 
