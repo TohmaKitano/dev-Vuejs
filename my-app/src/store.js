@@ -81,29 +81,62 @@ Vue.use(Vuex)
 // })
 // export default store
 
-// コンポーネントにストアを組み込む
-const store = new Vuex.Store({
-  // 初期のstate
+// // コンポーネントにストアを組み込む
+// const store = new Vuex.Store({
+//   // 初期のstate
+//   state: {
+//     message: 'Hello, Vue.js'
+//   },
+//   // stateのmessageを使用するゲッター
+//   getters: {
+//     message(state) {
+//       return state.message
+//     }
+//   },
+//   // stateのメッセージを変更するミューテーション
+//   mutations: {
+//     setMessage(state, payload) {
+//       state.message = payload.message
+//     }
+//   },
+//   // stateのメッセージを更新するアクション
+//   actions: {
+//     doUpdate({ commit }, message) {
+//       commit('setMessage', { message })
+//     }
+//   }
+// })
+// export default store
+
+// モジュールでストアを分割するサンプル
+const moduleA = {
+  namespaced: true,
   state: {
-    message: 'Hello, Vue.js'
+    count: 1
   },
-  // stateのmessageを使用するゲッター
-  getters: {
-    message(state) {
-      return state.message
-    }
-  },
-  // stateのメッセージを変更するミューテーション
   mutations: {
-    setMessage(state, payload) {
-      state.message = payload.message
+    update(state) {
+      state.count += 100
     }
+  }
+}
+
+const moduleB = {
+  namespaced: true,
+  state: {
+    count: 2
   },
-  // stateのメッセージを更新するアクション
-  actions: {
-    doUpdate({ commit }, message) {
-      commit('setMessage', { message })
+  mutations: {
+    update(state) {
+      state.count += 200
     }
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
   }
 })
 export default store
