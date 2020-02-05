@@ -3942,4 +3942,68 @@ export default {
     this.$store.commit('increment')
   }
 }
+// => 0
+```
+
+### コアコンセプト
+
+#### ステート(state)
+ストアで管理している状態そのもの。コンポーネントでいうdataにあたる。
+
+```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    message: 'Hello, Vue.js'
+  }
+})
+export default store
+
+# my-app/src/main.js
+import store from '@/store.js'
+console.log(store.state.message)
+// => Hello, Vue.js
+```
+
+### ゲッター(getter)
+ステートを取得するための算出データ機能。コンポーネントでいうcomputedとmethodsの中間のような機能にあたる。
+
+```
+# my-app/src/store.js
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+    list: [
+      { id: 1, name: 'りんご', price: 100 },
+      { id: 2, name: 'ばなな', price: 200 },
+      { id: 3, name: 'いちご', price: 300 }
+    ]
+  },
+  getters: {
+    // ステートを返す
+    count(state, getters, rootState, rootGetter) {
+      return state.count
+    },
+    // リストの中からpriceプロパティの最大値を返す
+    max(state) {
+      return state.list.reduce((a, b) => {
+        return a > b.price ? a : b.price
+      }, 0)
+    },
+  }
+})
+export default store
+
+# my-app/src/main.js
+import store from '@/store.js'
+console.log(store.getters.count)
+// => 0
+console.log(store.getters.max)
+// => 300
+```
+
+- getterに引数を使う
+
+```
+
 ```

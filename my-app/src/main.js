@@ -46,6 +46,13 @@ Vue.config.productionTip = false
 import store from '@/store.js'
 // store.commit('increment')
 // console.log(store.state.count)
+// console.log(store.state.message)
+console.log(store.getters.count)
+// => 0
+console.log(store.getters.max)
+// => 300
+console.log(store.getters.item(1))
+// => {__ob__: Observer}
 
 /* eslint-disable no-new */
 // デフォルト(template) => コンパイルが必要
