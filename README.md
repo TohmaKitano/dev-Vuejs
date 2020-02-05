@@ -4212,3 +4212,158 @@ studing now...
 - アプリケーションレベルの状態はストアで管理する
 - 状態を変更できるのはミューテーションのみ
 - 非同期処理はコミットする前に実行する(<strong>？</strong>)
+
+### コンポーネントにストアを組み込む
+
+- main.js
+
+```
+import Vue from 'vue'
+import App from './App'
+
+Vue.config.productionTip = false
+
+// コンポーネントにストアを組み込む
+import store from '@/store.js'
+new Vue({
+  el: '#app',
+  store, // storeをローカルに登録
+  render: h => h(App)
+})
+```
+
+- store.js
+
+```
+import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+// コンポーネントにストアを組み込む
+const store = new Vuex.Store({
+  // 初期のstate
+  state: {
+    message: 'Hello, Vue.js'
+  },
+  // stateのmessageを使用するゲッター
+  getters: {
+    message(state) {
+      return state.message
+    }
+  },
+  // stateのメッセージを変更するミューテーション
+  mutations: {
+    setMessage(state, payload) {
+      state.message = payload.message
+    }
+  },
+  // stateのメッセージを更新するアクション
+  actions: {
+    doUpdate({ commit }, message) {
+      commit('setMessage', { message })
+    }
+  }
+})
+export default store
+```
+
+- App.vue
+
+```
+<template>
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <EditForm/>
+  </div>
+</template>
+
+<script>
+import EditForm from '@/components/EditForm'
+
+export default {
+  name: 'App',
+  components: {
+    EditForm
+  },
+  // ローカルのmessageとストアのmessageを同期
+  computed: {
+    message() {
+      return this.$store.getters.message
+    }
+  }
+}
+</script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
+```
+
+- EditForm.vue
+
+```
+<template>
+  <div class="edit-form">
+    <input type="text" :value="message" @input="doUpdate">
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'EditForm',
+  computed: {
+    message() {
+      return this.$store.getters.message
+    }
+  },
+  methods: {
+    doUpdate(event) {
+      // inputイベントとディスパッチを同期
+      this.$store.dispatch('doUpdate', event.target.value)
+    }
+  }
+}
+</script>
+```
+
+- v-model を使用したリファクタリング
+
+```
+<template>
+  <div class="edit-form">
+    <!-- <input type="text" :value="message" @input="doUpdate"> -->
+    <!-- modelを使って一つの算出プロパティにまとめる -->
+    <input type="text" v-model="message">
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'EditForm',
+  // v-modelを使って一つの算出プロパティにまとめる
+  computed: {
+    message: {
+      get() { return this.$store.getters.message },
+      set(value) { this.$store.dispatch('doUpdate', value) }
+    }
+  },
+  // // inputイベントとディスパッチを同期
+  // methods: {
+  //   doUpdate(event) {
+  //     this.$store.dispatch('doUpdate', event.target.value)
+  //   }
+  // }
+}
+</script>
+```
+
+### Vuexのヘルパー
+<a href="https://vuex.vuejs.org/ja/guide/state.html" target="_blank" rel="noopener">studing now...</a>

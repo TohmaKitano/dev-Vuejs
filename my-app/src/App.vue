@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <!-- <img src="./assets/logo.png">
+    <HelloWorld/> -->
 
     <!-- <h3>引数なし</h3>
     <ol>
@@ -16,17 +16,28 @@
       <li>{{ nameB(1) }}</li>
     </ol> -->
 
+    <h1>{{ message }}</h1>
+    <EditForm/>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+// import HelloWorld from './components/HelloWorld'
+import EditForm from '@/components/EditForm'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // HelloWorld,
+    EditForm
   },
+  // ローカルのmessageとストアのmessageを同期
+  computed: {
+    message() {
+      return this.$store.getters.message
+    }
+  }
   // created() {
   //   console.log(this.$store.state.count)
   //   this.$store.commit('increment')

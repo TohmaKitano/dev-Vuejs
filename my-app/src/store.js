@@ -1,6 +1,12 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import {
+//   mapState,
+//   mapGetters,
+//   mapMutations,
+//   mapActions
+// } from 'Vuex'
 Vue.use(Vuex)
 
 // ストアはアプリケーション内に作った、仮想のデータベースのようなもの。
@@ -56,20 +62,47 @@ Vue.use(Vuex)
 // })
 // export default store
 
-// アクション
+// // アクション
+// const store = new Vuex.Store({
+//   state: {
+//     count: 0
+//   },
+//   mutations: {
+//     mutationType(state, payload) {
+//       state.count = payload
+//     }
+//   },
+//   actions: {
+//     actionType({ commit }, payload) {
+//       // アクション内からコミットする
+//       commit('mutationType', payload)
+//     }
+//   }
+// })
+// export default store
+
+// コンポーネントにストアを組み込む
 const store = new Vuex.Store({
+  // 初期のstate
   state: {
-    count: 0
+    message: 'Hello, Vue.js'
   },
-  mutations: {
-    mutationType(state, payload) {
-      state.count = payload
+  // stateのmessageを使用するゲッター
+  getters: {
+    message(state) {
+      return state.message
     }
   },
+  // stateのメッセージを変更するミューテーション
+  mutations: {
+    setMessage(state, payload) {
+      state.message = payload.message
+    }
+  },
+  // stateのメッセージを更新するアクション
   actions: {
-    actionType({ commit }, payload) {
-      // アクション内からコミットする
-      commit('mutationType', payload)
+    doUpdate({ commit }, message) {
+      commit('setMessage', { message })
     }
   }
 })

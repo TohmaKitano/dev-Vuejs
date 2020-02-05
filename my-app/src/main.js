@@ -62,11 +62,18 @@ import store from '@/store.js'
 // console.log(store.state.count)
 // // => 1
 
-// アクション
-// アクションをdisppatchで呼び出す
-store.dispatch('actionType', 1)
-console.log(store.state.count)
-// => 1
+// // アクション
+// // アクションをdisppatchで呼び出す
+// store.dispatch('actionType', 1)
+// console.log(store.state.count)
+// // => 1
+
+// コンポーネントにストアを組み込む
+new Vue({
+  el: '#app',
+  store, // storeをローカルに登録
+  render: h => h(App)
+})
 
 /* eslint-disable no-new */
 // デフォルト(template) => コンパイルが必要
@@ -76,9 +83,9 @@ console.log(store.state.count)
 //   template: '<App/>'
 // })
 
-// ランタイム限定(描画関数) => コンパイルは不要
-new Vue({
-  el: '#app',
-  store, // ストアを登録
-  render: h => h(App)
-})
+// // ランタイム限定(描画関数) => コンパイルは不要
+// new Vue({
+//   el: '#app',
+//   store, // ストアを登録
+//   render: h => h(App)
+// })
