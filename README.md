@@ -4367,3 +4367,139 @@ export default {
 
 ### Vuexのヘルパー
 <a href="https://vuex.vuejs.org/ja/guide/state.html" target="_blank" rel="noopener">studing now...</a>
+
+
+### モジュールでストアを分割
+
+```
+// モジュールを定義
+const moduleA = {
+  state: { ... },
+  mutations: { ... }
+}
+const moduleB = {
+  state: { ... },
+  mutations: { ... }
+}
+
+// モジュールをストアに登録
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
+  }
+})
+
+// モジュールにアクセス
+store.state.moduleA
+store.state.moduleB
+```
+
+#### モジュールでストアを分割するサンプル
+
+```
+# my-app/src/store.js
+const moduleA = {
+  state: {
+    count: 1
+  },
+  mutations: {
+    update(state) {
+      state.count += 100
+    }
+  }
+}
+
+const moduleB = {
+  state: {
+    count: 2
+  },
+  mutations: {
+    update(state) {
+      state.count += 200
+    }
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
+  }
+})
+export default store
+
+# my-app/src/main.js
+console.log(store.state.moduleA.count)
+// => 1
+console.log(store.state.moduleB.count)
+// => 2
+store.commit('update')
+console.log(store.state.moduleA.count)
+// => 101
+console.log(store.state.moduleB.count)
+// => 202
+```
+
+### ネームスペース
+namespacedオプションをtrueにすることでネームスペースを持つことができる。
+
+```
+namespaced: true
+
+// コミット、ディスパッチを呼び出す
+store.commit('namespaseName/type')
+
+// ゲッターを呼び出す
+store.getters['namespaseName/type']
+```
+
+```
+# my-app/src/store.js
+const moduleA = {
+  namespaced: true,
+  state: {
+    count: 1
+  },
+  mutations: {
+    update(state) {
+      state.count += 100
+    }
+  }
+}
+
+const moduleB = {
+  namespaced: true,
+  state: {
+    count: 2
+  },
+  mutations: {
+    update(state) {
+      state.count += 200
+    }
+  }
+}
+
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
+  }
+})
+export default store
+
+# my-app/src/main.js
+console.log(store.state.moduleA.count)
+// => 1
+console.log(store.state.moduleB.count)
+// => 2
+// moduleAのupdateタイプを呼び出す
+store.commit('moduleA/update')
+console.log(store.state.moduleA.count)
+// => 101
+console.log(store.state.moduleB.count)
+// => 2
+```
+
+- ヘルパーでネームスペースを指定<br>
+studing now...

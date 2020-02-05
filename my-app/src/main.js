@@ -68,6 +68,19 @@ import store from '@/store.js'
 // console.log(store.state.count)
 // // => 1
 
+// モジュールでストアを分割するサンプル
+console.log(store.state.moduleA.count)
+// => 1
+console.log(store.state.moduleB.count)
+// => 2
+// store.commit('update')
+store.commit('moduleA/update')
+// store.commit('moduleB/update')
+console.log(store.state.moduleA.count)
+// => 101
+console.log(store.state.moduleB.count)
+// => 202
+
 // コンポーネントにストアを組み込む
 new Vue({
   el: '#app',
