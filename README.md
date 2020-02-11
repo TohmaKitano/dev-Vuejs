@@ -4844,3 +4844,43 @@ new Vue({
 </template>
 ```
 
+### Vue Router のモード
+
+#### ハッシュモード
+ハッシュ値の変更によって現在のルートを検知する。<br>
+History APIのサポートやサーバー側の設定が不要となるが、ページ内リンクの検知ができない。
+
+#### ヒストリーモード
+HTML5の history.pushState API を利用して現在のルートを検知する。<br>
+サーバー側の設定が必要。
+
+- src/router.js
+
+```
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+// ルート用のコンポーネントを読み込む
+import Home from '@/views/Home'
+import Product from '@/views/Product'
+
+Vue.use(VueRouter);
+
+// VueRouterインスタンスを作成
+const router = new VueRouter({
+
+  mode: history, // ヒストリーモードに変更
+
+  routes: [
+    { path: '/', component: Home },
+    { path: '/product', component: Product }
+  ]
+})
+export default router
+```
+
+- WebサーバーがApacheの場合
+
+```
+
+```
