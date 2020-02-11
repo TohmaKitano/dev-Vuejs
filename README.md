@@ -9,6 +9,7 @@ Let's study & enjoy Vue.js
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-6">Chapter 6 Transition, Animation</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-7">Chapter 7 Application</a>
 - <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-8">Chapter 8 VueX</a>
+- <a href="https://github.com/NakatsuboYusuke/dev-Vuejs#chapter-9">Chapter 9 Vue Router</a>
 
 
 ## Chapter 1
@@ -4719,3 +4720,44 @@ if (module.hot) {
     })
   })
 ```
+
+## Chapter 9
+
+### Vue Router
+シングルページアプリケーションを構築する拡張ライブラリ。
+
+### シングルページアプリケーション(Single-Page-Application)
+単一のウェブページを利用して、要素の内容のみを置き換えて画面遷移させる、アプリケーションの設計。
+
+### Vue Router のインストール
+<a href="https://vuex.vuejs.org/ja/" target="_blank" rel="noopener">https://router.vuejs.org/ja/</a>
+
+```
+// Vue CLI のインストール
+// => アプリケーション開発に必要な開発環境を構築する、コマンドラインインターフェース。
+$ vue init webpack my-spa-app
+
+// Vue Routerのインストール
+$ npm install vue-router
+
+// @~ でバージョンを指定
+$ npm i -S vue-router@3.0.1
+```
+
+### プラグインとして登録
+
+- src/router.js
+
+```
+import Vue from 'vue'
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+```
+
+- インストールすると以下のコンポーネントが利用可能になる。
+
+|カスタムタグ|振る舞い|
+|-----|-----|
+|<router-view>|ルートとマッチしたコンポーネントを描画する|
+|<router-link>|ルートのリンクを作成する|
+
