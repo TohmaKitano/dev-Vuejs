@@ -81,11 +81,14 @@ import store from '@/store.js'
 // console.log(store.state.moduleB.count)
 // // => 202
 
-// ネームスペース付きモジュールから外部へアクセス
-store.dispatch('moduleA/test')
-console.log(store.getters['moduleA/test'])
-// => ["getter: moduleA/item", "getter: user"]
+// // ネームスペース付きモジュールから外部へアクセス
+// store.dispatch('moduleA/test')
+// console.log(store.getters['moduleA/test'])
+// // => ["getter: moduleA/item", "getter: user"]
 
+// モジュールの再利用
+store.dispatch('moduleA/load', '/path/a.json');
+store.dispatch('moduleB/load', '/path/b.json');
 
 // コンポーネントにストアを組み込む
 new Vue({

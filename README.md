@@ -4610,3 +4610,47 @@ src
 
 ### モジュールの再利用
 
+- store.js
+
+```
+// モジュールを定義
+const myModule = {
+  namespaced: true,
+  state() {
+    return {
+      entries: []
+    }
+  },
+  mutations: {
+    set(state, payload) {
+      state.entries = payload
+    }
+  },
+  actions: {
+    load({ commit }, file) {
+      axios
+        .get(file)
+        .then(response => {
+           commit('set', response.data)
+        })
+    }
+  }
+}
+
+// モジュールを登録
+const store = new Vue.Store({
+  modules: {
+    moduleA: myModule,
+    moduleB: myModule
+  }
+})
+export default store;
+```
+
+- main.js
+
+```
+// モジュールの再利用
+store.dispatch('moduleA/load', '/path/a.json');
+store.dispatch('moduleB/load', '/path/b.json');
+```
