@@ -4654,3 +4654,68 @@ export default store;
 store.dispatch('moduleA/load', '/path/a.json');
 store.dispatch('moduleB/load', '/path/b.json');
 ```
+
+### その他の機能、オプション
+studing now...
+
+- ストアの機能を監視
+
+```
+// 状態の監視
+const store = new Vuex.store({
+  // ...
+})
+const unwatch = store.watch(
+  (state, getters) => {
+    return state.count // 監視したいデータを返す
+  },
+  (newVal, oldVal) => {
+    // 処理
+  }
+)
+
+// コミットやディスパッチの監視
+// コミットにフック
+store.subscribe((mutation, state) => {
+  console.log(mutation.type)
+  console.log(mutation.payload)
+})
+// ディスパッチにフック
+store.subscribeAction((action, state) => {
+  console.log(action.type)
+  console.log(action.payload)
+})
+```
+
+- Strictモード<br>
+通常モードでは、ステートの変更に対し警告が出ないため、開発モードではStrictモードにする。
+
+```
+// 開発モード
+const store = new Vue.Store({
+  strict: true
+})
+
+// 通常モード(環境変数で切り替える)
+const store = new Vue.Store({
+  strict: process.env.NODE_ENV !== 'production'
+})
+```
+
+- ホットリロード
+デフォルトではホットリロードを使用できない。<strong>store.hotUpdate()API</strong> メソッドを使い設定する。<br>
+Vuex.Store コンストラクタを使っているファイルはホットリロードを使用できない。ミューテーション、アクション、モジュールなどを別ファイルで設定して読み込む。
+
+```
+if (module.hot) {
+  module.hot.accept(['@/store/myModule.js'], () => {
+    // 更新されたモジュールを読み込む
+    const myModule = require('@/store/myModule.js').default
+    // 新しい定義をセット
+    store.hotUpdate({
+      modules: {
+        myModule: myModule
+      }
+    })
+  })
+```
