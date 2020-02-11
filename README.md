@@ -4761,3 +4761,86 @@ Vue.use(VueRouter);
 |<router-view>|ルートとマッチしたコンポーネントを描画する|
 |<router-link>|ルートのリンクを作成する|
 
+### SPA構築のサンプル
+
+- src/router.js
+
+```
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+// ルート用のコンポーネントを読み込む
+import Home from '@/views/Home'
+import Product from '@/views/Product'
+
+Vue.use(VueRouter);
+
+// VueRouterインスタンスを作成
+const router = new VueRouter({
+  routes: [
+    { path: '/', component: Home },
+    { path: '/product', component: Product }
+  ]
+})
+export default router
+```
+
+- main.js
+
+```
+import Vue from 'vue'
+import App from './App'
+
+// ルーターを読み込む
+import router from './router.js'
+
+Vue.config.productionTip = false
+
+new Vue({
+  el: '#app',
+  router, // アプリケーションに登録
+  render: h => h(App)
+})
+```
+
+- src/App.vue
+
+```
+<template>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/product">商品情報</router-link>
+    </nav>
+    <router-view />
+  </div>
+</template>
+
+<script>
+</script>
+
+<style>
+:<snip>
+</style>
+```
+
+- src/views/Home.vue
+
+```
+<template>
+  <div class="home">
+    <h1>home</h1>
+  </div>
+</template>
+```
+
+- src/views/Home.vue
+
+```
+<template>
+  <div class="product">
+    <h1>商品情報</h1>
+  </div>
+</template>
+```
+
