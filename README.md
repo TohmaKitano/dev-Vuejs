@@ -4928,3 +4928,62 @@ this.$route
   query     // ?に続くクエリのオブジェクト
 }
 ```
+
+### ルートの定義
+VueRouterコンストラクタでルーターのインスタンスを作成。routesオプションに各ルートの定義を追加する。
+
+- ルート名とパラメータを指定し、可変URLにマッチングさせる
+
+```
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/',
+      component: Home
+    },
+    {
+      name: 'product', // ルートに固有の名前をつける
+      path: '/product/:id', // URLからパラメータを受け取る
+      component: Product
+    }
+  ]
+})
+export default router
+```
+
+- 受け取ったパラメータを使用する
+
+```
+this.$route.params.id
+```
+
+- 受け取ったクエリを使用する
+
+```
+this.$route.query
+```
+
+- メタフィールドを指定する
+
+```
+// ページにBasic認証を指定する場合
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/user',
+      component: User,
+      meta: { requireAuth: true }
+    }
+  ]
+})
+export default router
+```
+
+- リダイレクトさせる
+
+```
+const router = new VueRouter({
+  { path: '/a', redirect: '/b' }
+  { path: '/a', redirect: { name: 'foo' }}
+})
+```
