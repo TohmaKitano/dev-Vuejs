@@ -11,8 +11,15 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   // mode: history, // ヒストリーモードに変更
   routes: [
-    { path: '/', component: Home },
-    { path: '/product', component: Product }
+    {
+      path: '/',
+      component: Home
+    },
+    {
+      name: 'product',
+      path: '/product',
+      component: Product
+    }
   ]
 })
 export default router
