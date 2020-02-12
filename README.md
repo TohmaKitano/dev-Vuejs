@@ -4852,7 +4852,8 @@ History APIのサポートやサーバー側の設定が不要となるが、ペ
 
 #### ヒストリーモード
 HTML5の history.pushState API を利用して現在のルートを検知する。<br>
-サーバー側の設定が必要。
+サーバー側の設定が必要。<br>
+studing now...
 
 - src/router.js
 
@@ -4882,5 +4883,48 @@ export default router
 - WebサーバーがApacheの場合
 
 ```
+# .htaccess
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+# サブディレクトリがある場合
+# RewriteBase /my-app/
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+</IfModule>
 
+# src/router.js
+const router = new VueRouter({
+  base: '/my-app/'
+})
+```
+
+- $router<br>
+VueRouterのインスタンス自体。<br>
+使い方がイマイチわからない...
+
+```
+this.$router
+```
+
+- $route<br>
+マッチしたルートの情報が入ったオブジェクト。<br>
+使い方がイマイチわからない...
+
+```
+this.$route
+
+// => 次の情報が含まれる
+{
+  fullPath, // フルパス
+  hash,     // /#/ に続く文字列
+  matched,  // すべてのルートオブジェクトの配列
+  meta,     // ルートのメタ情報
+  name,     // ルート名
+  params,   // ルートのパラメータのオブジェクト
+  path,     // ルートパス
+  query     // ?に続くクエリのオブジェクト
+}
 ```

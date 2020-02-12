@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 
 // VueRouterインスタンスを作成
 const router = new VueRouter({
-  mode: history, // ヒストリーモードに変更
+  // mode: history, // ヒストリーモードに変更
   routes: [
     { path: '/', component: Home },
     { path: '/product', component: Product }
