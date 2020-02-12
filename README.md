@@ -4943,8 +4943,12 @@ const router = new VueRouter({
     },
     {
       name: 'product', // ルートに固有の名前をつける
-      path: '/product/:id', // URLからパラメータを受け取る
+      path: '/product/:id',
       component: Product
+    },
+    {
+      path: '/product/:id', // URLからパラメータを受け取る
+      component: ProductList
     }
   ]
 })
@@ -4986,4 +4990,23 @@ const router = new VueRouter({
   { path: '/a', redirect: '/b' }
   { path: '/a', redirect: { name: 'foo' }}
 })
+```
+
+### ナビゲーションを作成
+
+#### <router-link></router-link>
+Vue.jsの組み込みコンポーネント。ルーター用のリンクを自動的に作成する。
+
+```
+// 文字列を渡す
+<router-link to="/product"></router-link>
+
+// テンプレートリテラルを渡す
+<router-link :to=`/product/${id}` ></router-link>
+```
+
+#### tag属性でタグを変更
+
+```
+<router-link to="/product" tag=""button></router-link>
 ```
