@@ -5005,8 +5005,35 @@ Vue.jsの組み込みコンポーネント。ルーター用のリンクを自�
 <router-link :to=`/product/${id}` ></router-link>
 ```
 
-#### tag属性でタグを変更
+- tag属性でタグを変更
 
 ```
 <router-link to="/product" tag=""button></router-link>
 ```
+
+- パスをオブジェクト形式で指定
+
+|オプション|形式|
+|-----|-----|
+|name|ルート名|
+|path|ルートパス|
+|query|クエリーのオブジェクト|
+|params|パラメータのオブジェクト|
+
+```
+// ルートパスで指定
+<router-link :to="{ path: '/product' }">
+
+// ルートパスとクエリーで指定
+<router-link :to="{ path: '/product', query: { page: 1 }}">
+
+// パラメータがある場合はルート名で指定
+<router-link :to="{ name: '/product , params: { id: 1 }}">
+```
+
+- アクティブなルートに自動的に付与されるクラス
+
+|クラス|条件|
+|-----|-----|
+|.router-link-exact-active|完全にルートがマッチした場合|
+|.router-link-active|ルートにマッチしたパスを含む場合|

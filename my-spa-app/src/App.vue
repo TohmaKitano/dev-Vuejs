@@ -33,7 +33,10 @@ nav a {
   text-decoration: none;
 }
 /* アクティブなリンク */
-.router-link-active {
+/* .router-link-active {
+  background: palevioletred;
+} */
+.router-link-exact-active {
   background: palevioletred;
 }
 </style>
