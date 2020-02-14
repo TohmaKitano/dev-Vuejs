@@ -5077,3 +5077,125 @@ this.$router.push('/product')
 // オブジェクトを渡すこともできる
 this.$router.push({ name: 'product', params: { id: 1 } })
 ```
+
+### 動的ルートを作成
+
+- src/router.js
+
+```
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '@/views/Home'
+import Product from '@/views/Product'
+import ProductList from '@/views/ProductList'
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  // mode: history,
+  routes: [
+    {
+      path: '/',
+      component: Home
+    },
+    {
+      path: '/product',
+      component: Product
+    },
+    {
+      path: '/product/:id', // パラメータが可変となる
+      // path: '/product/:id'(\\d+), // 正規表現でパラメータを扱う
+      component: ProductList
+    }
+  ]
+})
+export default router
+
+// =>
+this.$router.params.id -> 1
+```
+
+- src/views/Product.vue
+
+```
+<template>
+  <div class="product">
+    <h1>商品一覧</h1>
+  </div>
+</template>
+```
+
+- src/views/ProductList.vue
+
+```
+<template>
+  <div class="product">
+    <h1>商品情報</h1>
+    <p>このページは ID.{{ $route.params.id }} の詳細を表示する</p>
+  </div>
+</template>
+
+// => 実行結果
+<div class="product">
+  <h1>商品情報</h1>
+  <p>このページは ID.1 の詳細を表示する</p>
+</div>
+```
+
+#### パラメータをpropsでコンポーネントに渡す
+
+- src/router.js
+
+```
+:<snip>
+const router = new VueRouter({
+  // mode: history,
+  routes: [
+    {
+      path: '/',
+      component: Home
+    },
+    {
+      path: '/product',
+      component: Product
+    },
+    {
+      path: '/product/:id'(\\d+),
+      component: ProductList,
+      // パラメータをpropsとしてコンポーネントに渡す
+      // props: true
+      // => [Vue warn]: Invalid prop: type check failed for prop "id". Expected Number with value 1, got String with value "1".
+      props: route => ({
+        id: Number(route.params.id)
+      })
+    }
+  ]
+})
+export default router
+```
+
+- src/views/ProductList.vue
+
+```
+<template>
+  <div class="product">
+    <h1>商品情報</h1>
+    <!-- <p>このページは ID.{{ $route.params.id }} の詳細を表示する</p> -->
+    <p>このページは ID.{{ id }} の詳細を表示する</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    id: Number
+  }
+}
+</script>
+
+// => http://localhost:8080/#/product/1
+// => 出力結果
+<div class="product">
+  <h1>商品情報</h1>
+  <p>このページは ID.1 の詳細を表示する</p>
+</div>
+```
