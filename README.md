@@ -295,7 +295,7 @@ data: {
 <div id="app">
   <ul>
     <li v-for="item in list" v-bind:key="item.id">
-ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+      ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
     </li>
     </ul>
 </div>
