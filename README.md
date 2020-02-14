@@ -5099,12 +5099,12 @@ const router = new VueRouter({
     },
     {
       path: '/product',
-      component: Product
+      component: ProductList
     },
     {
       path: '/product/:id', // パラメータが可変となる
-      // path: '/product/:id'(\\d+), // 正規表現でパラメータを扱う
-      component: ProductList
+      // path: '/product/:id(\\d+)', // 正規表現でパラメータを扱う
+      component: Product
     }
   ]
 })
@@ -5156,11 +5156,12 @@ const router = new VueRouter({
     },
     {
       path: '/product',
-      component: Product
+      component: ProductList
     },
     {
-      path: '/product/:id'(\\d+),
-      component: ProductList,
+      // name: 'product',
+      path: '/product/:id(\\d+)',
+      component: Product,
       // パラメータをpropsとしてコンポーネントに渡す
       // props: true
       // => [Vue warn]: Invalid prop: type check failed for prop "id". Expected Number with value 1, got String with value "1".
@@ -5198,4 +5199,56 @@ export default {
   <h1>商品情報</h1>
   <p>このページは ID.1 の詳細を表示する</p>
 </div>
+```
+
+### コンテンツを表示
+
+#### モックアップAPIを用意
+
+- src/api/products.js
+
+```
+const database = [
+  { id: 1, name: '商品A', price: 100, content: '商品A詳細' },
+  { id: 2, name: '商品B', price: 200, content: '商品B詳細' },
+  { id: 3, name: '商品C', price: 300, content: '商品C詳細' }
+]
+
+export default {
+  fetch(id) {
+    return database
+  },
+  find(id) {
+    return database.find(el => el.id === id)
+  },
+  asyncFind(id, callback) {
+    setTimeout(() => {
+      callback(database.find(el => el.id === id))
+    }, 1000)
+  }
+}
+```
+
+- src/views/ProductList.vue
+
+```
+<template>
+  <div class="product-list">
+    <h1>商品一覧</h1>
+    <ul>
+      <li v-for="{ id, name } in list" :key="id">
+        <router-link :to="`/product/${ id }`">{{ name }}</router-link>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import products from '@/api/products.js'
+export default {
+  computed: {
+    list: () => products.fetch()
+  }
+}
+</script>
 ```

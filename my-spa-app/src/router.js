@@ -17,13 +17,13 @@ const router = new VueRouter({
       component: Home
     },
     {
-      // name: 'product',
       path: '/product',
-      component: Product,
+      component: ProductList
     },
     {
-      path: '/product/:id',
-      component: ProductList,
+      // name: 'product',
+      path: '/product/:id(\\d+)',
+      component: Product,
       // パラメータをpropsとしてコンポーネントに渡す
       // props: true
       // => [Vue warn]: Invalid prop: type check failed for prop "id". Expected Number with value 1, got String with value "1".
