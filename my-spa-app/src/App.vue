@@ -36,4 +36,7 @@ nav a {
 .router-link-active {
   background: palevioletred;
 }
+/* .router-link-exact-active {
+  background: palevioletred;
+} */
 </style>

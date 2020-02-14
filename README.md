@@ -295,7 +295,7 @@ data: {
 <div id="app">
   <ul>
     <li v-for="item in list" v-bind:key="item.id">
-      ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
+ID.{{ item.id }} {{ item.name }} HP.{{ item.hp }}
     </li>
     </ul>
 </div>
@@ -5005,8 +5005,75 @@ Vue.jsの組み込みコンポーネント。ルーター用のリンクを自�
 <router-link :to=`/product/${id}` ></router-link>
 ```
 
-#### tag属性でタグを変更
+- tag属性でタグを変更
 
 ```
 <router-link to="/product" tag=""button></router-link>
+```
+
+- パスをオブジェクト形式で指定
+
+|オプション|形式|
+|-----|-----|
+|name|ルート名|
+|path|ルートパス|
+|query|クエリーのオブジェクト|
+|params|パラメータのオブジェクト|
+
+```
+// ルートパスで指定
+<router-link :to="{ path: '/product' }">
+
+// ルートパスとクエリーで指定
+<router-link :to="{ path: '/product', query: { page: 1 }}">
+
+// パラメータがある場合はルート名で指定
+<router-link :to="{ name: '/product , params: { id: 1 }}">
+```
+
+- アクティブなルートに自動的に付与されるクラス
+
+|クラス|条件|
+|-----|-----|
+|.router-link-exact-active|完全にルートがマッチした場合|
+|.router-link-active|ルートにマッチしたパスを含む場合|
+
+- exact属性<br>
+.router-link-activeクラスはpathオプションが前方一致するかを条件にしているため、ルートパス(/)を含めない場合に属性を付与する。
+
+```
+<router-link to="/" exact>Home</router-link>
+<router-link to="/product">商品情報</router-link>
+
+// exact属性あり
+<nav>
+  <a href="#/" class="">Home</a>
+  <a href="#/product" class="router-link-exact-active router-link-active">商品情報</a>
+</nav>
+
+// exact属性なし
+<nav>
+  <a href="#/" class="router-link-active">Home</a>
+  <a href="#/product" class="router-link-exact-active router-link-active">商品情報</a>
+</nav>
+```
+
+- replace属性<br>
+履歴エントリを作成する代わりに現在のエントリを修正する(?)<br>
+Studing now...
+
+
+- 特定の処理が終わったらページを遷移させる
+
+|メソッド|振る舞い|
+|-----|-----|
+|push|履歴エントリを追加|
+|replace|履歴エントリを修正|
+|go|ブラウザレベルでページ遷移|
+
+```
+this.$router.push('/product')
+
+// オブジェクトを渡すこともできる
+this.$router.push({ name: 'product', params: { id: 1 } })
 ```
