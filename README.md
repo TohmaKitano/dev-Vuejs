@@ -5363,3 +5363,8 @@ const router = new VueRouter({
 export default router
 ```
 
+### Vuexでデータを共有
+
+```
+
+```
