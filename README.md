@@ -5605,6 +5605,7 @@ Studing now...
 
 
 ### ページ遷移にエフェクトを適用
+難易度が急に上がるので要復習。一応バグは出ないが意味不明な箇所が多発。
 
 #### トランジションのサンプル
 
@@ -5624,4 +5625,153 @@ CSS
 .view-enter, .view-leave-to {
   opacity: 0;
 }
+```
+
+### 非同期処理にエフェクトを適用
+
+- src/App.vue
+
+```
+<template>
+  <div id="app">
+    <nav>
+      <router-link to="/" exact>Home</router-link>
+      <router-link to="/product">商品情報</router-link>
+    </nav>
+    <transition name="view"> // 追記
+      <router-view />
+    </transition> // 追記
+  </div>
+</template>
+
+<script>
+</script>
+
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+nav {
+  display: flex;
+  align-items: center;
+  background: #222;
+}
+nav a {
+  display: block;
+  padding: 0.5em;
+  color: #eee;
+  line-height: 1em;
+  text-decoration: none;
+}
+/* アクティブなリンク */
+.router-link-active {
+  background: palevioletred;
+}
+/* .router-link-exact-active {
+  background: palevioletred;
+} */
+
+.view-enter-active, .view-leave-active {
+  transition: opacity 0.5s;
+}
+.view-leave-active {
+  position: absolute;
+}
+.view-enter, .view-leave-to {
+  opacity: 0;
+}
+</style>
+```
+
+- src/store/view.js
+
+```
+export default {
+  namespaced: true,
+  state: {
+    loading: false
+  },
+  mutations: {
+    start(state) {
+      state.loading = true
+    },
+    end(state) {
+      state.loading = false
+    }
+  }
+}
+```
+
+- /src/store.js<br>
+定数storeをexport defaultしておく。
+
+```
+:<snip>
+import product from '@/store/product.js'
+// viewコンポーネントを読み込む
+import view from '@/store/view.js'
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  modules: {
+    product, // モジュールをストアルートに登録
+    view
+  },
+  // ...
+})
+export default store
+```
+
+- src/router.js
+
+```
+:<snip>
+import store from '@/store.js'
+// グローバルのナビゲーションガイド
+router.beforeEach((to, from, next) => {
+  store.commit('view/start')
+  next()
+})
+// ルーターナビゲーションの後にフック
+router.afterEach(() => {
+  store.commit('view/end')
+})
+```
+
+- src/components/LoadingOverlay.vue
+
+```
+// オーバーレイ用のコンポーネント
+<template>
+  <transition name="loading">
+    <div class="loading" v-if="loading">Loading</div>
+  </transition>
+</template>
+
+<script>
+  export default {
+    computed: {
+      loading() {
+        return this.$store.state.view.loading
+      }
+    }
+  }
+</script>
+
+<style>
+.loading {
+  /* position:fixed; とかでいい感じのスタイル */
+}
+.loading-enter-active {
+  transition: all 0.25s;
+}
+.loading-leave-active {
+  transition: all 0.5s ease 0.5s; /* ルータービューが終わった後に */
+}
+</style>
 ```
