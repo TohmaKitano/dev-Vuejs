@@ -5532,3 +5532,73 @@ const router = new VueRouter({
   ]
 })
 ```
+
+- グローバルでガード<br>
+ルートインスタンスに定義して、グローバルにナビゲーションガードを実行する。
+
+|メソッド|タイミング|
+|-----|-----|
+|beforeEach|すべてのルートの遷移前、コンポーネントガードの解決前|
+|beforeResolve|すべてのルートの遷移前、コンポーネントガードの解決後|
+|afterEach|すべてのルートの遷移後|
+
+```
+// beforeEach
+router.beforeEach((to, from, next) => {
+  console.log('global:beforeEach')
+  next()
+})
+
+// beforeResolve
+router.beforeResolve((to, from, next) => {
+  console.log('global:beforeResolve')
+  next()
+})
+
+// afterEach
+router.afterEach((to, from, next) => {
+  console.log('global:afterEach')
+  next()
+  // すべてのルートに共通する処理を実行
+})
+```
+
+- コンポーネントでガード<br>
+
+|メソッド|タイミング|
+|-----|-----|
+|beforeRouteEnter|コンポーネントへ遷移する前|
+|beforeRouteUpdate|コンポーネントでルートが更新される前|
+|beforeRouteLeave|コンポーネントから遷移する前|
+
+```
+export default {
+
+  // beforeRouteEnter
+  // コンポーネントのインスタンスが作成されていないので、thisを参照できない
+  // beforeRouteEnter(to, from, next) {
+    // console.log('component:beforeRouteEnter', this) // -> undifined
+    // next()
+  // },
+  beforeRouteEnter(to, from, next) {
+    next(vm = {
+      cosole.log(vm) // -> Vuecomponent
+    })
+  },
+
+  // beforeRouteUpdate
+  beforeRouteUpdate(to, from, next) {
+    console.log('component:beforeRouteUpdate', this) // -> Vuecomponent
+    next()
+  }
+
+  // beforeRouteLeave
+  beforeRouteLeave(to, from, next) {
+    console.log('component:beforeRouteLeave') // -> Vuecomponent
+    next()
+  }
+}
+```
+
+### ナビゲーションの解決フロー
+Studing now...
