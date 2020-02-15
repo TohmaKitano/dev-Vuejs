@@ -5602,3 +5602,26 @@ export default {
 
 ### ナビゲーションの解決フロー
 Studing now...
+
+
+### ページ遷移にエフェクトを適用
+
+#### トランジションのサンプル
+
+```
+HTML
+<transition name="view">
+  <router-view />
+</transition>
+
+CSS
+.view-enter-active, .view-leave-active {
+  transition: opacity 0.5s;
+}
+.view-leave-active {
+  position: absolute;
+}
+.view-enter, .view-leave-to {
+  opacity: 0;
+}
+```
