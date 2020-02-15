@@ -56,4 +56,16 @@ const router = new VueRouter({
     }
   ]
 })
+
+import store from '@/store.js'
+// グローバルのナビゲーションガイド
+router.beforeEach((to, from, next) => {
+  store.commit('view/start')
+  next()
+})
+// ルーターナビゲーションの後にフック
+router.afterEach(() => {
+  store.commit('view/end')
+})
+
 export default router
