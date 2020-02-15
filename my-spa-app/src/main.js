@@ -6,6 +6,9 @@ import App from './App'
 // ルーターを読み込む
 import router from './router.js'
 
+// ストアを読み込む
+import store from '@/store.js'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -17,5 +20,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router, // アプリケーションに登録
+  store, // アプリケーションに登録
   render: h => h(App)
 })
