@@ -14,6 +14,7 @@ import ProductReviewDetail from '@/views/Product/ReviewDetail'
 Vue.use(VueRouter);
 
 // VueRouterインスタンスを作成
+// スラッシュから始まるパスは絶対パスになるので注意する
 const router = new VueRouter({
   // mode: history, // ヒストリーモードに変更
   routes: [
