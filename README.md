@@ -5365,6 +5365,42 @@ export default router
 
 ### Vuexでデータを共有
 
+- src/store.js<br>
+productモジュールを読み込む。
+
+```
+import 'babel-polyfill'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import product from '@/store/product.js'
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  modules: {
+    product // モジュールをストアルートに登録
+  },
+  // ...
+})
 ```
 
+- src/main.js
+
+```
+import Vue from 'vue'
+import App from './App'
+
+// ルーターを読み込む
+import router from '@/router.js'
+
+// ストアを読み込む
+import store from '@/store.js'
+
+Vue.config.productionTip = false
+
+new Vue({
+  el: '#app',
+  router, // アプリケーションに登録
+  store, // アプリケーションに登録
+  render: h => h(App)
+})
 ```
