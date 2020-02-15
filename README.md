@@ -5513,3 +5513,22 @@ next(false)
 next('/')
 next({ path: '/' })
 ```
+
+- <strong>beforeEnter</strong> ルート単位でガード<br>
+各ルートのオプションに定義して、ナビゲーションガードを実行する。
+
+```
+const router = new VueRouter({
+  routes: [
+    {
+      path: '/foo',
+      component: 'foo',
+      beforeEnter(to, from, next) {
+        console.log('route:beforeEnter')
+        // ルートの遷移を許可する場合next()
+        next()
+      }
+    }
+  ]
+})
+```
