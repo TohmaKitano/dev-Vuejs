@@ -13,6 +13,8 @@ import ProductReviewDetail from '@/views/Product/ReviewDetail'
 
 Vue.use(VueRouter);
 
+const About = () => import('@/views/About')
+
 // VueRouterインスタンスを作成
 // スラッシュから始まるパスは絶対パスになるので注意する
 const router = new VueRouter({
@@ -25,6 +27,12 @@ const router = new VueRouter({
     {
       path: '/product',
       component: ProductList
+    },
+    {
+      path: '/about',
+      component: About
+      // 次のように書くこともできる
+      // component: () => import('@/views/About')
     },
     {
       // name: 'product',

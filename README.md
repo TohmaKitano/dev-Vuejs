@@ -5806,3 +5806,36 @@ export default {
 }
 </script>
 ```
+
+### コンポーネントの非同期読み込み
+
+- src/router.js
+
+```
+// ルート用コンポーネントの非同期読み込み
+const About = () => import('@/views/About')
+const router = new VueRouter({
+  :<snip>
+  routes: [{
+    path: '/about',
+    component: About
+    // 次のように書くこともできる
+    // component: () => import('@/views/About')
+  }]
+  :<snip>
+})
+```
+
+// オプション用コンポーネントの非同期読み込み
+
+```
+<script>
+export default {
+  :<snip>
+  components: {
+    MyComponent: () => import('@/components/MyComponent')
+  }
+  :<snip>
+}
+</script>
+```
