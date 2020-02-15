@@ -1,5 +1,6 @@
 import products from '@/api/products.js'
 
+// 下記のソースを検証する
 export default {
   namespaced: true,
   state: {
