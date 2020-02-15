@@ -5775,3 +5775,34 @@ router.afterEach(() => {
 }
 </style>
 ```
+
+### ページ遷移前にデータの読み込み
+
+- src/App.vue
+
+```
+<script>
+import products from '@/api/products.js'
+export default {
+  data() {
+    return {
+      item: {}
+    }
+  },
+  // enter は this を使用できないため実装が異なる
+  beforeRouteEnter(to, from, next) {
+    products.asyncFind(Number(to.params.id), item => {
+      next(vm => {
+        vm.item = item
+      })
+    })
+  },
+  beforeRouteUpdate(to, from, next) {
+    products.asyncFind(Number(to.params.id), item => {
+      this.item = item
+      next()
+    })
+  }
+}
+</script>
+```
