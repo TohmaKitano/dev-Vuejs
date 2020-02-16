@@ -5839,6 +5839,7 @@ export default {
 ```
 
 ### ルートのアクセス制限
+Studing now...
 
 - src/router.js
 
@@ -5872,6 +5873,28 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     next() // 認証の確認が必要ないルートならnext()で遷移
+  }
+})
+```
+
+### スクロールの振る舞いを操作
+<strong>scrollBehavior</strong> オプションを使い、コンテンツの特定のポジションに移動する。第三引数に<strong>savedPositionを指定すると、ブラウザの戻るを押した時に前回の位置が維持される。</strong><br>
+Studing now...
+
+```
+const router = new VueRouter({
+  routes: [
+    // ...
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        x: 0,
+        y: 0
+      }
+    }
   }
 })
 ```
