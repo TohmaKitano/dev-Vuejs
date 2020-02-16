@@ -5825,11 +5825,8 @@ const router = new VueRouter({
   }]
   :<snip>
 })
-```
 
 // オプション用コンポーネントの非同期読み込み
-
-```
 <script>
 export default {
   :<snip>
@@ -5839,4 +5836,42 @@ export default {
   :<snip>
 }
 </script>
+```
+
+### ルートのアクセス制限
+
+- src/router.js
+
+```
+const router = new VueRouter({
+  routes: [
+    // アクセス制限したいルート
+    {
+    path: '/user',
+    component: User,
+    meta: {
+      requiresAuth: true
+    }
+  }]
+})
+
+router.beforeEach((to, from, next) => {
+  // 上位ルートを含めて認証が必要なルートがあるかを確認
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // 認証状態を確認
+    if (!auth.loggedIn()) {
+      // 認証していなければログインページにリダイレクト
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 認証の確認が必要ないルートならnext()で遷移
+  }
+})
 ```
